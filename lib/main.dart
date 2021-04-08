@@ -1,7 +1,20 @@
+
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(App());
+}
+
+class App extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Первое приложение',
+      home: MyFirstStatefulWidget(),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -35,20 +48,29 @@ class MyFirstStatelessWidget extends StatelessWidget {
 
     );
   }
+
+
 }
 
 class MyFirstStatefulWidget extends StatefulWidget {
   @override
   _MyFirstStatefulWidgetState createState() => _MyFirstStatefulWidgetState();
+
+
 }
 
 class _MyFirstStatefulWidgetState extends State<MyFirstStatefulWidget> {
 
   int buildCount = 0;
 
+  void getRuntimeType(){
+    print(context.runtimeType);
+  }
+
   @override
   Widget build(BuildContext context) {
     print('Количество вызовов метода build(): ${++buildCount}');
+    getRuntimeType();
     return Container(
 
       child: Center(
