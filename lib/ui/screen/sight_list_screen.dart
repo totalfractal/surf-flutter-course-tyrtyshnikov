@@ -29,7 +29,7 @@ class _SightListScreenState extends State<SightListScreen> {
         title: Container(
           width: MediaQuery.of(context).size.width * 0.7,
           //child: AppBarTitleText(title: widget.title),
-          child: AppBarTitleText(title: widget.title),
+          child: AppBarTitleRichText(),
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
@@ -60,6 +60,32 @@ class AppBarTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(title,
           style: _sightListAppBarTextStyle,
+          textAlign: TextAlign.start,
+          maxLines: 2,
+          softWrap: true,);
+  }
+}
+
+class AppBarTitleRichText extends StatelessWidget {
+  const AppBarTitleRichText({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+          text: TextSpan(
+          text: "",
+          style: _sightListAppBarTextStyle,
+          children: <TextSpan>[
+            TextSpan(text: "С", style: TextStyle(color: hexToColor("#4CAF50"))),
+            TextSpan(text: "писок ",),
+            TextSpan(text: "и", style: TextStyle(color: Colors.yellow)),
+            TextSpan(text: "нтересных ",),
+            TextSpan(text: "мест",),
+          ],
+        
+      ),          
           textAlign: TextAlign.start,
           maxLines: 2,
           softWrap: true,);
