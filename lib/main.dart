@@ -13,7 +13,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'First App',
-      home: SightListScreen(title: "Places",),
+      home: SightListScreen(title: "Список интересных мест",),
+      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFFFFFF)),
     );
   }
 }
