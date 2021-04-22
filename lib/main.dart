@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/screen/sight_details.dart';
 
-import 'package:places/ui/screen/sight_list_screen.dart';
 
 void main() {
   runApp(App());
@@ -16,8 +16,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'First App',
-      home: SightListScreen(title: "Список интересных мест",),
-     // home: SightDetails(sight: Sight(mocks[0][0], mocks[0][1], mocks[0][2], mocks[0][3], mocks[0][4], mocks[0][5]),),
+     // home: SightListScreen(title: "Список интересных мест",),
+      home: SightDetails(sight: Sight(mocks[0][0], mocks[0][1], mocks[0][2], mocks[0][3], mocks[0][4], mocks[0][5]),),
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFFFFFF)),
     );
   }
