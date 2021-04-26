@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:places/domain/sight.dart';
+import 'package:places/mocks.dart';
+import 'package:places/ui/screen/sight_card.dart';
 
 class SightListScreen extends StatefulWidget {
   SightListScreen({Key key, this.title}) : super(key: key);
@@ -9,13 +12,13 @@ class SightListScreen extends StatefulWidget {
   _SightListScreenState createState() => _SightListScreenState();
 }
 
-TextStyle _sightListAppBarTextStyle = 
-  TextStyle(
-    fontFamily: 'Roboto',
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.bold,
-    fontSize: 32,
-    color: hexToColor("#252849"),);
+TextStyle _sightListAppBarTextStyle = TextStyle(
+  fontFamily: 'Roboto',
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.bold,
+  fontSize: 32,
+  color: hexToColor("#252849"),
+);
 
 Color hexToColor(String code) {
   return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
@@ -24,28 +27,42 @@ Color hexToColor(String code) {
 class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Container(
           width: MediaQuery.of(context).size.width * 0.7,
           //child: AppBarTitleText(title: widget.title),
-          child: AppBarTitleRichText(),
+          child: AppBarTitleText(
+            title: widget.title,
+          ),
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         toolbarHeight: 75,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Hello!"
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: getSightCardsList(),
+            // children: [
+            //   SightCard(sight: Sight(mocks[0], 0, 0, "1", "2", "3")),
+            // ],
+          ),
         ),
       ),
     );
   }
+}
+
+List<SightCard> getSightCardsList() {
+  List<SightCard> sightCards = [];
+  mocks.forEach((element) {
+    sightCards.add(SightCard(
+        sight: Sight(element[0], element[1], element[2], element[3], element[4],
+            element[5])));
+  });
+  return sightCards;
 }
 
 class AppBarTitleText extends StatelessWidget {
@@ -58,11 +75,13 @@ class AppBarTitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(title,
-          style: _sightListAppBarTextStyle,
-          textAlign: TextAlign.start,
-          maxLines: 2,
-          softWrap: true,);
+    return Text(
+      title,
+      style: _sightListAppBarTextStyle,
+      textAlign: TextAlign.start,
+      maxLines: 2,
+      softWrap: true,
+    );
   }
 }
 
@@ -74,21 +93,26 @@ class AppBarTitleRichText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-          text: TextSpan(
-          text: "",
-          style: _sightListAppBarTextStyle,
-          children: <TextSpan>[
-            TextSpan(text: "С", style: TextStyle(color: hexToColor("#4CAF50"))),
-            TextSpan(text: "писок ",),
-            TextSpan(text: "и", style: TextStyle(color: Colors.yellow)),
-            TextSpan(text: "нтересных ",),
-            TextSpan(text: "мест",),
-          ],
-        
-      ),          
-          textAlign: TextAlign.start,
-          maxLines: 2,
-          softWrap: true,);
+      text: TextSpan(
+        text: "",
+        style: _sightListAppBarTextStyle,
+        children: <TextSpan>[
+          TextSpan(text: "С", style: TextStyle(color: hexToColor("#4CAF50"))),
+          TextSpan(
+            text: "писок ",
+          ),
+          TextSpan(text: "и", style: TextStyle(color: Colors.yellow)),
+          TextSpan(
+            text: "нтересных ",
+          ),
+          TextSpan(
+            text: "мест",
+          ),
+        ],
+      ),
+      textAlign: TextAlign.start,
+      maxLines: 2,
+      softWrap: true,
+    );
   }
 }
-
