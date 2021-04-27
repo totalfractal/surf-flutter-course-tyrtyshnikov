@@ -28,17 +28,20 @@ class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          width: MediaQuery.of(context).size.width * 0.7,
-          //child: AppBarTitleText(title: widget.title),
-          child: AppBarTitleText(
-            title: widget.title,
+      appBar: PreferredSize(
+              preferredSize: Size(MediaQuery.of(context).size.width * 0.7, 75),
+              child: AppBar(
+          title: Container(
+            //width: MediaQuery.of(context).size.width * 0.7,
+            //child: AppBarTitleText(title: widget.title),
+            child: AppBarTitleText(
+              title: widget.title,
+            ),
           ),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          elevation: 0,
+          toolbarHeight: 75,
         ),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0,
-        toolbarHeight: 75,
       ),
       body: Center(
         child: SingleChildScrollView(
