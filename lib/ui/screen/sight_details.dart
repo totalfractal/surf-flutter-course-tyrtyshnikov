@@ -28,6 +28,25 @@ class SightDetails extends StatelessWidget {
                 stops: [0.0, 1.0],
                 tileMode: TileMode.clamp),
           ),
+          child: Image.network(
+            sight.url,
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes
+                      : null,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                ),
+              );
+            },
+            fit: BoxFit.cover,
+          ),
         ),
         Container(
           padding: EdgeInsets.only(top: 16.0, left: 16, right: 16, bottom: 2),
@@ -96,21 +115,21 @@ class SightDetails extends StatelessWidget {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: hexToColor("#4CAF50"),
-                          shadowColor: Colors.transparent, // background
-                          onPrimary: Colors.white,
-                          textStyle: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontStyle: FontStyle.normal,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                              decoration: TextDecoration.none) // foreground
-                          ),
-                      onPressed: () {},
-                      child: Text('Построить маршрут'.toUpperCase()),
-                    ),
+                  style: ElevatedButton.styleFrom(
+                      primary: hexToColor("#4CAF50"),
+                      shadowColor: Colors.transparent, // background
+                      onPrimary: Colors.white,
+                      textStyle: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          decoration: TextDecoration.none) // foreground
+                      ),
+                  onPressed: () {},
+                  child: Text('Построить маршрут'.toUpperCase()),
+                ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 24),
@@ -119,18 +138,18 @@ class SightDetails extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.transparent,
-                          shadowColor: Colors.transparent, // background
-                          onPrimary: hexToColor("#3B3E5B"),
-                          textStyle: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontStyle: FontStyle.normal,
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                              color: hexToColor("#3B3E5B"),
-                              decoration: TextDecoration.none,
-                              ), // foreground
-                          ),
+                        primary: Colors.transparent,
+                        shadowColor: Colors.transparent, // background
+                        onPrimary: hexToColor("#3B3E5B"),
+                        textStyle: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          color: hexToColor("#3B3E5B"),
+                          decoration: TextDecoration.none,
+                        ), // foreground
+                      ),
                       onPressed: () {},
                       child: Text('Запланировать'),
                     ),
@@ -149,7 +168,6 @@ class SightDetails extends StatelessWidget {
                           ),
                       onPressed: () {},
                       child: Text('В избранное'),
-                      
                     ),
                   ],
                 ),
