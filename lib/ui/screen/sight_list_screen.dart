@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/screen/res/styles.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
 class SightListScreen extends StatefulWidget {
@@ -12,13 +13,7 @@ class SightListScreen extends StatefulWidget {
   _SightListScreenState createState() => _SightListScreenState();
 }
 
-TextStyle _sightListAppBarTextStyle = TextStyle(
-  fontFamily: 'Roboto',
-  fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.bold,
-  fontSize: 32,
-  color: hexToColor("#252849"),
-);
+
 
 Color hexToColor(String code) {
   return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
@@ -38,7 +33,6 @@ class _SightListScreenState extends State<SightListScreen> {
               title: widget.title,
             ),
           ),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           toolbarHeight: 75,
         ),
@@ -70,7 +64,7 @@ List<SightCard> getSightCardsList() {
   mocks.forEach((element) {
     sightCards.add(SightCard(
         sight: Sight(name: element[0], lat: element[1], lon: element[2], 
-          url: element[3], type: element[4], details: element[5]) ));
+          url: element[3], details: element[4], type: element[5]) ));
   });
   return sightCards;
 }
@@ -87,7 +81,7 @@ class AppBarTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: _sightListAppBarTextStyle,
+      style: lmSightListAppBarTextStyle,
       textAlign: TextAlign.start,
       maxLines: 2,
       softWrap: true,
@@ -95,34 +89,4 @@ class AppBarTitleText extends StatelessWidget {
   }
 }
 
-class AppBarTitleRichText extends StatelessWidget {
-  const AppBarTitleRichText({
-    Key key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: "",
-        style: _sightListAppBarTextStyle,
-        children: <TextSpan>[
-          TextSpan(text: "С", style: TextStyle(color: hexToColor("#4CAF50"))),
-          TextSpan(
-            text: "писок ",
-          ),
-          TextSpan(text: "и", style: TextStyle(color: Colors.yellow)),
-          TextSpan(
-            text: "нтересных ",
-          ),
-          TextSpan(
-            text: "мест",
-          ),
-        ],
-      ),
-      textAlign: TextAlign.start,
-      maxLines: 2,
-      softWrap: true,
-    );
-  }
-}

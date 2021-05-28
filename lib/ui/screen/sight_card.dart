@@ -72,13 +72,7 @@ class SightCard extends StatelessWidget {
                               sight.type.isEmpty
                                   ? "категория"
                                   : sight.type.toLowerCase(),
-                              style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontStyle: FontStyle.normal,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              )),
+                              style: Theme.of(context).primaryTextTheme.caption),
                         ),
                         Container(
                           color: Colors.green,
@@ -103,27 +97,16 @@ class SightCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child:
-                            Text(sight.name.isEmpty ? "Название" : sight.name,
-                                style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: hexToColor("#3B3E5B"),
-                                )),
-                      ),
+                          padding: EdgeInsets.symmetric(vertical: 2),
+                          child: Text(
+                            sight.name.isEmpty ? "Название" : sight.name,
+                            style: Theme.of(context).primaryTextTheme.subtitle1,
+                          )),
                       Container(
                         child: Text("закрыто до 9:00",
                             textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontStyle: FontStyle.normal,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                                color: hexToColor("#7C7E92"),
-                                decoration: TextDecoration.none)),
+                            style:
+                                Theme.of(context).primaryTextTheme.subtitle2),
                       ),
                     ]),
               ),
