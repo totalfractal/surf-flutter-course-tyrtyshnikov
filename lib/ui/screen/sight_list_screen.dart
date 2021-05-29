@@ -54,6 +54,13 @@ class _SightListScreenState extends State<SightListScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(items: [
+          BottomNavigationBarItem(icon: Image.asset("res/icons/List.png"), label: ""),
+          BottomNavigationBarItem(icon: Image.asset("res/icons/Map.png"), label: ""),
+          BottomNavigationBarItem(icon: Image.asset("res/icons/Heart Full.png", color: hexToColor("#252849"),), label: "", ),
+          BottomNavigationBarItem(icon: Image.asset("res/icons/Settings.png"), label: ""),
+        ],
+        ),
     );
   }
 }
@@ -62,8 +69,8 @@ List<SightCard> getSightCardsList() {
   List<SightCard> sightCards = [];
   mocks.forEach((element) {
     sightCards.add(SightCard(
-        sight: Sight(element[0], element[1], element[2], element[3], element[4],
-            element[5])));
+        sight: Sight(name: element[0], lat: element[1], lon: element[2], 
+          url: element[3], type: element[4], details: element[5]) ));
   });
   return sightCards;
 }
