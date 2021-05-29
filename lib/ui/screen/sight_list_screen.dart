@@ -81,7 +81,7 @@ class AppBarTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: lmSightListAppBarTextStyle,
+     // style: lmSightListAppBarTextStyle,
       textAlign: TextAlign.start,
       maxLines: 2,
       softWrap: true,

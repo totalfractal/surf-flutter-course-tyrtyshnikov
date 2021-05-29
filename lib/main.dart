@@ -20,10 +20,10 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'First App',
       
-      home: VisitingScreen(),
+     // home: VisitingScreen(),
      // home: SightListScreen(title: "Список интересных мест",),
-     // home: SightDetails(sight: Sight(name: mocks[0][0], lat: mocks[0][1], lon: mocks[0][2], url: mocks[0][3], details: mocks[0][4], type: mocks[0][5]),),
-      theme: lightTheme
+      home: SightDetails(sight: Sight(name: mocks[0][0], lat: mocks[0][1], lon: mocks[0][2], url: mocks[0][3], details: mocks[0][4], type: mocks[0][5]),),
+      theme: darkTheme
       
     );
   }
