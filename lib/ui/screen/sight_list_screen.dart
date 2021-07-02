@@ -4,6 +4,11 @@ import 'package:places/mocks.dart';
 import 'package:places/ui/screen/res/styles.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
+import '../../globals.dart';
+
+
+
+
 class SightListScreen extends StatefulWidget {
   SightListScreen({Key key, this.title}) : super(key: key);
 
@@ -15,9 +20,7 @@ class SightListScreen extends StatefulWidget {
 
 
 
-Color hexToColor(String code) {
-  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
-}
+
 
 class _SightListScreenState extends State<SightListScreen> {
   @override
@@ -49,10 +52,10 @@ class _SightListScreenState extends State<SightListScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(items: [
-          BottomNavigationBarItem(icon: Image.asset("res/icons/List.png"), label: ""),
-          BottomNavigationBarItem(icon: Image.asset("res/icons/Map.png"), label: ""),
-          BottomNavigationBarItem(icon: Image.asset("res/icons/Heart Full.png", color: hexToColor("#252849"),), label: "", ),
-          BottomNavigationBarItem(icon: Image.asset("res/icons/Settings.png"), label: ""),
+          BottomNavigationBarItem(icon: Image.asset("res/icons/List.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B"),), label: ""),
+          BottomNavigationBarItem(icon: Image.asset("res/icons/Map.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")), label: ""),
+          BottomNavigationBarItem(icon: Image.asset("res/icons/Heart.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")), label: "", ),
+          BottomNavigationBarItem(icon: Image.asset("res/icons/Settings.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")), label: ""),
         ],
         ),
     );

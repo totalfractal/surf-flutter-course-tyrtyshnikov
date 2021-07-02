@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/ui/screen/sight_list_screen.dart';
+import 'package:places/ui/screen/res/colors.dart';
+
+import '../../globals.dart';
 
 class SightCard extends StatelessWidget {
   const SightCard({
@@ -23,8 +25,8 @@ class SightCard extends StatelessWidget {
               height: 96,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16)),
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12)),
                 gradient: new LinearGradient(
                     colors: [
                       Colors.black38,
@@ -40,8 +42,8 @@ class SightCard extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16)),
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12)),
                     child: Image.network(
                       sight.url,
                       loadingBuilder: (BuildContext context, Widget child,
@@ -62,7 +64,7 @@ class SightCard extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: EdgeInsets.only(left: 16),
                     alignment: Alignment.topCenter,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,12 +74,17 @@ class SightCard extends StatelessWidget {
                               sight.type.isEmpty
                                   ? "категория"
                                   : sight.type.toLowerCase(),
-                              style: Theme.of(context).primaryTextTheme.caption),
+                              style:
+                                  Theme.of(context).primaryTextTheme.caption),
                         ),
-                        Container(
-                          color: Colors.green,
-                          width: 20,
-                          height: 20,
+                        IconButton(
+                          icon: Image.asset("res/icons/Heart.png",
+                              fit: BoxFit.fill),
+                          onPressed: () => {
+                            print("you like this!"),
+                          },
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                         ),
                       ],
                     ),
@@ -85,10 +92,15 @@ class SightCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 5,
-            ),
             Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadiusDirectional.only(
+                    bottomEnd: Radius.circular(12),
+                    bottomStart: Radius.circular(12),
+                  ),
+                  color: isDarkMode
+                      ? dmSightCardContainerColor
+                      : lmSightCardContainerColor),
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.all(16.0),
               child: ConstrainedBox(
@@ -100,7 +112,7 @@ class SightCard extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
                             sight.name.isEmpty ? "Название" : sight.name,
-                            style: Theme.of(context).primaryTextTheme.subtitle1,
+                            style: Theme.of(context).primaryTextTheme.headline5,
                           )),
                       Container(
                         child: Text("закрыто до 9:00",

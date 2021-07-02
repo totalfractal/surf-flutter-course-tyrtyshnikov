@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
 
+import '../../globals.dart';
 import '../../mocks.dart';
+
 
 class VisitingScreen extends StatelessWidget {
   @override
@@ -60,13 +63,14 @@ class VisitingScreen extends StatelessWidget {
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-                icon: Image.asset("res/icons/List.png"), label: ""),
+                icon: Image.asset("res/icons/List.png",),
+                 label: ""),
             BottomNavigationBarItem(
-                icon: Image.asset("res/icons/Map.png"), label: ""),
+                icon: Image.asset("res/icons/Map.png"), 
+                label: ""),
             BottomNavigationBarItem(
               icon: Image.asset(
                 "res/icons/Heart Full.png",
-                color: hexToColor("#252849"),
               ),
               label: "",
             ),
@@ -232,8 +236,8 @@ class WantToVisitSightCard extends StatelessWidget {
               height: 96,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16)),
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12)),
                 gradient: new LinearGradient(
                     colors: [
                       Colors.black38,
@@ -249,8 +253,8 @@ class WantToVisitSightCard extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16)),
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12)),
                     child: Image.network(
                       sight.url,
                       loadingBuilder: (BuildContext context, Widget child,
@@ -271,7 +275,7 @@ class WantToVisitSightCard extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: EdgeInsets.only(top: 16, left: 16),
                     alignment: Alignment.topCenter,
                     child: Row(
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -294,10 +298,10 @@ class WantToVisitSightCard extends StatelessWidget {
                                 alignment: Alignment.topCenter,
                                 icon: Image.asset(
                                   "res/icons/Calendar.png",
-                                  height: 24,
-                                  width: 24,
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  print("Добавить в календарь");
+                                },
                               )),
                           Container(
                               alignment: Alignment.topCenter,
@@ -306,10 +310,10 @@ class WantToVisitSightCard extends StatelessWidget {
                                   alignment: Alignment.topCenter,
                                   icon: Image.asset(
                                     "res/icons/Delete.png",
-                                    height: 24,
-                                    width: 24,
                                   ),
-                                  onPressed: () {}))
+                                  onPressed: () {
+                                    print("Удалить");
+                                  }))
                         ]),
                       ],
                     ),
@@ -317,10 +321,15 @@ class WantToVisitSightCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 5,
-            ),
             Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadiusDirectional.only(
+                    bottomEnd: Radius.circular(12),
+                    bottomStart: Radius.circular(12),
+                  ),
+                  color: isDarkMode
+                      ? dmSightCardContainerColor
+                      : lmSightCardContainerColor),
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.all(16.0),
               child: ConstrainedBox(
@@ -375,8 +384,8 @@ class VisitedSightCard extends StatelessWidget {
               height: 96,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16)),
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12)),
                 gradient: new LinearGradient(
                     colors: [
                       Colors.black38,
@@ -392,8 +401,8 @@ class VisitedSightCard extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16)),
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12)),
                     child: Image.network(
                       sight.url,
                       loadingBuilder: (BuildContext context, Widget child,
@@ -414,7 +423,7 @@ class VisitedSightCard extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: EdgeInsets.only(top: 16, left: 16, ),
                     alignment: Alignment.topCenter,
                     child: Row(
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -443,10 +452,10 @@ class VisitedSightCard extends StatelessWidget {
                                 alignment: Alignment.topCenter,
                                 icon: Image.asset(
                                   "res/icons/Share.png",
-                                  height: 24,
-                                  width: 24,
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  print("Поделиться");
+                                },
                               )),
                           Container(
                               alignment: Alignment.topCenter,
@@ -455,10 +464,10 @@ class VisitedSightCard extends StatelessWidget {
                                   alignment: Alignment.topCenter,
                                   icon: Image.asset(
                                     "res/icons/Delete.png",
-                                    height: 24,
-                                    width: 24,
                                   ),
-                                  onPressed: () {}))
+                                  onPressed: () {
+                                    print("Удалить");
+                                  }))
                         ]),
                       ],
                     ),
@@ -466,10 +475,15 @@ class VisitedSightCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 5,
-            ),
             Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadiusDirectional.only(
+                    bottomEnd: Radius.circular(12),
+                    bottomStart: Radius.circular(12),
+                  ),
+                  color: isDarkMode
+                      ? dmSightCardContainerColor
+                      : lmSightCardContainerColor),
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.all(16.0),
               child: ConstrainedBox(
