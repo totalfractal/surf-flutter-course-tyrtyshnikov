@@ -12,39 +12,18 @@ class VisitingScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
-            
-            indicatorPadding: EdgeInsets.only(left: 16, right: 1, top: 6, bottom: 6),
-            indicator: BoxDecoration(
-              borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(40), right: Radius.circular(40)),
-              color: hexToColor("#3B3E5B"),
-            ),
-            labelStyle: TextStyle(
-              fontFamily: 'Roboto',
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-              color: Colors.white,
-            ),
-            unselectedLabelStyle: TextStyle(
-              fontFamily: 'Roboto',
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            ),
-            unselectedLabelColor: hexToColor("#7C7E92"),
+            indicatorPadding:
+                EdgeInsets.only(left: 16, right: 1, top: 6, bottom: 6),
             tabs: [
               Container(
-                padding: EdgeInsets.only(left: 16),
+                  padding: EdgeInsets.only(left: 16),
                   width: double.infinity,
-                  // color: hexToColor("#3B3E5B"),
                   child: Tab(
                     text: "Хочу посетить",
                   )),
               Container(
-                padding: EdgeInsets.only(left: 16),
+                  padding: EdgeInsets.only(left: 16),
                   width: double.infinity,
-                  // color: hexToColor("#3B3E5B"),
                   child: Tab(
                     text: "Посетил",
                   ))
@@ -53,45 +32,47 @@ class VisitingScreen extends StatelessWidget {
           title: Container(
             child: Text(
               "Избранное",
-              style: TextStyle(
-                fontFamily: 'Roboto',
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
-                color: hexToColor("#252849"),
-              ),
             ),
             alignment: Alignment.center,
           ),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
         ),
         body: TabBarView(children: [
           WantToVisitTab(visitList: [
-            /* Sight(
+            Sight(
                 name: mocks[0][0],
                 lat: mocks[0][1],
                 lon: mocks[0][2],
                 url: mocks[0][3],
                 details: mocks[0][4],
-                type: mocks[0][5]) */
+                type: mocks[0][5])
           ]),
           VisitedTab(visitedList: [
-            /* Sight(
+            Sight(
                 name: mocks[1][0],
                 lat: mocks[1][1],
                 lon: mocks[1][2],
                 url: mocks[1][3],
                 details: mocks[1][4],
-                type: mocks[1][5]) */
+                type: mocks[1][5])
           ])
         ]),
-        bottomNavigationBar: BottomNavigationBar(items: [
-          BottomNavigationBarItem(icon: Image.asset("res/icons/List.png"), label: ""),
-          BottomNavigationBarItem(icon: Image.asset("res/icons/Map.png"), label: ""),
-          BottomNavigationBarItem(icon: Image.asset("res/icons/Heart Full.png", color: hexToColor("#252849"),), label: "", ),
-          BottomNavigationBarItem(icon: Image.asset("res/icons/Settings.png"), label: ""),
-        ],
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+                icon: Image.asset("res/icons/List.png"), label: ""),
+            BottomNavigationBarItem(
+                icon: Image.asset("res/icons/Map.png"), label: ""),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                "res/icons/Heart Full.png",
+                color: hexToColor("#252849"),
+              ),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+                icon: Image.asset("res/icons/Settings.png"), label: ""),
+          ],
         ),
       ),
     );
@@ -132,26 +113,14 @@ class WantToVisitTab extends StatelessWidget {
                         padding: EdgeInsets.only(top: 24, bottom: 8),
                         child: Text(
                           "Пусто",
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontStyle: FontStyle.normal,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: hexToColor("#7C7E92"),
-                          ),
+                          style: Theme.of(context).primaryTextTheme.headline2,
                         ),
                       ),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 40),
                         child: Text(
                           "Отмечайте понравившиеся места и они появятся здесь.",
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: hexToColor("#7C7E92"),
-                          ),
+                          style: Theme.of(context).primaryTextTheme.headline3,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -211,26 +180,14 @@ class VisitedTab extends StatelessWidget {
                         padding: EdgeInsets.only(top: 24, bottom: 8),
                         child: Text(
                           "Пусто",
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontStyle: FontStyle.normal,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: hexToColor("#7C7E92"),
-                          ),
+                          style: Theme.of(context).primaryTextTheme.headline2,
                         ),
                       ),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 53),
                         child: Text(
                           "Завершите маршрут, чтобы место попало сюда.",
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: hexToColor("#7C7E92"),
-                          ),
+                          style: Theme.of(context).primaryTextTheme.headline3,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -326,13 +283,7 @@ class WantToVisitSightCard extends StatelessWidget {
                                 sight.type.isEmpty
                                     ? "категория"
                                     : sight.type.toLowerCase(),
-                                style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                )),
+                                style: Theme.of(context).primaryTextTheme.caption,),
                           ),
                         ),
                         ButtonBar(buttonPadding: EdgeInsets.zero, children: [
@@ -381,37 +332,19 @@ class WantToVisitSightCard extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child:
                             Text(sight.name.isEmpty ? "Название" : sight.name,
-                                style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: hexToColor("#3B3E5B"),
-                                )),
+                                style: Theme.of(context).primaryTextTheme.headline4),
                       ),
                       Container(
                         padding: EdgeInsets.only(top: 2),
                         child: Text("Запланировано на 12 окт. 2020",
                             textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontStyle: FontStyle.normal,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                                color: hexToColor("#4CAF50"),
-                                decoration: TextDecoration.none)),
+                            style: Theme.of(context).primaryTextTheme.subtitle2.copyWith(color: hexToColor("#4CAF50"))),
                       ),
                       Container(
                         padding: EdgeInsets.only(top: 16),
                         child: Text("закрыто до 9:00",
                             textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontStyle: FontStyle.normal,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                                color: hexToColor("#7C7E92"),
-                                decoration: TextDecoration.none)),
+                            style: Theme.of(context).primaryTextTheme.subtitle2),
                       ),
                     ]),
               ),
@@ -548,37 +481,20 @@ class VisitedSightCard extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 2),
                         child:
                             Text(sight.name.isEmpty ? "Название" : sight.name,
-                                style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: hexToColor("#3B3E5B"),
-                                )),
+                                style: Theme.of(context).primaryTextTheme.headline4,
+                                ),
                       ),
                       Container(
                         padding: EdgeInsets.only(top: 2),
                         child: Text("Цель достигнута 12 окт. 2020",
                             textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontStyle: FontStyle.normal,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                                color: hexToColor("#7C7E92"),
-                                decoration: TextDecoration.none)),
+                            style: Theme.of(context).primaryTextTheme.subtitle2),
                       ),
                       Container(
                         padding: EdgeInsets.only(top: 16),
                         child: Text("закрыто до 9:00",
                             textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontStyle: FontStyle.normal,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                                color: hexToColor("#7C7E92"),
-                                decoration: TextDecoration.none)),
+                            style: Theme.of(context).primaryTextTheme.subtitle2),
                       ),
                     ]),
               ),

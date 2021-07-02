@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/ui/screen/res/styles.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
 
 class SightDetails extends StatelessWidget {
@@ -53,18 +54,13 @@ class SightDetails extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 2),
-                alignment: Alignment.topLeft,
-                child: Text(sight.name,
+                  margin: EdgeInsets.symmetric(vertical: 2),
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    sight.name,
                     textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontStyle: FontStyle.normal,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: hexToColor("#3B3E5B"),
-                        decoration: TextDecoration.none)),
-              ),
+                    style: Theme.of(context).primaryTextTheme.headline1,
+                  )),
               Container(
                 // padding:
                 //     EdgeInsets.only(top: 2.0, left: 16, right: 16, bottom: 24),
@@ -75,25 +71,13 @@ class SightDetails extends StatelessWidget {
                     Container(
                       child: Text(sight.type.toLowerCase(),
                           textAlign: TextAlign.start,
-                          style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontStyle: FontStyle.normal,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: hexToColor("#3B3E5B"),
-                              decoration: TextDecoration.none)),
+                          style: Theme.of(context).primaryTextTheme.subtitle1),
                     ),
                     Container(
                       margin: EdgeInsets.only(left: 16),
                       child: Text("закрыто до 9:00",
                           textAlign: TextAlign.start,
-                          style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontStyle: FontStyle.normal,
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                              color: hexToColor("#7C7E92"),
-                              decoration: TextDecoration.none)),
+                          style: Theme.of(context).primaryTextTheme.subtitle2),
                     ),
                   ],
                 ),
@@ -102,74 +86,47 @@ class SightDetails extends StatelessWidget {
                 margin: EdgeInsets.symmetric(vertical: 24),
                 child: Text(sight.details,
                     textAlign: TextAlign.justify,
-                    style: TextStyle(
-                        wordSpacing: 15,
-                        fontFamily: 'Roboto',
-                        fontStyle: FontStyle.normal,
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                        color: hexToColor("#3B3E5B"),
-                        decoration: TextDecoration.none)),
+                    style: Theme.of(context).primaryTextTheme.bodyText1),
               ),
               Container(
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
+                  /* style: ElevatedButton.styleFrom(
                       primary: hexToColor("#4CAF50"),
                       shadowColor: Colors.transparent, // background
-                      onPrimary: Colors.white,
-                      textStyle: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          decoration: TextDecoration.none) // foreground
-                      ),
+                      textStyle: Theme.of(context).primaryTextTheme.button), */
                   onPressed: () {},
                   child: Text('Построить маршрут'.toUpperCase()),
                 ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 24),
-                child: ButtonBar(
-                  alignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.transparent,
-                        shadowColor: Colors.transparent, // background
-                        onPrimary: hexToColor("#3B3E5B"),
-                        textStyle: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          color: hexToColor("#3B3E5B"),
-                          decoration: TextDecoration.none,
-                        ), // foreground
+                child: Theme(
+                  data: ThemeData(
+                    elevatedButtonTheme: ElevatedButtonThemeData(
+                        style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          hexToColor("#3B3E5B")),
+                      shadowColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
+                    )),
+                  ),
+                  child: ButtonBar(
+                    alignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text('Запланировать'),
                       ),
-                      onPressed: () {},
-                      child: Text('Запланировать'),
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.transparent,
-                          shadowColor: Colors.transparent, // background
-                          onPrimary: hexToColor("#3B3E5B"),
-                          textStyle: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontStyle: FontStyle.normal,
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                              color: hexToColor("#3B3E5B"),
-                              decoration: TextDecoration.none) // foreground
-                          ),
-                      onPressed: () {},
-                      child: Text('В избранное'),
-                    ),
-                  ],
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text('В избранное'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
