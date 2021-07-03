@@ -45,6 +45,13 @@ final lightTheme = ThemeData(
         bodyText1: lmRoboto14BodyText,
         caption: lmRoboto14W700Caption,
         button: lmRoboto14W700),
+    sliderTheme: SliderThemeData(
+        activeTrackColor: Color.fromRGBO(76, 175, 80, 1),
+        thumbColor: Colors.white,
+        rangeThumbShape:
+            RoundRangeSliderThumbShape(elevation: 4, pressedElevation: 8),
+        rangeTrackShape: CustomRectTrackShape(),
+        trackHeight: 2),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
       backgroundColor: lmElevatedButtonBackgroundColor,
@@ -97,15 +104,35 @@ final darkTheme = ThemeData(
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
             backgroundColor: dmElevatedButtonBackgroundColor,
+            foregroundColor: MaterialStateProperty.all(Colors.white),
+            textStyle: MaterialStateProperty.all(TextStyle(
+                fontFamily: "Roboto",
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w700,
+                fontSize: 14)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             )))),
     textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(
-            textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(
-      color: Colors.white,
-    )),
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.green) ,
-    ),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+      ),
     ));
+
+class CustomRectTrackShape extends RoundedRectRangeSliderTrackShape {
+  Rect getPreferredRect({
+    @required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    @required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double trackHeight = sliderTheme.trackHeight;
+    final double trackLeft = offset.dx + 12;
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackWidth = parentBox.size.width - 24;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
+  }
+}
