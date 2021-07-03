@@ -54,8 +54,17 @@ final lightTheme = ThemeData(
         trackHeight: 2),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-      backgroundColor: lmElevatedButtonBackgroundColor,
-    )),
+            backgroundColor: dmElevatedButtonBackgroundColor,
+            foregroundColor: MaterialStateProperty.all(Colors.white),
+            textStyle: MaterialStateProperty.all(TextStyle(
+                fontFamily: "Roboto",
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w700,
+                fontSize: 14)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            )))),
     textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
             textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(

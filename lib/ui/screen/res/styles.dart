@@ -1,9 +1,7 @@
 //Light Theme
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../globals.dart';
-import '../sight_list_screen.dart';
 import 'colors.dart';
 
 const TextStyle _text =
@@ -89,7 +87,7 @@ final dmAppBarTextStyle = TextStyle(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w500,
   fontSize: 18,
-  color: Colors.white,
+  color: Colors.green,
 );
 
 /* final dmSightListAppBarTextStyle = TextStyle(

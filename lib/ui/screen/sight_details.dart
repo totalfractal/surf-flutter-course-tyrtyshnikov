@@ -1,10 +1,6 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/ui/screen/res/styles.dart';
-import 'package:places/ui/screen/sight_list_screen.dart';
-
 import '../../globals.dart';
 
 
@@ -103,13 +99,7 @@ class SightDetails extends StatelessWidget {
                     children: [
                       Image.asset("res/icons/GO.png"),
                       SizedBox(width: 8),
-                      Text('Построить маршрут'.toUpperCase(), style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "Roboto",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14
-                      ),),
+                      Text('Построить маршрут'.toUpperCase(), ),
                     ],
                   ),
                 ),

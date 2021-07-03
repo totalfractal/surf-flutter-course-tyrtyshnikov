@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../globals.dart';
-import '../sight_list_screen.dart';
 
 //Light Theme
 
