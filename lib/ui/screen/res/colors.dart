@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../globals.dart';
 
+
+
 //Light Theme
 
 const lmPrimaryColor = Colors.white,
@@ -22,6 +24,7 @@ final lmElevatedButtonBackgroundColor = MaterialStateProperty.all<Color>(hexToCo
 final lmUnselectedLabelColor = hexToColor("#7C7E92");
 final lmTabBarColor = hexToColor("#3B3E5B");
 final lmSightCardContainerColor = Colors.white;
+final lmFilterIconsColor = Color.fromRGBO(76, 175, 80, 1);
 
 //Dark Theme
 
@@ -44,3 +47,4 @@ final dmElevatedButtonBackgroundColor = MaterialStateProperty.all<Color>(hexToCo
 final dmUnselectedLabelColor = hexToColor("#7C7E92");
 final dmTabBarColor = Colors.white;
 final dmSightCardContainerColor = Color.fromRGBO(26, 26, 32, 1);
+final dmFilterColor = Color.fromRGBO(106, 218, 111, 1);

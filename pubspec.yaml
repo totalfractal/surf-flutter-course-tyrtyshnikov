@@ -26,5 +26,9 @@ flutter:
   assets:
     - res/
     - res/icons/
+    - res/icons/catalog/
+    - res/icons/catalog/black/
+    - res/icons/catalog/white/
+    - res/icons/other/
 
 

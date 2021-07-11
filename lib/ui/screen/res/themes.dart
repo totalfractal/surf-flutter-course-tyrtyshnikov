@@ -47,6 +47,7 @@ final lightTheme = ThemeData(
         button: lmRoboto14W700),
     sliderTheme: SliderThemeData(
         activeTrackColor: Color.fromRGBO(76, 175, 80, 1),
+        inactiveTrackColor: Color.fromRGBO(124, 126, 146, 0.56),
         thumbColor: Colors.white,
         rangeThumbShape:
             RoundRangeSliderThumbShape(elevation: 4, pressedElevation: 8),

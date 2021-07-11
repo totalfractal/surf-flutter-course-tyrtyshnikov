@@ -5,9 +5,6 @@ import 'package:places/ui/screen/sight_card.dart';
 
 import '../../globals.dart';
 
-
-
-
 class SightListScreen extends StatefulWidget {
   SightListScreen({Key key, this.title}) : super(key: key);
 
@@ -17,17 +14,13 @@ class SightListScreen extends StatefulWidget {
   _SightListScreenState createState() => _SightListScreenState();
 }
 
-
-
-
-
 class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-              preferredSize: Size(MediaQuery.of(context).size.width * 0.7, 75),
-              child: AppBar(
+        preferredSize: Size(MediaQuery.of(context).size.width * 0.7, 75),
+        child: AppBar(
           title: Container(
             //width: MediaQuery.of(context).size.width * 0.7,
             //child: AppBarTitleText(title: widget.title),
@@ -50,25 +43,46 @@ class _SightListScreenState extends State<SightListScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: [
-          BottomNavigationBarItem(icon: Image.asset("res/icons/List.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B"),), label: ""),
-          BottomNavigationBarItem(icon: Image.asset("res/icons/Map.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")), label: ""),
-          BottomNavigationBarItem(icon: Image.asset("res/icons/Heart.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")), label: "", ),
-          BottomNavigationBarItem(icon: Image.asset("res/icons/Settings.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")), label: ""),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+              icon: Image.asset(
+                "res/icons/List.png",
+                color: isDarkMode ? Colors.white : hexToColor("#3B3E5B"),
+              ),
+              label: ""),
+          BottomNavigationBarItem(
+              icon: Image.asset("res/icons/Map.png",
+                  color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),
+              label: ""),
+          BottomNavigationBarItem(
+            icon: Image.asset("res/icons/Heart.png",
+                color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+              icon: Image.asset("res/icons/Settings.png",
+                  color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),
+              label: ""),
         ],
-        ),
+      ),
     );
   }
-}
 
-List<SightCard> getSightCardsList() {
-  List<SightCard> sightCards = [];
-  mocks.forEach((element) {
-    sightCards.add(SightCard(
-        sight: Sight(name: element[0], lat: element[1], lon: element[2], 
-          url: element[3], details: element[4], type: element[5]) ));
-  });
-  return sightCards;
+  List<SightCard> getSightCardsList() {
+    List<SightCard> sightCards = [];
+    mocks.forEach((element) {
+      sightCards.add(SightCard(
+          sight: Sight(
+              name: element[0],
+              lat: element[1],
+              lon: element[2],
+              url: element[3],
+              details: element[4],
+              type: element[5])));
+    });
+    return sightCards;
+  }
 }
 
 class AppBarTitleText extends StatelessWidget {
@@ -83,12 +97,10 @@ class AppBarTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-     // style: lmSightListAppBarTextStyle,
+      // style: lmSightListAppBarTextStyle,
       textAlign: TextAlign.start,
       maxLines: 2,
       softWrap: true,
     );
   }
 }
-
-
