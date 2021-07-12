@@ -2,7 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/res/styles.dart';
 
-import '../../../globals.dart';
+//import '../../../globals.dart';
+
+class ThemeProvider extends ChangeNotifier{
+  ThemeData _selectedTheme;
+
+  ThemeData light = lightTheme;
+  ThemeData dark = darkTheme;
+
+  ThemeProvider({bool isDarkMode}){
+    this._selectedTheme = isDarkMode ? dark : light;
+  }
+
+  ThemeData get getTheme => _selectedTheme;
+
+  void swapTheme() {
+    _selectedTheme = _selectedTheme == dark ? light : dark;
+    notifyListeners();
+  }
+}
 
 final lightTheme = ThemeData(
     primaryColor: lmPrimaryColor,
@@ -35,7 +53,11 @@ final lightTheme = ThemeData(
     ),
     bottomAppBarTheme: BottomAppBarTheme(color: lmBottomAppBarColor),
     bottomNavigationBarTheme:
-        BottomNavigationBarThemeData(backgroundColor: lmBottomNavBarColor),
+        BottomNavigationBarThemeData(
+          backgroundColor: lmBottomNavBarColor, 
+          unselectedItemColor: lmSecondaryColor,
+          selectedItemColor: lmSecondaryColor
+        ),
     primaryTextTheme: TextTheme(
         headline1: lmRoboto24W700,
         headline2: lmRoboto18W500,
@@ -45,6 +67,7 @@ final lightTheme = ThemeData(
         subtitle1: lmRoboto14BoldSubtitle1,
         subtitle2: lmRoboto14Subtitle2,
         bodyText1: lmRoboto14BodyText,
+        bodyText2: lmRoboto16W400,
         caption: lmRoboto14W700Caption,
         button: lmRoboto14W700),
     sliderTheme: SliderThemeData(
@@ -68,11 +91,7 @@ final lightTheme = ThemeData(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             )))),
-    textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(
-            textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(
-      color: hexToColor("#3B3E5B"),
-    )))));
+    );
 
 final darkTheme = ThemeData(
     primaryColor: dmPrimaryColor,
@@ -103,7 +122,8 @@ final darkTheme = ThemeData(
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: dmBottomNavBarColor,
-        unselectedItemColor: Colors.white),
+        selectedItemColor: dmWhiteColor,
+        unselectedItemColor: dmWhiteColor),
     primaryTextTheme: TextTheme(
         headline1: dmRoboto24W700,
         headline2: dmRoboto18W500,
@@ -113,6 +133,7 @@ final darkTheme = ThemeData(
         subtitle1: dmRoboto14BoldSubtitle1,
         subtitle2: dmRoboto14Subtitle2,
         bodyText1: dmRoboto14BodyText,
+        bodyText2: dmRoboto16W400,
         caption: dmRoboto14W700Caption,
         button: dmRoboto14W700),
     elevatedButtonTheme: ElevatedButtonThemeData(

@@ -39,7 +39,7 @@ TextStyle lmRoboto14W700Caption = _text.copyWith(
 TextStyle lmRoboto14W700 = _text.copyWith(
     fontSize: 14, fontWeight: FontWeight.w700, color: lmPrimaryColor);
 
-//Light Theme адекват
+TextStyle lmRoboto16W400 = _text.copyWith(fontSize: 16, fontWeight: FontWeight.w400, color: lmMainColor);
 
 
 final lmAppBarTextStyle = TextStyle(
@@ -88,8 +88,7 @@ TextStyle dmRoboto14W700Caption = _text.copyWith(
 TextStyle dmRoboto14W700 = _text.copyWith(
     fontSize: 14, fontWeight: FontWeight.w700, color: dmPrimaryColor);
 
-//DarkTheme адекват
-
+TextStyle dmRoboto16W400 = _text.copyWith(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white);
 final dmAppBarTextStyle = TextStyle(
   fontFamily: 'Roboto',
   fontStyle: FontStyle.normal,
