@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:places/globals.dart';
+import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
+import 'package:places/ui/screen/res/themes.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key key}) : super(key: key);
@@ -12,6 +14,17 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool isDarkMode = false;
+  
+  
+  /* @override
+  void initState() {
+    globals.ChangeThemeNotifier().addListener(() {
+      setState(() {
+        
+      });
+    });
+    super.initState();
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: globals.BottomNavBar(),
       body: Container(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -35,12 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Container(
                     child: Text(
                   "Тёмная тема",
-                  style: TextStyle(
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 16,
-                      color: lmMainColor),
+                  style: Theme.of(context).primaryTextTheme.bodyText2,
                 )),
                 Container(
                     child: FlutterSwitch(
@@ -52,9 +60,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         toggleSize: 28,
                         padding: 2,
                         onToggle: (value) {
+                          ThemeProvider themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+                          themeProvider.swapTheme();
                           setState(() {
-                            isDarkMode = value;
+                            isDarkMode = !isDarkMode;
                           });
+                         // globals.ChangeThemeNotifier().changeTheme();
                         })),
               ],
             ),
@@ -71,19 +82,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Container(
                     child: Text(
                   "Смотреть туториал",
-                  style: TextStyle(
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 16,
-                      color: lmMainColor),
+                  style: Theme.of(context).primaryTextTheme.bodyText2,
                 )),
                 Container(
                   padding: EdgeInsets.only(right: 10),
                   child: InkWell(
                       child: Image.asset(
                         "res/icons/other/Info.png",
-                        color: isDarkMode ? dmGreenColor : lmGreenColor,
+                        color: globals.isDarkMode ? dmGreenColor : lmGreenColor,
                       ),
                       onTap: () {
                         print("info");
