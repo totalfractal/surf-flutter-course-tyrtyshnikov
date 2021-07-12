@@ -6,7 +6,7 @@ import 'package:places/ui/screen/sight_card.dart';
 import '../../globals.dart';
 
 class SightListScreen extends StatefulWidget {
-  SightListScreen({Key key, this.title}) : super(key: key);
+  SightListScreen({Key key, @required this.title}) : super(key: key);
 
   final String title;
 
@@ -22,16 +22,13 @@ class _SightListScreenState extends State<SightListScreen> {
         preferredSize: Size(MediaQuery.of(context).size.width * 0.7, 75),
         child: AppBar(
           title: Container(
-            //width: MediaQuery.of(context).size.width * 0.7,
-            //child: AppBarTitleText(title: widget.title),
             child: AppBarTitleText(
               title: widget.title,
             ),
           ),
-          elevation: 0,
-          toolbarHeight: 75,
         ),
       ),
+      bottomNavigationBar: BottomNavBar(),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -43,29 +40,7 @@ class _SightListScreenState extends State<SightListScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: Image.asset(
-                "res/icons/List.png",
-                color: isDarkMode ? Colors.white : hexToColor("#3B3E5B"),
-              ),
-              label: ""),
-          BottomNavigationBarItem(
-              icon: Image.asset("res/icons/Map.png",
-                  color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),
-              label: ""),
-          BottomNavigationBarItem(
-            icon: Image.asset("res/icons/Heart.png",
-                color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-              icon: Image.asset("res/icons/Settings.png",
-                  color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),
-              label: ""),
-        ],
-      ),
+      
     );
   }
 
@@ -84,6 +59,8 @@ class _SightListScreenState extends State<SightListScreen> {
     return sightCards;
   }
 }
+
+
 
 class AppBarTitleText extends StatelessWidget {
   const AppBarTitleText({

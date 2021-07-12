@@ -7,6 +7,9 @@ import 'colors.dart';
 const TextStyle _text =
     TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.normal);
 
+//TODO: Сделать стили по Figma
+
+//Light Theme
 TextStyle lmRoboto14Bold = _text.copyWith(
     fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white);
 TextStyle lmRoboto24W700 = _text.copyWith(
@@ -35,6 +38,9 @@ TextStyle lmRoboto14W700Caption = _text.copyWith(
 );
 TextStyle lmRoboto14W700 = _text.copyWith(
     fontSize: 14, fontWeight: FontWeight.w700, color: lmPrimaryColor);
+
+//Light Theme адекват
+
 
 final lmAppBarTextStyle = TextStyle(
   fontFamily: 'Roboto',
@@ -82,18 +88,13 @@ TextStyle dmRoboto14W700Caption = _text.copyWith(
 TextStyle dmRoboto14W700 = _text.copyWith(
     fontSize: 14, fontWeight: FontWeight.w700, color: dmPrimaryColor);
 
+//DarkTheme адекват
+
 final dmAppBarTextStyle = TextStyle(
   fontFamily: 'Roboto',
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w500,
   fontSize: 18,
-  color: Colors.green,
+  color: Colors.white,
 );
 
-/* final dmSightListAppBarTextStyle = TextStyle(
-  fontFamily: 'Roboto',
-  fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.bold,
-  fontSize: 32,
-  color: Colors.white,
-); */

@@ -38,6 +38,7 @@ class VisitingScreen extends StatelessWidget {
           ),
           elevation: 0,
         ),
+         bottomNavigationBar: BottomNavBar(),
         body: TabBarView(children: [
           WantToVisitTab(visitList: [
             Sight(
@@ -58,24 +59,7 @@ class VisitingScreen extends StatelessWidget {
                 type: mocks[1][5])
           ])
         ]),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-                icon: Image.asset("res/icons/List.png",),
-                 label: ""),
-            BottomNavigationBarItem(
-                icon: Image.asset("res/icons/Map.png"), 
-                label: ""),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                "res/icons/Heart Full.png",
-              ),
-              label: "",
-            ),
-            BottomNavigationBarItem(
-                icon: Image.asset("res/icons/Settings.png"), label: ""),
-          ],
-        ),
+       
       ),
     );
   }

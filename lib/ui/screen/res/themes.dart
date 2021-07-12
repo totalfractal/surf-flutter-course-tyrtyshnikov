@@ -9,14 +9,16 @@ final lightTheme = ThemeData(
     backgroundColor: lmBackgroundColor,
     scaffoldBackgroundColor: lmScaffoldBackgroundColor,
     appBarTheme: AppBarTheme(
+        backwardsCompatibility: false,
         backgroundColor: lmBackgroundColor,
         titleTextStyle: TextStyle(
           fontFamily: 'Roboto',
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500,
           fontSize: 18,
-          color: Color.fromRGBO(37, 40, 73, 1),
+          color: lmSecondaryColor,
         ),
+        elevation: 0,
         centerTitle: true),
     tabBarTheme: TabBarTheme(
       indicatorSize: TabBarIndicatorSize.tab,
@@ -77,8 +79,10 @@ final darkTheme = ThemeData(
     backgroundColor: dmBackgroundColor,
     scaffoldBackgroundColor: dmScaffoldBackgroundColor,
     appBarTheme: AppBarTheme(
+      backwardsCompatibility: false,
         backgroundColor: dmBackgroundColor,
         titleTextStyle: dmAppBarTextStyle,
+        elevation: 0,
         centerTitle: true),
     tabBarTheme: TabBarTheme(
       indicatorSize: TabBarIndicatorSize.tab,
