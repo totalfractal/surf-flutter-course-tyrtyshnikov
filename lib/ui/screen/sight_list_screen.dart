@@ -44,17 +44,20 @@ class _SightListScreenState extends State<SightListScreen> {
     );
   }
 
-  List<SightCard> getSightCardsList() {
-    List<SightCard> sightCards = [];
+  List<Widget> getSightCardsList() {
+    List<Widget> sightCards = [];
     mocks.forEach((element) {
-      sightCards.add(SightCard(
-          sight: Sight(
-              name: element[0],
-              lat: element[1],
-              lon: element[2],
-              url: element[3],
-              details: element[4],
-              type: element[5])));
+      sightCards.add(Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SightCard(
+            sight: Sight(
+                name: element[0],
+                lat: element[1],
+                lon: element[2],
+                url: element[3],
+                details: element[4],
+                type: element[5])),
+      ));
     });
     return sightCards;
   }

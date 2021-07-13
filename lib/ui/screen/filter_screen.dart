@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/nearbySights.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/globals.dart';
+import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 
 class FilterScreen extends StatefulWidget {
@@ -56,7 +56,7 @@ class _FilterScreenState extends State<FilterScreen> {
     _cafeFilter = CategoryFilter(
       iconKey: _cafeIconKey,
       name: 'Кафе',
-      iconImage: isDarkMode
+      iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Cafe.png"
           : "res/icons/catalog/white/Cafe.png",
       onPressed: (bool value) {
@@ -66,7 +66,7 @@ class _FilterScreenState extends State<FilterScreen> {
     _hotelFilter = CategoryFilter(
       iconKey: _hotelIconKey,
       name: 'Отель',
-      iconImage: isDarkMode
+      iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Hotel.png"
           : "res/icons/catalog/white/Hotel.png",
       onPressed: (bool value) {
@@ -76,7 +76,7 @@ class _FilterScreenState extends State<FilterScreen> {
     _museumFilter = CategoryFilter(
       iconKey: _museumIconKey,
       name: 'Музей',
-      iconImage: isDarkMode
+      iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Museum.png"
           : "res/icons/catalog/white/Museum.png",
       onPressed: (bool value) {
@@ -86,7 +86,7 @@ class _FilterScreenState extends State<FilterScreen> {
     _parkFilter = CategoryFilter(
       iconKey: _parkIconKey,
       name: 'Парк',
-      iconImage: isDarkMode
+      iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Park.png"
           : "res/icons/catalog/white/Park.png",
       onPressed: (bool value) {
@@ -96,7 +96,7 @@ class _FilterScreenState extends State<FilterScreen> {
     _partPlaceFilter = CategoryFilter(
       iconKey: _partPlaceIconKey,
       name: 'Особое место',
-      iconImage: isDarkMode
+      iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Particular place.png"
           : "res/icons/catalog/white/Particular place.png",
       onPressed: (bool value) {
@@ -106,7 +106,7 @@ class _FilterScreenState extends State<FilterScreen> {
     _restourantFilter = CategoryFilter(
       iconKey: _restourantIconKey,
       name: 'Ресторан',
-      iconImage: isDarkMode
+      iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Restourant.png"
           : "res/icons/catalog/white/Restourant.png",
       onPressed: (bool value) {
@@ -127,8 +127,8 @@ class _FilterScreenState extends State<FilterScreen> {
               child: Container(
                   padding: EdgeInsets.only(left: 16.0),
                   child: Image.asset(
-                    "res/icons/Arrow.png",
-                    color: Colors.black,
+                    "res/icons/other/Arrow.png", 
+                    color: globals.isDarkMode ? dmWhiteColor : lmMainColor,
                   )),
             ),
             actions: [
@@ -154,7 +154,7 @@ class _FilterScreenState extends State<FilterScreen> {
                               fontWeight: FontWeight.w500,
                               fontStyle: FontStyle.normal,
                               fontSize: 16,
-                              color: Color.fromRGBO(76, 175, 80, 1)),
+                              color: globals.isDarkMode ? dmGreenColor : lmGreenColor),
                           textAlign: TextAlign.right,
                         ),
                       ))),
@@ -350,8 +350,7 @@ class _CategoryFilterIconState extends State<CategoryFilterIcon> {
       children: [
         IconButton(
           iconSize: 64,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
+          splashRadius: 32,
           icon: Image.asset(
             widget.iconImage,
             height: 64,
@@ -368,7 +367,7 @@ class _CategoryFilterIconState extends State<CategoryFilterIcon> {
         ),
         Opacity(
             opacity: _isSelected ? 1.0 : 0.0,
-            child: Image.asset("res/icons/other/Tick choice.png")),
+            child: Image.asset("res/icons/other/Tick choice.png",)),
       ],
     );
   }
