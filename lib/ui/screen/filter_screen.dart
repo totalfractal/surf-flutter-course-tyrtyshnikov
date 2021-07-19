@@ -126,9 +126,12 @@ class _FilterScreenState extends State<FilterScreen> {
             leading: GestureDetector(
               child: Container(
                   padding: EdgeInsets.only(left: 16.0),
-                  child: Image.asset(
-                    "res/icons/other/Arrow.png", 
-                    color: globals.isDarkMode ? dmWhiteColor : lmMainColor,
+                  child: IconButton(
+                    icon: ImageIcon(
+                      AssetImage("res/icons/other/Arrow.png"), 
+                      color: IconTheme.of(context).color,
+                    ),
+                    onPressed: (){},
                   )),
             ),
             actions: [
@@ -367,7 +370,10 @@ class _CategoryFilterIconState extends State<CategoryFilterIcon> {
         ),
         Opacity(
             opacity: _isSelected ? 1.0 : 0.0,
-            child: Image.asset("res/icons/other/Tick choice.png",)),
+            //TODO: разобраться с BlendMode
+            child: Image.asset("res/icons/other/Tick choice.png", 
+           // color: globals.isDarkMode ? dmWhiteColor : lmMainColor,
+            )),
       ],
     );
   }
