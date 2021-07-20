@@ -110,6 +110,16 @@ final lightTheme = ThemeData(
     cursorColor: lmMainColor,
   ),
   inputDecorationTheme: InputDecorationTheme(
+    hintStyle: lmRoboto16W400.copyWith(color: lmInactiveBlackColor),
+      errorStyle: TextStyle(height: 0),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: lmRedColor.withOpacity(0.4), width: 2),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: lmRedColor.withOpacity(0.4), width: 1),
+      ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: lmGreenColor.withOpacity(0.4), width: 1),
@@ -179,6 +189,7 @@ final darkTheme = ThemeData(
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w700,
                 fontSize: 14)),
+            
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
@@ -206,6 +217,17 @@ final darkTheme = ThemeData(
       cursorColor: dmWhiteColor,
     ),
     inputDecorationTheme: InputDecorationTheme(
+      hintStyle: dmRoboto16W400.copyWith(color: dmInactiveBlackColor),
+      errorStyle: TextStyle(height: 0),
+      focusedErrorBorder: OutlineInputBorder(
+
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: dmRedColor.withOpacity(0.4), width: 2),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: dmRedColor.withOpacity(0.4), width: 1),
+      ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(color: dmGreenColor.withOpacity(0.4), width: 1),
