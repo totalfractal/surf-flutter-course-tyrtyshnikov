@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
+import 'package:places/ui/screen/add_sight_screen_category.dart';
 import 'package:places/ui/screen/filter_screen.dart';
 import 'package:places/ui/screen/res/themes.dart';
 import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_details.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
+import 'package:places/ui/screen/add_sight_screen_category.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +35,8 @@ class _AppState extends State<App> {
       builder: (context, themeProvider, child) {
         return MaterialApp(
         title: 'First App',
+       // home: AddSightScreenCategory(setCategory: (value){}),
+       // home: AddSightScreenCategory(setCategory: (value){} ),
         home: AddSightScreen(),
        // home: SettingsScreen(),
         // home: FilterScreen(),

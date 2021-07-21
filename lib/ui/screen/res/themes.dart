@@ -40,6 +40,7 @@ final lightTheme = ThemeData(
         color: lmSecondaryColor,
       ),
       elevation: 0,
+      
       centerTitle: true),
   tabBarTheme: TabBarTheme(
     indicatorSize: TabBarIndicatorSize.tab,

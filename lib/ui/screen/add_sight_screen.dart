@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
+import 'package:places/ui/screen/add_sight_screen_category.dart';
 
 class AddSightScreen extends StatefulWidget {
   const AddSightScreen({Key key}) : super(key: key);
@@ -12,7 +13,7 @@ class AddSightScreen extends StatefulWidget {
 
 class _AddSightScreenState extends State<AddSightScreen> {
   bool _isFieldsFill = false;
-  ButtonStyle _inactiveCreateButtonStyle;
+  //ButtonStyle _inactiveCreateButtonStyle;
 
   FocusNode _nameFieldFocusNode;
   FocusNode _latFieldFocusNode;
@@ -45,14 +46,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _inactiveCreateButtonStyle = globals.isDarkMode
-        ? Theme.of(context).elevatedButtonTheme.style.copyWith(
-            backgroundColor: MaterialStateProperty.all<Color>(dmMainColor),
-            foregroundColor: MaterialStateProperty.all(dmInactiveBlackColor))
-        : Theme.of(context).elevatedButtonTheme.style.copyWith(
-            backgroundColor: MaterialStateProperty.all<Color>(
-                Color.fromRGBO(245, 245, 245, 1)),
-            foregroundColor: MaterialStateProperty.all(lmInactiveBlackColor));
+    ButtonStyle _inactiveCreateButtonStyle = getInactiveButtonStyle(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
@@ -132,7 +126,14 @@ class _AddSightScreenState extends State<AddSightScreen> {
                                   )),
                                 ],
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(context, 
+                                MaterialPageRoute(builder: (context) => AddSightScreenCategory(setCategory: (category) {
+                                  setState(() {
+                                    _category = category;
+                                  });
+                                })));
+                              },
                             ),
                           )
                         ],
@@ -303,7 +304,21 @@ class _AddSightScreenState extends State<AddSightScreen> {
       ),
     );
   }
+
+  
 }
+
+ButtonStyle getInactiveButtonStyle(BuildContext context) {
+    ButtonStyle _inactiveCreateButtonStyle = globals.isDarkMode
+        ? Theme.of(context).elevatedButtonTheme.style.copyWith(
+            backgroundColor: MaterialStateProperty.all<Color>(dmMainColor),
+            foregroundColor: MaterialStateProperty.all(dmInactiveBlackColor))
+        : Theme.of(context).elevatedButtonTheme.style.copyWith(
+            backgroundColor: MaterialStateProperty.all<Color>(
+                Color.fromRGBO(245, 245, 245, 1)),
+            foregroundColor: MaterialStateProperty.all(lmInactiveBlackColor));
+    return _inactiveCreateButtonStyle;
+  }
 
 class NewPlaceTextFormField extends StatefulWidget {
   const NewPlaceTextFormField({
