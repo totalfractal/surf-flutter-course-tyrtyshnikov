@@ -44,8 +44,8 @@ class VisitingScreen extends StatelessWidget {
           WantToVisitTab(visitList: [
             Sight(
                 name: mocks[0][0],
-                lat: mocks[0][1],
-                lon: mocks[0][2],
+                lat: double.parse(mocks[0][1]),
+                lon: double.parse(mocks[0][2]),
                 url: mocks[0][3],
                 details: mocks[0][4],
                 type: mocks[0][5])
@@ -53,8 +53,8 @@ class VisitingScreen extends StatelessWidget {
           VisitedTab(visitedList: [
             Sight(
                 name: mocks[1][0],
-                lat: mocks[1][1],
-                lon: mocks[1][2],
+                lat: double.parse(mocks[1][1]),
+                lon: double.parse(mocks[1][2]),
                 url: mocks[1][3],
                 details: mocks[1][4],
                 type: mocks[1][5])

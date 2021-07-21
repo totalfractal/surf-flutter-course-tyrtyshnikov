@@ -22,8 +22,8 @@ class NearbySightsFinder {
     mocks.forEach((element) {
       allSights.add(Sight(
           name: element[0],
-          lat: element[1],
-          lon: element[2],
+          lat: double.parse(element[1]),
+          lon: double.parse(element[2]),
           url: element[3],
           details: element[4],
           type: element[5]));

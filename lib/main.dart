@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
-import 'package:places/ui/screen/add_sight_screen_category.dart';
 import 'package:places/ui/screen/filter_screen.dart';
 import 'package:places/ui/screen/res/themes.dart';
 import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_details.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
-import 'package:places/ui/screen/add_sight_screen_category.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +15,7 @@ import 'globals.dart' as globals;
 void main() {
   return runApp(ChangeNotifierProvider(
   child: App(),
-  create: (BuildContext context) => ThemeProvider(isDarkMode: true),));
+  create: (BuildContext context) => ThemeProvider(isDarkMode: false),));
 }
 
 class App extends StatefulWidget {

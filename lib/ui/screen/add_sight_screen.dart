@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/globals.dart' as globals;
+import 'package:places/mocks.dart';
 import 'package:places/ui/screen/res/colors.dart';
-import 'package:places/ui/screen/add_sight_screen_category.dart';
+
+import 'add_sight_screen_category.dart';
 
 class AddSightScreen extends StatefulWidget {
   const AddSightScreen({Key key}) : super(key: key);
@@ -13,18 +15,11 @@ class AddSightScreen extends StatefulWidget {
 
 class _AddSightScreenState extends State<AddSightScreen> {
   bool _isFieldsFill = false;
-  //ButtonStyle _inactiveCreateButtonStyle;
-
-  FocusNode _nameFieldFocusNode;
-  FocusNode _latFieldFocusNode;
-  FocusNode _lonFieldFocusNode;
-  FocusNode _descriptionFieldFocusNode;
 
   TextEditingController _nameFieldTextController;
   TextEditingController _latFieldTextController;
-  TextEditingController _lonFieldTextController; 
+  TextEditingController _lonFieldTextController;
   TextEditingController _descriptionFieldTextController;
-
 
   String _category = "Не выбрано";
 
@@ -33,10 +28,6 @@ class _AddSightScreenState extends State<AddSightScreen> {
   @override
   void initState() {
     super.initState();
-    _nameFieldFocusNode = FocusNode();
-    _latFieldFocusNode = FocusNode();
-    _lonFieldFocusNode = FocusNode();
-    _descriptionFieldFocusNode = FocusNode();
 
     _nameFieldTextController = TextEditingController();
     _latFieldTextController = TextEditingController();
@@ -79,14 +70,21 @@ class _AddSightScreenState extends State<AddSightScreen> {
             child: SingleChildScrollView(
               child: Form(
                 key: _formKey,
-                /* onChanged: () {
-                  if (_formKey.currentState.validate() &&
+                onChanged: () {
+                  if (_nameFieldTextController.text.isNotEmpty &&
+                      _latFieldTextController.text.isNotEmpty &&
+                      _lonFieldTextController.text.isNotEmpty &&
+                      _descriptionFieldTextController.text.isNotEmpty &&
                       _category != "Не выбрано") {
                     setState(() {
                       _isFieldsFill = true;
                     });
+                  } else {
+                    setState(() {
+                      _isFieldsFill = false;
+                    });
                   }
-                }, */
+                },
                 child: Column(
                   children: [
                     Container(
@@ -104,6 +102,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0),
                             child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -127,12 +126,16 @@ class _AddSightScreenState extends State<AddSightScreen> {
                                 ],
                               ),
                               onTap: () {
-                                Navigator.push(context, 
-                                MaterialPageRoute(builder: (context) => AddSightScreenCategory(setCategory: (category) {
-                                  setState(() {
-                                    _category = category;
-                                  });
-                                })));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddSightScreenCategory(
+                                                setCategory: (category) {
+                                              setState(() {
+                                                _category = category;
+                                              });
+                                            })));
                               },
                             ),
                           )
@@ -162,7 +165,6 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           SizedBox(
                             height: 40,
                             child: NewPlaceTextFormField(
-                             // focusNode: _nameFieldFocusNode,
                               textController: _nameFieldTextController,
                               inputType: TextInputType.text,
                               maxLength: 100,
@@ -194,7 +196,6 @@ class _AddSightScreenState extends State<AddSightScreen> {
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 25,
                                 child: NewPlaceTextFormField(
-                                 // focusNode: _latFieldFocusNode,
                                   textController: _latFieldTextController,
                                   inputType: TextInputType.number,
                                   maxLength: 10,
@@ -223,7 +224,6 @@ class _AddSightScreenState extends State<AddSightScreen> {
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 25,
                                 child: NewPlaceTextFormField(
-                                 // focusNode: _lonFieldFocusNode,
                                   textController: _lonFieldTextController,
                                   inputType: TextInputType.number,
                                   maxLength: 10,
@@ -262,7 +262,6 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           SizedBox(
                             height: 80,
                             child: NewPlaceTextFormField(
-                             // focusNode: _descriptionFieldFocusNode,
                               textController: _descriptionFieldTextController,
                               inputType: TextInputType.text,
                               maxLength: 1000,
@@ -285,13 +284,27 @@ class _AddSightScreenState extends State<AddSightScreen> {
               width: double.infinity,
               height: 48,
               child: AbsorbPointer(
-                absorbing: true,
+                absorbing: !_isFieldsFill,
                 child: ElevatedButton(
                   style: _isFieldsFill
-                      ? Theme.of(context).elevatedButtonTheme
+                      ? Theme.of(context).elevatedButtonTheme.style
                       : _inactiveCreateButtonStyle,
                   onPressed: () {
-                    print("click");
+                    mocks.add([
+                      _nameFieldTextController.text,
+                      _latFieldTextController.text,
+                      _lonFieldTextController.text,
+                      "",
+                      _descriptionFieldTextController.text,
+                      _category
+                    ]);
+                    setState(() {
+                      _nameFieldTextController.clear();
+                      _latFieldTextController.clear();
+                      _lonFieldTextController.clear();
+                      _descriptionFieldTextController.clear();
+                      _category = "Не выбрано";
+                    });
                   },
                   child: Text(
                     'СОЗДАТЬ',
@@ -304,26 +317,24 @@ class _AddSightScreenState extends State<AddSightScreen> {
       ),
     );
   }
-
-  
 }
 
 ButtonStyle getInactiveButtonStyle(BuildContext context) {
-    ButtonStyle _inactiveCreateButtonStyle = globals.isDarkMode
-        ? Theme.of(context).elevatedButtonTheme.style.copyWith(
-            backgroundColor: MaterialStateProperty.all<Color>(dmMainColor),
-            foregroundColor: MaterialStateProperty.all(dmInactiveBlackColor))
-        : Theme.of(context).elevatedButtonTheme.style.copyWith(
-            backgroundColor: MaterialStateProperty.all<Color>(
-                Color.fromRGBO(245, 245, 245, 1)),
-            foregroundColor: MaterialStateProperty.all(lmInactiveBlackColor));
-    return _inactiveCreateButtonStyle;
-  }
+  ButtonStyle _inactiveCreateButtonStyle = globals.isDarkMode
+      ? Theme.of(context).elevatedButtonTheme.style.copyWith(
+          backgroundColor: MaterialStateProperty.all<Color>(dmMainColor),
+          foregroundColor: MaterialStateProperty.all(dmInactiveBlackColor))
+      : Theme.of(context).elevatedButtonTheme.style.copyWith(
+          backgroundColor: MaterialStateProperty.all<Color>(
+              Color.fromRGBO(245, 245, 245, 1)),
+          foregroundColor: MaterialStateProperty.all(lmInactiveBlackColor));
+  return _inactiveCreateButtonStyle;
+}
 
 class NewPlaceTextFormField extends StatefulWidget {
   const NewPlaceTextFormField({
     Key key,
-   // @required this.focusNode,
+    // @required this.focusNode,
     @required this.textController,
     @required this.inputType,
     this.maxLength = 60,
@@ -331,9 +342,9 @@ class NewPlaceTextFormField extends StatefulWidget {
     this.isLastNode = false,
   }) : super(key: key);
 
-  //final FocusNode focusNode;
   final TextEditingController textController;
   final TextInputType inputType;
+
   final int maxLength;
   final String hintText;
   final bool isLastNode;
@@ -343,52 +354,60 @@ class NewPlaceTextFormField extends StatefulWidget {
 }
 
 class _NewPlaceTextFormFieldState extends State<NewPlaceTextFormField> {
+  bool _hasFocus = false;
+
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (String value) {
-        if (value == null || value.isEmpty) return "";
-        return null;
+    return Focus(
+      onFocusChange: (hasFocus) {
+        setState(() {
+          _hasFocus = hasFocus;
+        });
       },
-      maxLength: widget.maxLength,
-      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-      keyboardType: widget.inputType,
-      cursorWidth: 1,
-      maxLines: null,
-      minLines: 5,
-      style: Theme.of(context).primaryTextTheme.bodyText2,
-     // focusNode: widget.focusNode,
-      controller: widget.textController,
-      
-      //cursorColor: dmWhiteColor,
-      decoration: InputDecoration(
-        
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          counterText: "",
-          hintText: widget.hintText,
-          suffixIcon: Visibility(
-            visible: widget.textController.text.isNotEmpty,
-            child: IconButton(
-              alignment: Alignment.center,
-              icon: ImageIcon(
-                AssetImage("res/icons/other/Clear.png"),
-                color: IconTheme.of(context).color,
+      child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: (String value) {
+          if (value == null || value.isEmpty) return "";
+          return null;
+        },
+        maxLength: widget.maxLength,
+        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+        keyboardType: widget.inputType,
+        cursorWidth: 1,
+        maxLines: null,
+        minLines: 5,
+
+        style: Theme.of(context).primaryTextTheme.bodyText2,
+        // focusNode: widget.focusNode,
+        controller: widget.textController,
+        onTap: () {},
+
+        //cursorColor: dmWhiteColor,
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            counterText: "",
+            hintText: widget.hintText,
+            suffixIcon: Visibility(
+              visible: _hasFocus && widget.textController.text.isNotEmpty,
+              child: IconButton(
+                alignment: Alignment.center,
+                icon: ImageIcon(
+                  AssetImage("res/icons/other/Clear.png"),
+                  color: IconTheme.of(context).color,
+                ),
+                onPressed: () {
+                  setState(() {
+                    widget.textController.clear();
+                  });
+                },
               ),
-              onPressed: () {
-                setState(() {
-                  widget.textController.clear();
-                });
-              },
-            ),
-          )),
-      onChanged: (value) {
-        setState(() {});
-      },
-      textInputAction: widget.isLastNode ? TextInputAction.done : TextInputAction.next,
-      onEditingComplete: widget.isLastNode 
-      ? () => FocusScope.of(context).unfocus()
-       : () => context.nextEditableTextFocus(),
+            )),
+        textInputAction:
+            widget.isLastNode ? TextInputAction.done : TextInputAction.next,
+        onEditingComplete: widget.isLastNode
+            ? () => FocusScope.of(context).unfocus()
+            : () => context.nextEditableTextFocus(),
+      ),
     );
   }
 }
@@ -400,5 +419,3 @@ extension Utility on BuildContext {
     } while (FocusScope.of(this).focusedChild.context.widget is! EditableText);
   }
 }
-
-

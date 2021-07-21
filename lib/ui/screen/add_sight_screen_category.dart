@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 
@@ -9,7 +8,7 @@ class AddSightScreenCategory extends StatefulWidget {
   const AddSightScreenCategory({Key key, @required this.setCategory})
       : super(key: key);
 
-      final ValueSetter<String> setCategory;
+  final ValueSetter<String> setCategory;
 
   final List<String> categories = const [
     "Кинотеатр",
@@ -22,10 +21,7 @@ class AddSightScreenCategory extends StatefulWidget {
 
   @override
   _AddSightScreenCategoryState createState() => _AddSightScreenCategoryState();
-  }
-
-  
-
+}
 
 class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
   List<CategoryModel> sampleData = [];
@@ -46,7 +42,11 @@ class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: ImageIcon(
+            AssetImage("res/icons/other/Arrow.png"),
+            color: Theme.of(context).iconTheme.color,
+            
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text("Категория"),
@@ -62,9 +62,11 @@ class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
               itemCount: sampleData.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
+                  borderRadius: BorderRadius.circular(12),
                   onTap: () {
                     setState(() {
-                      sampleData.forEach((element) => element.isSelected = false);
+                      sampleData
+                          .forEach((element) => element.isSelected = false);
                       sampleData[index].isSelected = true;
                       _selectedCategory = sampleData[index].text;
                       _isCategorySelected = true;
@@ -77,7 +79,6 @@ class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                margin: EdgeInsets.all(16),
                 width: double.infinity,
                 height: 48,
                 child: AbsorbPointer(
