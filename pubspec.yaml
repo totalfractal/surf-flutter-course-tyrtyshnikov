@@ -13,6 +13,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  geolocator: ^7.2.0+1
+  flutter_switch: ^0.3.2
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -25,5 +28,10 @@ flutter:
   assets:
     - res/
     - res/icons/
+    - res/icons/menu/
+    - res/icons/catalog/
+    - res/icons/catalog/black/
+    - res/icons/catalog/white/
+    - res/icons/other/
 
 

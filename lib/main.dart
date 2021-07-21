@@ -1,30 +1,46 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/screen/filter_screen.dart';
 import 'package:places/ui/screen/res/themes.dart';
+import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_details.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
+import 'package:provider/provider.dart';
 
+import 'globals.dart' as globals;
 
 void main() {
-  runApp(App());
+  return runApp(ChangeNotifierProvider(
+  child: App(),
+  create: (BuildContext context) => ThemeProvider(isDarkMode: true),));
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   // This widget is the root of your application.
+
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'First App',
-      
-     // home: VisitingScreen(),
-     // home: SightListScreen(title: "Список интересных мест",),
-      home: SightDetails(sight: Sight(name: mocks[0][0], lat: mocks[0][1], lon: mocks[0][2], url: mocks[0][3], details: mocks[0][4], type: mocks[0][5]),),
-      theme: darkTheme
-      
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+        title: 'First App',
+       // home: SettingsScreen(),
+        // home: FilterScreen(),
+         home: VisitingScreen(),
+        // home: SightListScreen(title: "Список интересных мест",),
+        // home: SightDetails(sight: Sight(name: mocks[0][0], lat: mocks[0][1], lon: mocks[0][2], url: mocks[0][3], details: mocks[0][4], type: mocks[0][5]),),
+        //theme: globals.isDarkMode ? darkTheme : lightTheme,
+        theme: themeProvider.getTheme,
+      );
+      },
     );
   }
 }
@@ -44,38 +60,28 @@ class MyApp extends StatelessWidget {
 }
 
 class MyFirstStatelessWidget extends StatelessWidget {
-
   int buildCount = 0;
 
   @override
   Widget build(BuildContext context) {
     print('Количество вызовов метода build(): ${++buildCount}');
     return Container(
-
       child: Center(
-
         child: Text('Hello!'),
-
       ),
-
     );
   }
-
-
 }
 
 class MyFirstStatefulWidget extends StatefulWidget {
   @override
   _MyFirstStatefulWidgetState createState() => _MyFirstStatefulWidgetState();
-
-
 }
 
 class _MyFirstStatefulWidgetState extends State<MyFirstStatefulWidget> {
-
   int buildCount = 0;
 
-  void getRuntimeType(){
+  void getRuntimeType() {
     print(context.runtimeType);
   }
 
@@ -84,13 +90,9 @@ class _MyFirstStatefulWidgetState extends State<MyFirstStatefulWidget> {
     print('Количество вызовов метода build(): ${++buildCount}');
     getRuntimeType();
     return Container(
-
       child: Center(
-
         child: Text('Hello!'),
-
       ),
-
     );
   }
 }

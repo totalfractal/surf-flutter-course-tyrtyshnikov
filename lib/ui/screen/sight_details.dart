@@ -1,7 +1,8 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/ui/screen/res/styles.dart';
-import 'package:places/ui/screen/sight_list_screen.dart';
+import '../../globals.dart';
+
 
 class SightDetails extends StatelessWidget {
   const SightDetails({
@@ -12,9 +13,9 @@ class SightDetails extends StatelessWidget {
   final Sight sight;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(children: [
+    return Scaffold(
+      //color: Colors.white,
+      body: Column(children: [
         Container(
           height: MediaQuery.of(context).size.width,
           width: MediaQuery.of(context).size.width,
@@ -92,14 +93,18 @@ class SightDetails extends StatelessWidget {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  /* style: ElevatedButton.styleFrom(
-                      primary: hexToColor("#4CAF50"),
-                      shadowColor: Colors.transparent, // background
-                      textStyle: Theme.of(context).primaryTextTheme.button), */
                   onPressed: () {},
-                  child: Text('Построить маршрут'.toUpperCase()),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset("res/icons/GO.png"),
+                      SizedBox(width: 8),
+                      Text('Построить маршрут'.toUpperCase(), ),
+                    ],
+                  ),
                 ),
               ),
+              
               Container(
                 margin: EdgeInsets.symmetric(vertical: 24),
                 child: Theme(
@@ -118,12 +123,30 @@ class SightDetails extends StatelessWidget {
                     alignment: MainAxisAlignment.spaceAround,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Запланировать'),
+                        onPressed: () {
+                          print("Запланировано");
+                        },
+                        
+                        child: Row(
+                          children: [
+                            Image.asset("res/icons/Calendar.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),
+                            SizedBox(width: 9,),
+                            Text('Запланировать', style: TextStyle(color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),)
+                          ],
+                        ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
-                        child: Text('В избранное'),
+                        onPressed: () {
+                          print("Добавлено в избранное");
+                        },
+                        style: ButtonStyle(),
+                        child: Row(
+                          children: [
+                            Image.asset("res/icons/Heart.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),
+                            SizedBox(width: 9,),
+                            Text('В избранное', style: TextStyle(color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),),
+                          ],
+                        ),
                       ),
                     ],
                   ),

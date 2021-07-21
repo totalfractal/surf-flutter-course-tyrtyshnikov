@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/ui/screen/sight_list_screen.dart';
-
+import 'package:places/ui/screen/res/colors.dart';
+import '../../globals.dart';
 import '../../mocks.dart';
+
+//TODO: Сделать наследование для карточек
 
 class VisitingScreen extends StatelessWidget {
   @override
@@ -37,6 +39,7 @@ class VisitingScreen extends StatelessWidget {
           ),
           elevation: 0,
         ),
+        bottomNavigationBar: BottomNavBar(),
         body: TabBarView(children: [
           WantToVisitTab(visitList: [
             Sight(
@@ -57,23 +60,6 @@ class VisitingScreen extends StatelessWidget {
                 type: mocks[1][5])
           ])
         ]),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-                icon: Image.asset("res/icons/List.png"), label: ""),
-            BottomNavigationBarItem(
-                icon: Image.asset("res/icons/Map.png"), label: ""),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                "res/icons/Heart Full.png",
-                color: hexToColor("#252849"),
-              ),
-              label: "",
-            ),
-            BottomNavigationBarItem(
-                icon: Image.asset("res/icons/Settings.png"), label: ""),
-          ],
-        ),
       ),
     );
   }
@@ -96,7 +82,7 @@ class WantToVisitTab extends StatelessWidget {
               children: [
                 Container(
                   child: Image.asset(
-                    "res/icons/Card.png",
+                    "res/icons/other/Card.png",
                     height: 64,
                     width: 64,
                     fit: BoxFit.fill,
@@ -135,11 +121,14 @@ class WantToVisitTab extends StatelessWidget {
           );
   }
 
-  List<WantToVisitSightCard> _getWantToVisitListWidgets() {
-    List<WantToVisitSightCard> list = [];
+  List<Widget> _getWantToVisitListWidgets() {
+    List<Widget> list = [];
     visitList.forEach((element) {
-      list.add(WantToVisitSightCard(
-        sight: element,
+      list.add(Padding(
+        padding: const EdgeInsets.all(16),
+        child: WantToVisitSightCard(
+          sight: element,
+        ),
       ));
     });
     return list;
@@ -163,7 +152,7 @@ class VisitedTab extends StatelessWidget {
               children: [
                 Container(
                   child: Image.asset(
-                    "res/icons/GO.png",
+                    "res/icons/other/GO.png",
                     height: 64,
                     width: 64,
                     fit: BoxFit.fill,
@@ -202,11 +191,14 @@ class VisitedTab extends StatelessWidget {
           );
   }
 
-  List<VisitedSightCard> _getVisitedListWidgets() {
-    List<VisitedSightCard> list = [];
+  List<Widget> _getVisitedListWidgets() {
+    List<Widget> list = [];
     visitedList.forEach((element) {
-      list.add(VisitedSightCard(
-        sight: element,
+      list.add(Padding(
+        padding: const EdgeInsets.all(16),
+        child: VisitedSightCard(
+          sight: element,
+        ),
       ));
     });
     return list;
@@ -223,135 +215,159 @@ class WantToVisitSightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Container(
-        child: Column(
-          children: [
-            Container(
-              height: 96,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16)),
-                gradient: new LinearGradient(
-                    colors: [
-                      Colors.black38,
-                      Colors.black12,
-                    ],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp),
-              ),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16)),
-                    child: Image.network(
-                      sight.url,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
-                      },
-                      fit: BoxFit.fitWidth,
+    return Stack(
+      children: [
+        Container(
+          child: Column(
+            children: [
+              Container(
+                height: 96,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12)),
+                  gradient: new LinearGradient(
+                      colors: [
+                        Colors.black38,
+                        Colors.black12,
+                      ],
+                      begin: const FractionalOffset(0.0, 0.0),
+                      end: const FractionalOffset(1.0, 0.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp),
+                ),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12)),
+                      child: Image.network(
+                        sight.url,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        },
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(16.0),
-                    alignment: Alignment.topCenter,
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topLeft,
-                            child: Text(
+                    Container(
+                      padding: EdgeInsets.only(top: 16, left: 16),
+                      alignment: Alignment.topCenter,
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topLeft,
+                              child: Text(
                                 sight.type.isEmpty
                                     ? "категория"
                                     : sight.type.toLowerCase(),
-                                style: Theme.of(context).primaryTextTheme.caption,),
+                                style:
+                                    Theme.of(context).primaryTextTheme.caption,
+                              ),
+                            ),
                           ),
-                        ),
-                        ButtonBar(buttonPadding: EdgeInsets.zero, children: [
-                          Container(
-                              alignment: Alignment.topCenter,
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
+                          ButtonBar(buttonPadding: EdgeInsets.zero, children: [
+                            Container(
                                 alignment: Alignment.topCenter,
-                                icon: Image.asset(
-                                  "res/icons/Calendar.png",
-                                  height: 24,
-                                  width: 24,
-                                ),
-                                onPressed: () {},
-                              )),
-                          Container(
-                              alignment: Alignment.topCenter,
-                              child: IconButton(
+                                child: IconButton(
                                   padding: EdgeInsets.zero,
                                   alignment: Alignment.topCenter,
                                   icon: Image.asset(
-                                    "res/icons/Delete.png",
-                                    height: 24,
-                                    width: 24,
+                                    "res/icons/other/Calendar.png",
                                   ),
-                                  onPressed: () {}))
-                        ]),
-                      ],
+                                  onPressed: () {
+                                    print("Добавить в календарь");
+                                  },
+                                )),
+                            Container(
+                                alignment: Alignment.topCenter,
+                                child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    alignment: Alignment.topCenter,
+                                    icon: Image.asset(
+                                      "res/icons/other/Delete.png",
+                                    ),
+                                    onPressed: () {
+                                      print("Удалить");
+                                    }))
+                          ]),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.all(16.0),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child:
-                            Text(sight.name.isEmpty ? "Название" : sight.name,
-                                style: Theme.of(context).primaryTextTheme.headline4),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 2),
-                        child: Text("Запланировано на 12 окт. 2020",
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context).primaryTextTheme.subtitle2.copyWith(color: hexToColor("#4CAF50"))),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text("закрыто до 9:00",
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context).primaryTextTheme.subtitle2),
-                      ),
-                    ]),
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadiusDirectional.only(
+                      bottomEnd: Radius.circular(12),
+                      bottomStart: Radius.circular(12),
+                    ),
+                    color: isDarkMode
+                        ? dmSightCardContainerColor
+                        : lmSightCardContainerColor),
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.all(16.0),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 2),
+                          child: Text(
+                              sight.name.isEmpty ? "Название" : sight.name,
+                              style:
+                                  Theme.of(context).primaryTextTheme.headline4),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 2),
+                          child: Text("Запланировано на 12 окт. 2020",
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context)
+                                  .primaryTextTheme
+                                  .subtitle2
+                                  .copyWith(color: hexToColor("#4CAF50"))),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text("закрыто до 9:00",
+                              textAlign: TextAlign.start,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle2),
+                        ),
+                      ]),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        new Positioned.fill(
+            child: new Material(
+                color: Colors.transparent,
+                child: new InkWell(
+                  onTap: () {
+                    print("InkWell");
+                  },
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                )))
+      ],
     );
   }
 }
@@ -366,142 +382,164 @@ class VisitedSightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Container(
-        child: Column(
-          children: [
-            Container(
-              height: 96,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16)),
-                gradient: new LinearGradient(
-                    colors: [
-                      Colors.black38,
-                      Colors.black12,
-                    ],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp),
-              ),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16)),
-                    child: Image.network(
-                      sight.url,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
-                      },
-                      fit: BoxFit.fitWidth,
+    return Stack(
+      children: [
+        Container(
+          child: Column(
+            children: [
+              Container(
+                height: 96,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12)),
+                  gradient: new LinearGradient(
+                      colors: [
+                        Colors.black38,
+                        Colors.black12,
+                      ],
+                      begin: const FractionalOffset(0.0, 0.0),
+                      end: const FractionalOffset(1.0, 0.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp),
+                ),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12)),
+                      child: Image.network(
+                        sight.url,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        },
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(16.0),
-                    alignment: Alignment.topCenter,
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                                sight.type.isEmpty
-                                    ? "категория"
-                                    : sight.type.toLowerCase(),
-                                style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                )),
+                    Container(
+                      padding: EdgeInsets.only(
+                        top: 16,
+                        left: 16,
+                      ),
+                      alignment: Alignment.topCenter,
+                      child: Row(
+                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                  sight.type.isEmpty
+                                      ? "категория"
+                                      : sight.type.toLowerCase(),
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  )),
+                            ),
                           ),
-                        ),
-                        ButtonBar(buttonPadding: EdgeInsets.zero, children: [
-                          Container(
-                              alignment: Alignment.topCenter,
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
+                          ButtonBar(buttonPadding: EdgeInsets.zero, children: [
+                            Container(
                                 alignment: Alignment.topCenter,
-                                icon: Image.asset(
-                                  "res/icons/Share.png",
-                                  height: 24,
-                                  width: 24,
-                                ),
-                                onPressed: () {},
-                              )),
-                          Container(
-                              alignment: Alignment.topCenter,
-                              child: IconButton(
+                                child: IconButton(
                                   padding: EdgeInsets.zero,
                                   alignment: Alignment.topCenter,
                                   icon: Image.asset(
-                                    "res/icons/Delete.png",
-                                    height: 24,
-                                    width: 24,
+                                    "res/icons/other/Share.png",
                                   ),
-                                  onPressed: () {}))
-                        ]),
-                      ],
+                                  onPressed: () {
+                                    print("Поделиться");
+                                  },
+                                )),
+                            Container(
+                                alignment: Alignment.topCenter,
+                                child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    alignment: Alignment.topCenter,
+                                    icon: Image.asset(
+                                      "res/icons/other/Delete.png",
+                                    ),
+                                    onPressed: () {
+                                      print("Удалить");
+                                    }))
+                          ]),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.all(16.0),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child:
-                            Text(sight.name.isEmpty ? "Название" : sight.name,
-                                style: Theme.of(context).primaryTextTheme.headline4,
-                                ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 2),
-                        child: Text("Цель достигнута 12 окт. 2020",
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context).primaryTextTheme.subtitle2),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text("закрыто до 9:00",
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context).primaryTextTheme.subtitle2),
-                      ),
-                    ]),
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadiusDirectional.only(
+                      bottomEnd: Radius.circular(12),
+                      bottomStart: Radius.circular(12),
+                    ),
+                    color: isDarkMode
+                        ? dmSightCardContainerColor
+                        : lmSightCardContainerColor),
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.all(16.0),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 2),
+                          child: Text(
+                            sight.name.isEmpty ? "Название" : sight.name,
+                            style: Theme.of(context).primaryTextTheme.headline4,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 2),
+                          child: Text("Цель достигнута 12 окт. 2020",
+                              textAlign: TextAlign.start,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle2),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text("закрыто до 9:00",
+                              textAlign: TextAlign.start,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle2),
+                        ),
+                      ]),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        new Positioned.fill(
+            child: new Material(
+                color: Colors.transparent,
+                child: new InkWell(
+                  onTap: () {
+                    print("InkWell");
+                  },
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                )))
+      ],
     );
   }
 }

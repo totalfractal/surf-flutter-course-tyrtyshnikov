@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/ui/screen/sight_list_screen.dart';
+import 'package:places/ui/screen/res/colors.dart';
+
+import '../../globals.dart';
 
 class SightCard extends StatelessWidget {
   const SightCard({
@@ -12,108 +14,128 @@ class SightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      //height: MediaQuery.of(context).size.width * 0.5,
-
-      child: Container(
-        child: Column(
-          children: [
-            Container(
-              height: 96,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16)),
-                gradient: new LinearGradient(
-                    colors: [
-                      Colors.black38,
-                      Colors.black12,
-                    ],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp),
-              ),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16)),
-                    child: Image.network(
-                      sight.url,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
-                      },
-                      fit: BoxFit.fitWidth,
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+          child: Column(
+            children: [
+              Container(
+                height: 96,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12)),
+                  gradient: new LinearGradient(
+                      colors: [
+                        Colors.black38,
+                        Colors.black12,
+                      ],
+                      begin: const FractionalOffset(0.0, 0.0),
+                      end: const FractionalOffset(1.0, 0.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp),
+                ),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12)),
+                      child: Image.network(
+                        sight.url,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        },
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(16.0),
-                    alignment: Alignment.topCenter,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Container(
+                      padding: EdgeInsets.only(left: 16),
+                      alignment: Alignment.topCenter,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: Text(
+                                sight.type.isEmpty
+                                    ? "категория"
+                                    : sight.type.toLowerCase(),
+                                style:
+                                    Theme.of(context).primaryTextTheme.caption),
+                          ),
+                          IconButton(
+                            icon: Image.asset("res/icons/menu/Heart.png",
+                                fit: BoxFit.fill),
+                            onPressed: () => {
+                              print("you like this!"),
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadiusDirectional.only(
+                      bottomEnd: Radius.circular(12),
+                      bottomStart: Radius.circular(12),
+                    ),
+                    color: isDarkMode
+                        ? dmSightCardContainerColor
+                        : lmSightCardContainerColor),
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.all(16.0),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          child: Text(
-                              sight.type.isEmpty
-                                  ? "категория"
-                                  : sight.type.toLowerCase(),
-                              style: Theme.of(context).primaryTextTheme.caption),
-                        ),
+                            padding: EdgeInsets.symmetric(vertical: 2),
+                            child: Text(
+                              sight.name.isEmpty ? "Название" : sight.name,
+                              style:
+                                  Theme.of(context).primaryTextTheme.headline5,
+                            )),
                         Container(
-                          color: Colors.green,
-                          width: 20,
-                          height: 20,
+                          child: Text("закрыто до 9:00",
+                              textAlign: TextAlign.start,
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle2),
                         ),
-                      ],
-                    ),
-                  ),
-                ],
+                      ]),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.all(16.0),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Text(
-                            sight.name.isEmpty ? "Название" : sight.name,
-                            style: Theme.of(context).primaryTextTheme.subtitle1,
-                          )),
-                      Container(
-                        child: Text("закрыто до 9:00",
-                            textAlign: TextAlign.start,
-                            style:
-                                Theme.of(context).primaryTextTheme.subtitle2),
-                      ),
-                    ]),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        new Positioned.fill(
+            child: new Material(
+                color: Colors.transparent,
+                child: new InkWell(
+                  onTap: () {print("InkWell");},
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                )))
+      ],
     );
   }
 }
