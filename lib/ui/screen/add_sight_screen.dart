@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:places/globals.dart' as globals;
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/res/colors.dart';
+import 'package:provider/provider.dart';
 
 import 'add_sight_screen_category.dart';
 
 class AddSightScreen extends StatefulWidget {
-  const AddSightScreen({Key key}) : super(key: key);
+  const AddSightScreen({Key? key}) : super(key: key);
 
   @override
   _AddSightScreenState createState() => _AddSightScreenState();
@@ -15,24 +16,20 @@ class AddSightScreen extends StatefulWidget {
 
 class _AddSightScreenState extends State<AddSightScreen> {
   bool _isFieldsFill = false;
-
-  TextEditingController _nameFieldTextController;
-  TextEditingController _latFieldTextController;
-  TextEditingController _lonFieldTextController;
-  TextEditingController _descriptionFieldTextController;
-
+  TextEditingController _nameFieldTextController  = TextEditingController();
+  TextEditingController _latFieldTextController  = TextEditingController();
+  TextEditingController _lonFieldTextController  = TextEditingController();
+  TextEditingController _descriptionFieldTextController  = TextEditingController();
   String _category = "Не выбрано";
-
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-
-    _nameFieldTextController = TextEditingController();
-    _latFieldTextController = TextEditingController();
-    _lonFieldTextController = TextEditingController();
-    _descriptionFieldTextController = TextEditingController();
+  void dispose(){
+    _nameFieldTextController.dispose();
+_latFieldTextController.dispose();
+_lonFieldTextController.dispose();
+_descriptionFieldTextController.dispose();
+    super.dispose();
   }
 
   @override
@@ -49,7 +46,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               child: TextButton(
                 child: Text(
                   "Отмена",
-                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       color: globals.isDarkMode
                           ? dmSecondary2Color
                           : lmSecondary2Color),
@@ -112,7 +109,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                                       _category,
                                       style: Theme.of(context)
                                           .primaryTextTheme
-                                          .bodyText2
+                                          .bodyText2!
                                           .copyWith(
                                               color: globals.isDarkMode
                                                   ? dmSecondary2Color
@@ -321,10 +318,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
 ButtonStyle getInactiveButtonStyle(BuildContext context) {
   ButtonStyle _inactiveCreateButtonStyle = globals.isDarkMode
-      ? Theme.of(context).elevatedButtonTheme.style.copyWith(
+      ? Theme.of(context).elevatedButtonTheme.style!.copyWith(
           backgroundColor: MaterialStateProperty.all<Color>(dmMainColor),
           foregroundColor: MaterialStateProperty.all(dmInactiveBlackColor))
-      : Theme.of(context).elevatedButtonTheme.style.copyWith(
+      : Theme.of(context).elevatedButtonTheme.style!.copyWith(
           backgroundColor: MaterialStateProperty.all<Color>(
               Color.fromRGBO(245, 245, 245, 1)),
           foregroundColor: MaterialStateProperty.all(lmInactiveBlackColor));
@@ -333,10 +330,10 @@ ButtonStyle getInactiveButtonStyle(BuildContext context) {
 
 class NewPlaceTextFormField extends StatefulWidget {
   const NewPlaceTextFormField({
-    Key key,
+    Key? key,
     // @required this.focusNode,
-    @required this.textController,
-    @required this.inputType,
+    required this.textController,
+    required this.inputType,
     this.maxLength = 60,
     this.hintText = "",
     this.isLastNode = false,
@@ -366,7 +363,7 @@ class _NewPlaceTextFormFieldState extends State<NewPlaceTextFormField> {
       },
       child: TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: (String value) {
+        validator: (String? value) {
           if (value == null || value.isEmpty) return "";
           return null;
         },
@@ -384,7 +381,6 @@ class _NewPlaceTextFormFieldState extends State<NewPlaceTextFormField> {
 
         //cursorColor: dmWhiteColor,
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             counterText: "",
             hintText: widget.hintText,
             suffixIcon: Visibility(
@@ -416,6 +412,6 @@ extension Utility on BuildContext {
   void nextEditableTextFocus() {
     do {
       FocusScope.of(this).nextFocus();
-    } while (FocusScope.of(this).focusedChild.context.widget is! EditableText);
+    } while (FocusScope.of(this).focusedChild!.context!.widget is! EditableText);
   }
 }

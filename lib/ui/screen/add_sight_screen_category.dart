@@ -5,7 +5,7 @@ import 'package:places/ui/screen/res/colors.dart';
 import 'add_sight_screen.dart';
 
 class AddSightScreenCategory extends StatefulWidget {
-  const AddSightScreenCategory({Key key, @required this.setCategory})
+  const AddSightScreenCategory({Key? key, required this.setCategory})
       : super(key: key);
 
   final ValueSetter<String> setCategory;
@@ -24,16 +24,15 @@ class AddSightScreenCategory extends StatefulWidget {
 }
 
 class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
-  List<CategoryModel> sampleData = [];
+  List<CategoryModel> _categories = [];
   String _selectedCategory = "";
   bool _isCategorySelected = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     widget.categories.forEach((element) {
-      sampleData.add(CategoryModel(false, element));
+      _categories.add(CategoryModel(false, element));
     });
   }
 
@@ -59,20 +58,20 @@ class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
         child: Stack(
           children: [
             ListView.builder(
-              itemCount: sampleData.length,
+              itemCount: _categories.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   borderRadius: BorderRadius.circular(12),
                   onTap: () {
                     setState(() {
-                      sampleData
+                      _categories
                           .forEach((element) => element.isSelected = false);
-                      sampleData[index].isSelected = true;
-                      _selectedCategory = sampleData[index].text;
+                      _categories[index].isSelected = true;
+                      _selectedCategory = _categories[index].text;
                       _isCategorySelected = true;
                     });
                   },
-                  child: CategoryItem(sampleData[index]),
+                  child: CategoryItem(_categories[index]),
                 );
               },
             ),

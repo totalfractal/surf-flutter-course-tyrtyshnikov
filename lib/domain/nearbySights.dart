@@ -45,11 +45,11 @@ class NearbySightsFinder {
     await Geolocator.checkPermission();
   } */
 
-  bool isPointsNear(List<double> checkPoint, List<double> centerPoint, double km) {
+  bool isPointsNear(List<double?> checkPoint, List<double> centerPoint, double km) {
     var ky = 40000 / 360;
     var kx = cos(pi * centerPoint[0] / 180.0) * ky;
-    var dx = (centerPoint[1] - checkPoint[1]).abs() * kx;
-    var dy = (centerPoint[0] - checkPoint[0]) * ky;
+    var dx = (centerPoint[1] - checkPoint[1]!).abs() * kx;
+    var dy = (centerPoint[0] - checkPoint[0]!) * ky;
     return sqrt(dx * dx + dy * dy) <= km;
   }
  

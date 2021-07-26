@@ -5,16 +5,16 @@ import 'package:places/ui/screen/res/styles.dart';
 import '../../../globals.dart' as globals;
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData _selectedTheme;
+  ThemeData? _selectedTheme;
 
   ThemeData light = lightTheme;
   ThemeData dark = darkTheme;
 
-  ThemeProvider({bool isDarkMode}) {
+  ThemeProvider({required bool isDarkMode}) {
     this._selectedTheme = isDarkMode ? dark : light;
   }
 
-  ThemeData get getTheme => _selectedTheme;
+  ThemeData? get getTheme => _selectedTheme;
 
   bool isDarkTheme() => _selectedTheme == dark ? true : false;
 
@@ -40,6 +40,7 @@ final lightTheme = ThemeData(
         color: lmSecondaryColor,
       ),
       elevation: 0,
+      
       
       centerTitle: true),
   tabBarTheme: TabBarTheme(
@@ -111,6 +112,7 @@ final lightTheme = ThemeData(
     cursorColor: lmMainColor,
   ),
   inputDecorationTheme: InputDecorationTheme(
+    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
     hintStyle: lmRoboto16W400.copyWith(color: lmInactiveBlackColor),
       errorStyle: TextStyle(height: 0),
       focusedErrorBorder: OutlineInputBorder(
@@ -218,6 +220,7 @@ final darkTheme = ThemeData(
       cursorColor: dmWhiteColor,
     ),
     inputDecorationTheme: InputDecorationTheme(
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       hintStyle: dmRoboto16W400.copyWith(color: dmInactiveBlackColor),
       errorStyle: TextStyle(height: 0),
       focusedErrorBorder: OutlineInputBorder(
@@ -244,13 +247,13 @@ final darkTheme = ThemeData(
 
 class CustomRectTrackShape extends RoundedRectRangeSliderTrackShape {
   Rect getPreferredRect({
-    @required RenderBox parentBox,
+    required RenderBox parentBox,
     Offset offset = Offset.zero,
-    @required SliderThemeData sliderTheme,
+    required SliderThemeData sliderTheme,
     bool isEnabled = false,
     bool isDiscrete = false,
   }) {
-    final double trackHeight = sliderTheme.trackHeight;
+    final double trackHeight = sliderTheme.trackHeight!;
     final double trackLeft = offset.dx + 12;
     final double trackTop =
         offset.dy + (parentBox.size.height - trackHeight) / 2;

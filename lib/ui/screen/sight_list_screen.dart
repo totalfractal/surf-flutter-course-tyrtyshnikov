@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/screen/search_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/widgets/search_bar.dart';
 
 import '../../globals.dart';
 
 class SightListScreen extends StatefulWidget {
-  SightListScreen({Key key, @required this.title}) : super(key: key);
+  SightListScreen({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -15,12 +17,30 @@ class SightListScreen extends StatefulWidget {
 }
 
 class _SightListScreenState extends State<SightListScreen> {
+  List<Sight> _sightsList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width * 0.7, 75),
+        preferredSize: Size.fromHeight(100),
         child: AppBar(
+          bottom: PreferredSize(
+            preferredSize: Size(MediaQuery.of(context).size.width - 32, 40),
+            child: InkWell(
+              child: IgnorePointer(
+                  ignoring: true,
+                  child: SearchBar(
+                    onFiltersChanged: (List<Sight> value) => _sightsList,
+                    onQueryChanged: (String query) {
+
+                    }, onFocusChanged: (bool value) {  },
+                  )),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
+              },
+            ),
+          ),
           title: Container(
             child: AppBarTitleText(
               title: widget.title,
@@ -40,7 +60,6 @@ class _SightListScreenState extends State<SightListScreen> {
           ),
         ),
       ),
-      
     );
   }
 
@@ -53,7 +72,7 @@ class _SightListScreenState extends State<SightListScreen> {
             sight: Sight(
                 name: element[0],
                 lat: double.parse(element[1]),
-          lon: double.parse(element[2]),
+                lon: double.parse(element[2]),
                 url: element[3],
                 details: element[4],
                 type: element[5])),
@@ -63,12 +82,10 @@ class _SightListScreenState extends State<SightListScreen> {
   }
 }
 
-
-
 class AppBarTitleText extends StatelessWidget {
   const AppBarTitleText({
-    Key key,
-    @required this.title,
+    Key? key,
+    required this.title,
   }) : super(key: key);
 
   final String title;
