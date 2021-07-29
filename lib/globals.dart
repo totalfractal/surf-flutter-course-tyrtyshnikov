@@ -17,7 +17,7 @@ Color hexToColor(String code) {
  */
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

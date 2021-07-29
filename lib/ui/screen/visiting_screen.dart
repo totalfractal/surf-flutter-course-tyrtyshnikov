@@ -44,8 +44,8 @@ class VisitingScreen extends StatelessWidget {
           WantToVisitTab(visitList: [
             Sight(
                 name: mocks[0][0],
-                lat: mocks[0][1],
-                lon: mocks[0][2],
+                lat: double.parse(mocks[0][1]),
+                lon: double.parse(mocks[0][2]),
                 url: mocks[0][3],
                 details: mocks[0][4],
                 type: mocks[0][5])
@@ -53,8 +53,8 @@ class VisitingScreen extends StatelessWidget {
           VisitedTab(visitedList: [
             Sight(
                 name: mocks[1][0],
-                lat: mocks[1][1],
-                lon: mocks[1][2],
+                lat: double.parse(mocks[1][1]),
+                lon: double.parse(mocks[1][2]),
                 url: mocks[1][3],
                 details: mocks[1][4],
                 type: mocks[1][5])
@@ -68,7 +68,7 @@ class VisitingScreen extends StatelessWidget {
 class WantToVisitTab extends StatelessWidget {
   const WantToVisitTab({
     key,
-    @required this.visitList,
+    required this.visitList,
   }) : super(key: key);
 
   final List<Sight> visitList;
@@ -138,7 +138,7 @@ class WantToVisitTab extends StatelessWidget {
 class VisitedTab extends StatelessWidget {
   const VisitedTab({
     key,
-    @required this.visitedList,
+    required this.visitedList,
   }) : super(key: key);
 
   final List<Sight> visitedList;
@@ -208,7 +208,7 @@ class VisitedTab extends StatelessWidget {
 class WantToVisitSightCard extends StatelessWidget {
   const WantToVisitSightCard({
     key,
-    @required this.sight,
+    required this.sight,
   }) : super(key: key);
 
   final Sight sight;
@@ -244,9 +244,9 @@ class WantToVisitSightCard extends StatelessWidget {
                           topLeft: Radius.circular(12),
                           topRight: Radius.circular(12)),
                       child: Image.network(
-                        sight.url,
+                        sight.url!,
                         loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent loadingProgress) {
+                            ImageChunkEvent? loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
                           }
@@ -254,7 +254,7 @@ class WantToVisitSightCard extends StatelessWidget {
                             child: CircularProgressIndicator(
                               value: loadingProgress.expectedTotalBytes != null
                                   ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes
+                                      loadingProgress.expectedTotalBytes!
                                   : null,
                             ),
                           );
@@ -272,9 +272,9 @@ class WantToVisitSightCard extends StatelessWidget {
                             child: Container(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                sight.type.isEmpty
+                                sight.type!.isEmpty
                                     ? "категория"
-                                    : sight.type.toLowerCase(),
+                                    : sight.type!.toLowerCase(),
                                 style:
                                     Theme.of(context).primaryTextTheme.caption,
                               ),
@@ -330,7 +330,7 @@ class WantToVisitSightCard extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                              sight.name.isEmpty ? "Название" : sight.name,
+                              sight.name!.isEmpty ? "Название" : sight.name!,
                               style:
                                   Theme.of(context).primaryTextTheme.headline4),
                         ),
@@ -340,7 +340,7 @@ class WantToVisitSightCard extends StatelessWidget {
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .primaryTextTheme
-                                  .subtitle2
+                                  .subtitle2!
                                   .copyWith(color: hexToColor("#4CAF50"))),
                         ),
                         Container(
@@ -375,7 +375,7 @@ class WantToVisitSightCard extends StatelessWidget {
 class VisitedSightCard extends StatelessWidget {
   const VisitedSightCard({
     key,
-    @required this.sight,
+    required this.sight,
   }) : super(key: key);
 
   final Sight sight;
@@ -411,9 +411,9 @@ class VisitedSightCard extends StatelessWidget {
                           topLeft: Radius.circular(12),
                           topRight: Radius.circular(12)),
                       child: Image.network(
-                        sight.url,
+                        sight.url!,
                         loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent loadingProgress) {
+                            ImageChunkEvent? loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
                           }
@@ -421,7 +421,7 @@ class VisitedSightCard extends StatelessWidget {
                             child: CircularProgressIndicator(
                               value: loadingProgress.expectedTotalBytes != null
                                   ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes
+                                      loadingProgress.expectedTotalBytes!
                                   : null,
                             ),
                           );
@@ -442,9 +442,9 @@ class VisitedSightCard extends StatelessWidget {
                             child: Container(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                  sight.type.isEmpty
+                                  sight.type!.isEmpty
                                       ? "категория"
-                                      : sight.type.toLowerCase(),
+                                      : sight.type!.toLowerCase(),
                                   style: TextStyle(
                                     fontFamily: 'Roboto',
                                     fontStyle: FontStyle.normal,
@@ -504,7 +504,7 @@ class VisitedSightCard extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                            sight.name.isEmpty ? "Название" : sight.name,
+                            sight.name!.isEmpty ? "Название" : sight.name!,
                             style: Theme.of(context).primaryTextTheme.headline4,
                           ),
                         ),
