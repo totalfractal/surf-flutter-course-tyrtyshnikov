@@ -20,7 +20,7 @@ TextStyle lmRoboto14W400 = _text.copyWith(
     fontSize: 14, fontWeight: FontWeight.w400, color: lmHeadline3Color);
 TextStyle lmRoboto14W500 = _text.copyWith(
     fontSize: 14, fontWeight: FontWeight.w500, color: lmHeadline4Color);
-    TextStyle lmHeadline5 = _text.copyWith(
+TextStyle lmHeadline5 = _text.copyWith(
     fontSize: 14, fontWeight: FontWeight.bold, color: lmSubtitle1Color);
 TextStyle lmRoboto14BoldSubtitle1 = _text.copyWith(
     fontSize: 14, fontWeight: FontWeight.bold, color: lmSubtitle1Color);
@@ -39,9 +39,10 @@ TextStyle lmRoboto14W700Caption = _text.copyWith(
 TextStyle lmRoboto14W700 = _text.copyWith(
     fontSize: 14, fontWeight: FontWeight.w700, color: lmPrimaryColor);
 
-TextStyle lmRoboto16W400 = _text.copyWith(fontSize: 16, fontWeight: FontWeight.w400, color: lmMainColor);
-TextStyle lmRoboto12W400 = _text.copyWith(fontSize: 12, fontWeight: FontWeight.w400, color: lmInactiveBlackColor);
-
+TextStyle lmRoboto16W400 = _text.copyWith(
+    fontSize: 16, fontWeight: FontWeight.w400, color: lmMainColor);
+TextStyle lmRoboto12W400 = _text.copyWith(
+    fontSize: 12, fontWeight: FontWeight.w400, color: lmInactiveBlackColor);
 
 final lmAppBarTextStyle = TextStyle(
   fontFamily: 'Roboto',
@@ -49,7 +50,6 @@ final lmAppBarTextStyle = TextStyle(
   fontWeight: FontWeight.w500,
   fontSize: 18,
   color: hexToColor("#252849"),
-
 );
 
 final lmSightDetailsTypeTextStyle = TextStyle(
@@ -89,8 +89,10 @@ TextStyle dmRoboto14W700Caption = _text.copyWith(
 TextStyle dmRoboto14W700 = _text.copyWith(
     fontSize: 14, fontWeight: FontWeight.w700, color: dmPrimaryColor);
 
-TextStyle dmRoboto16W400 = _text.copyWith(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white);
-TextStyle dmRoboto12W400 = _text.copyWith(fontSize: 12, fontWeight: FontWeight.w400, color: dmInactiveBlackColor);
+TextStyle dmRoboto16W400 = _text.copyWith(
+    fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white);
+TextStyle dmRoboto12W400 = _text.copyWith(
+    fontSize: 12, fontWeight: FontWeight.w400, color: dmInactiveBlackColor);
 final dmAppBarTextStyle = TextStyle(
   fontFamily: 'Roboto',
   fontStyle: FontStyle.normal,
@@ -98,4 +100,3 @@ final dmAppBarTextStyle = TextStyle(
   fontSize: 18,
   color: Colors.white,
 );
-

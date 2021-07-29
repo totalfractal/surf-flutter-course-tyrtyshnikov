@@ -14,8 +14,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool isDarkMode = false;
-  
-  
+
   /* @override
   void initState() {
     globals.ChangeThemeNotifier().addListener(() {
@@ -60,12 +59,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         toggleSize: 28,
                         padding: 2,
                         onToggle: (value) {
-                          ThemeProvider themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+                          ThemeProvider themeProvider =
+                              Provider.of<ThemeProvider>(context,
+                                  listen: false);
                           themeProvider.swapTheme();
                           setState(() {
                             isDarkMode = !isDarkMode;
                           });
-                         // globals.ChangeThemeNotifier().changeTheme();
+                          // globals.ChangeThemeNotifier().changeTheme();
                         })),
               ],
             ),

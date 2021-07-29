@@ -5,7 +5,8 @@ import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({Key? key, required this.onFiltersChanged}) : super(key: key);
+  const FilterScreen({Key? key, required this.onFiltersChanged})
+      : super(key: key);
 
   final ValueSetter<List<Sight>> onFiltersChanged;
 
@@ -127,10 +128,12 @@ class _FilterScreenState extends State<FilterScreen> {
                   padding: EdgeInsets.only(left: 16.0),
                   child: IconButton(
                     icon: ImageIcon(
-                      AssetImage("res/icons/other/Arrow.png"), 
+                      AssetImage("res/icons/other/Arrow.png"),
                       color: IconTheme.of(context).color,
                     ),
-                    onPressed: (){Navigator.pop(context);},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   )),
             ),
             actions: [
@@ -156,7 +159,9 @@ class _FilterScreenState extends State<FilterScreen> {
                               fontWeight: FontWeight.w500,
                               fontStyle: FontStyle.normal,
                               fontSize: 16,
-                              color: globals.isDarkMode ? dmGreenColor : lmGreenColor),
+                              color: globals.isDarkMode
+                                  ? dmGreenColor
+                                  : lmGreenColor),
                           textAlign: TextAlign.right,
                         ),
                       ))),
@@ -373,8 +378,9 @@ class _CategoryFilterIconState extends State<CategoryFilterIcon> {
         Opacity(
             opacity: _isSelected! ? 1.0 : 0.0,
             //TODO: разобраться с BlendMode
-            child: Image.asset("res/icons/other/Tick choice.png", 
-           // color: globals.isDarkMode ? dmWhiteColor : lmMainColor,
+            child: Image.asset(
+              "res/icons/other/Tick choice.png",
+              // color: globals.isDarkMode ? dmWhiteColor : lmMainColor,
             )),
       ],
     );
