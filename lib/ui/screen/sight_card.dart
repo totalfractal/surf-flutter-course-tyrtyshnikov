@@ -10,7 +10,7 @@ class SightCard extends StatelessWidget {
     this.sight,
   }) : super(key: key);
 
-  final Sight sight;
+  final Sight? sight;
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +46,9 @@ class SightCard extends StatelessWidget {
                           topLeft: Radius.circular(12),
                           topRight: Radius.circular(12)),
                       child: Image.network(
-                        sight.url,
+                        sight!.url!,
                         loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent loadingProgress) {
+                            ImageChunkEvent? loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
                           }
@@ -56,7 +56,7 @@ class SightCard extends StatelessWidget {
                             child: CircularProgressIndicator(
                               value: loadingProgress.expectedTotalBytes != null
                                   ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes
+                                      loadingProgress.expectedTotalBytes!
                                   : null,
                             ),
                           );
@@ -72,9 +72,9 @@ class SightCard extends StatelessWidget {
                         children: [
                           Container(
                             child: Text(
-                                sight.type.isEmpty
+                                sight!.type!.isEmpty
                                     ? "категория"
-                                    : sight.type.toLowerCase(),
+                                    : sight!.type!.toLowerCase(),
                                 style:
                                     Theme.of(context).primaryTextTheme.caption),
                           ),
@@ -110,7 +110,7 @@ class SightCard extends StatelessWidget {
                         Container(
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: Text(
-                              sight.name.isEmpty ? "Название" : sight.name,
+                              sight!.name!.isEmpty ? "Название" : sight!.name!,
                               style:
                                   Theme.of(context).primaryTextTheme.headline5,
                             )),

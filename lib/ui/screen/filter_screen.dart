@@ -5,24 +5,26 @@ import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({Key key}) : super(key: key);
+  const FilterScreen({Key? key, required this.onFiltersChanged}) : super(key: key);
+
+  final ValueSetter<List<Sight>> onFiltersChanged;
 
   @override
   _FilterScreenState createState() => _FilterScreenState();
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  var _currentRangeValues;
-  var _nearbyCount;
-  var _nearbySightsFinder;
-  var _nearbySights;
+  RangeValues _currentRangeValues = RangeValues(100, 2000);
+  int _nearbyCount = 0;
+  NearbySightsFinder _nearbySightsFinder = NearbySightsFinder();
+  List<Sight> _nearbySights = [];
 
-  bool _isCafePressed;
-  bool _isHotelPressed;
-  bool _isMuseumPressed;
-  bool _isParkPressed;
-  bool _isPartPlacePressed;
-  bool _isRestourantPressed;
+  bool? _isCafePressed;
+  bool? _isHotelPressed;
+  bool? _isMuseumPressed;
+  bool? _isParkPressed;
+  bool? _isPartPlacePressed;
+  bool? _isRestourantPressed;
 
   GlobalKey<_CategoryFilterIconState> _cafeIconKey = GlobalKey();
   GlobalKey<_CategoryFilterIconState> _hotelIconKey = GlobalKey();
@@ -31,12 +33,12 @@ class _FilterScreenState extends State<FilterScreen> {
   GlobalKey<_CategoryFilterIconState> _partPlaceIconKey = GlobalKey();
   GlobalKey<_CategoryFilterIconState> _restourantIconKey = GlobalKey();
 
-  CategoryFilter _cafeFilter;
-  CategoryFilter _hotelFilter;
-  CategoryFilter _museumFilter;
-  CategoryFilter _parkFilter;
-  CategoryFilter _partPlaceFilter;
-  CategoryFilter _restourantFilter;
+  CategoryFilter? _cafeFilter;
+  CategoryFilter? _hotelFilter;
+  CategoryFilter? _museumFilter;
+  CategoryFilter? _parkFilter;
+  CategoryFilter? _partPlaceFilter;
+  CategoryFilter? _restourantFilter;
 
   @override
   void initState() {
@@ -46,9 +48,6 @@ class _FilterScreenState extends State<FilterScreen> {
     _isParkPressed = false;
     _isPartPlacePressed = false;
     _isRestourantPressed = false;
-
-    _currentRangeValues = RangeValues(100, 2000);
-    _nearbySightsFinder = NearbySightsFinder();
     _nearbySights =
         _nearbySightsFinder.calcNearbySightsByRange(_currentRangeValues);
     _nearbyCount = _nearbySights.length;
@@ -59,7 +58,7 @@ class _FilterScreenState extends State<FilterScreen> {
       iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Cafe.png"
           : "res/icons/catalog/white/Cafe.png",
-      onPressed: (bool value) {
+      onPressed: (bool? value) {
         _isCafePressed = value;
       },
     );
@@ -69,7 +68,7 @@ class _FilterScreenState extends State<FilterScreen> {
       iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Hotel.png"
           : "res/icons/catalog/white/Hotel.png",
-      onPressed: (bool value) {
+      onPressed: (bool? value) {
         _isHotelPressed = value;
       },
     );
@@ -79,7 +78,7 @@ class _FilterScreenState extends State<FilterScreen> {
       iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Museum.png"
           : "res/icons/catalog/white/Museum.png",
-      onPressed: (bool value) {
+      onPressed: (bool? value) {
         _isMuseumPressed = value;
       },
     );
@@ -89,7 +88,7 @@ class _FilterScreenState extends State<FilterScreen> {
       iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Park.png"
           : "res/icons/catalog/white/Park.png",
-      onPressed: (bool value) {
+      onPressed: (bool? value) {
         _isParkPressed = value;
       },
     );
@@ -99,7 +98,7 @@ class _FilterScreenState extends State<FilterScreen> {
       iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Particular place.png"
           : "res/icons/catalog/white/Particular place.png",
-      onPressed: (bool value) {
+      onPressed: (bool? value) {
         _isPartPlacePressed = value;
       },
     );
@@ -109,7 +108,7 @@ class _FilterScreenState extends State<FilterScreen> {
       iconImage: globals.isDarkMode
           ? "res/icons/catalog/black/Restourant.png"
           : "res/icons/catalog/white/Restourant.png",
-      onPressed: (bool value) {
+      onPressed: (bool? value) {
         _isRestourantPressed = value;
       },
     );
@@ -126,9 +125,12 @@ class _FilterScreenState extends State<FilterScreen> {
             leading: GestureDetector(
               child: Container(
                   padding: EdgeInsets.only(left: 16.0),
-                  child: Image.asset(
-                    "res/icons/other/Arrow.png", 
-                    color: globals.isDarkMode ? dmWhiteColor : lmMainColor,
+                  child: IconButton(
+                    icon: ImageIcon(
+                      AssetImage("res/icons/other/Arrow.png"), 
+                      color: IconTheme.of(context).color,
+                    ),
+                    onPressed: (){Navigator.pop(context);},
                   )),
             ),
             actions: [
@@ -137,12 +139,12 @@ class _FilterScreenState extends State<FilterScreen> {
                   child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          _cafeIconKey.currentState.unselect();
-                          _hotelIconKey.currentState.unselect();
-                          _museumIconKey.currentState.unselect();
-                          _parkIconKey.currentState.unselect();
-                          _partPlaceIconKey.currentState.unselect();
-                          _restourantIconKey.currentState.unselect();
+                          _cafeIconKey.currentState!.unselect();
+                          _hotelIconKey.currentState!.unselect();
+                          _museumIconKey.currentState!.unselect();
+                          _parkIconKey.currentState!.unselect();
+                          _partPlaceIconKey.currentState!.unselect();
+                          _restourantIconKey.currentState!.unselect();
                         });
                       },
                       child: Container(
@@ -176,7 +178,7 @@ class _FilterScreenState extends State<FilterScreen> {
                           "КАТЕГОРИИ",
                           style: Theme.of(context)
                               .primaryTextTheme
-                              .headline3
+                              .headline3!
                               .copyWith(
                                   fontSize: 12,
                                   color: Color.fromRGBO(124, 126, 146, 0.56)),
@@ -201,9 +203,9 @@ class _FilterScreenState extends State<FilterScreen> {
                               ),
                             ]),
                             TableRow(children: [
-                              _parkFilter,
-                              _museumFilter,
-                              _cafeFilter
+                              _parkFilter!,
+                              _museumFilter!,
+                              _cafeFilter!
                             ])
                           ],
                         ),
@@ -219,13 +221,13 @@ class _FilterScreenState extends State<FilterScreen> {
                       Text("Расстояние",
                           style: Theme.of(context)
                               .primaryTextTheme
-                              .bodyText1
+                              .bodyText1!
                               .copyWith(fontSize: 16)),
                       Text(
                           'от ${_currentRangeValues.start.round()} до ${_currentRangeValues.end.round()} м',
                           style: Theme.of(context)
                               .primaryTextTheme
-                              .subtitle2
+                              .subtitle2!
                               .copyWith(fontSize: 16)),
                     ],
                   ),
@@ -263,7 +265,10 @@ class _FilterScreenState extends State<FilterScreen> {
               width: double.infinity,
               height: 48,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.onFiltersChanged(_nearbySights);
+                  Navigator.pop(context);
+                },
                 child: Text(
                   'ПОКАЗАТЬ ($_nearbyCount)',
                 ),
@@ -278,17 +283,17 @@ class _FilterScreenState extends State<FilterScreen> {
 
 class CategoryFilter extends StatelessWidget {
   const CategoryFilter({
-    Key key,
-    @required this.name,
-    @required this.iconImage,
-    @required this.iconKey,
-    @required this.onPressed,
+    Key? key,
+    required this.name,
+    required this.iconImage,
+    required this.iconKey,
+    required this.onPressed,
   }) : super(key: key);
 
   final GlobalKey iconKey;
   final String name;
   final String iconImage;
-  final ValueChanged<bool> onPressed;
+  final ValueChanged<bool?> onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +306,7 @@ class CategoryFilter extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: Text(
               name,
-              style: Theme.of(context).primaryTextTheme.headline3.copyWith(
+              style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
                     fontSize: 12,
                   ),
             ),
@@ -314,21 +319,21 @@ class CategoryFilter extends StatelessWidget {
 
 class CategoryFilterIcon extends StatefulWidget {
   CategoryFilterIcon(
-      {Key key,
+      {Key? key,
       //@required this.isPressed,
-      @required this.iconImage,
-      @required this.onPressed})
+      required this.iconImage,
+      required this.onPressed})
       : super(key: key);
 
   final String iconImage;
-  final ValueChanged<bool> onPressed;
+  final ValueChanged<bool?> onPressed;
 
   @override
   _CategoryFilterIconState createState() => _CategoryFilterIconState();
 }
 
 class _CategoryFilterIconState extends State<CategoryFilterIcon> {
-  bool _isSelected;
+  bool? _isSelected;
 
   void unselect() {
     setState(() {
@@ -354,20 +359,23 @@ class _CategoryFilterIconState extends State<CategoryFilterIcon> {
           icon: Image.asset(
             widget.iconImage,
             height: 64,
-            color: _isSelected
+            color: _isSelected!
                 ? lmFilterIconsColor.withOpacity(0.5)
                 : lmFilterIconsColor,
           ),
           onPressed: () {
             setState(() {
-              _isSelected = !_isSelected;
+              _isSelected = !_isSelected!;
             });
             widget.onPressed(_isSelected);
           },
         ),
         Opacity(
-            opacity: _isSelected ? 1.0 : 0.0,
-            child: Image.asset("res/icons/other/Tick choice.png",)),
+            opacity: _isSelected! ? 1.0 : 0.0,
+            //TODO: разобраться с BlendMode
+            child: Image.asset("res/icons/other/Tick choice.png", 
+           // color: globals.isDarkMode ? dmWhiteColor : lmMainColor,
+            )),
       ],
     );
   }
