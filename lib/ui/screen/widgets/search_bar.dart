@@ -5,20 +5,19 @@ import 'package:places/ui/screen/filter_screen.dart';
 import 'package:places/ui/screen/res/colors.dart';
 
 class SearchBar extends StatefulWidget {
-  
-
   const SearchBar({
     Key? key,
     required this.onFiltersChanged,
     required this.onQueryChanged,
-    required this.onFocusChanged, this.autofocus,
+    required this.onFocusChanged,
+    this.autofocus,
   }) : super(key: key);
 
   final ValueSetter<List<Sight>> onFiltersChanged;
   final ValueSetter<String> onQueryChanged;
   final ValueSetter<bool> onFocusChanged;
 
-final bool? autofocus;
+  final bool? autofocus;
   @override
   _SearchBarState createState() => _SearchBarState();
 }
@@ -46,10 +45,9 @@ class _SearchBarState extends State<SearchBar> {
           setState(() {
             _hasFocus = hasFocus;
           });
-          if(_textController.text.isEmpty && _hasFocus){
-              widget.onFocusChanged(hasFocus);
+          if (_textController.text.isEmpty && _hasFocus) {
+            widget.onFocusChanged(hasFocus);
           }
-          
         },
         child: Stack(
           alignment: Alignment.centerRight,
@@ -112,8 +110,8 @@ class _SearchBarState extends State<SearchBar> {
                 child: Visibility(
                   visible: !_hasFocus,
                   child: InkWell(
-                    radius: 50,
-                    borderRadius: BorderRadius.circular(50),
+                      radius: 50,
+                      borderRadius: BorderRadius.circular(50),
                       onTap: () {
                         Navigator.push(
                             context,

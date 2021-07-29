@@ -50,8 +50,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
         BottomNavigationBarItem(
             icon: _selectedIndex == 3
-            ? ImageIcon(AssetImage("res/icons/menu/Settings Full.png"))
-            : ImageIcon(AssetImage("res/icons/menu/Settings.png")),
+                ? ImageIcon(AssetImage("res/icons/menu/Settings Full.png"))
+                : ImageIcon(AssetImage("res/icons/menu/Settings.png")),
             label: ""),
       ],
       onTap: (int index) {

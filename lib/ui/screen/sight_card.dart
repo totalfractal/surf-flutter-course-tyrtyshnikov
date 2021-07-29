@@ -130,7 +130,9 @@ class SightCard extends StatelessWidget {
             child: new Material(
                 color: Colors.transparent,
                 child: new InkWell(
-                  onTap: () {print("InkWell");},
+                  onTap: () {
+                    print("InkWell");
+                  },
                   customBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                   ),

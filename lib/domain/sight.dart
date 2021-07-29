@@ -1,11 +1,15 @@
+class Sight {
+  final String name;
+  final double lat, lon;
+  final String url;
+  final String details;
+  final String type;
 
-class Sight{
-  final String? name;
-  final double? lat, lon;
-  final String? url;
-  final String? details;
-  final String? type;
-
-  const Sight({this.name, this.lat, this.lon, this.url, this.details, this.type});
-  
+  const Sight(
+      {required this.name,
+      required this.lat,
+      required this.lon,
+      required this.url,
+      required this.details,
+      required this.type});
 }

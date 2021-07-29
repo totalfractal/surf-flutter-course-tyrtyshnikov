@@ -40,8 +40,6 @@ final lightTheme = ThemeData(
         color: lmSecondaryColor,
       ),
       elevation: 0,
-      
-      
       centerTitle: true),
   tabBarTheme: TabBarTheme(
     indicatorSize: TabBarIndicatorSize.tab,
@@ -84,7 +82,6 @@ final lightTheme = ThemeData(
       trackHeight: 2),
   elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-
           fixedSize: MaterialStateProperty.all<Size>(Size(double.infinity, 48)),
           backgroundColor: MaterialStateProperty.all<Color>(lmGreenColor),
           foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -114,15 +111,15 @@ final lightTheme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
     hintStyle: lmRoboto16W400.copyWith(color: lmInactiveBlackColor),
-      errorStyle: TextStyle(height: 0),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: lmRedColor.withOpacity(0.4), width: 2),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: lmRedColor.withOpacity(0.4), width: 1),
-      ),
+    errorStyle: TextStyle(height: 0),
+    focusedErrorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: lmRedColor.withOpacity(0.4), width: 2),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: lmRedColor.withOpacity(0.4), width: 1),
+    ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: lmGreenColor.withOpacity(0.4), width: 1),
@@ -183,8 +180,8 @@ final darkTheme = ThemeData(
         button: dmRoboto14W700),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-          
-           fixedSize: MaterialStateProperty.all<Size>(Size(double.infinity, 48)),
+            fixedSize:
+                MaterialStateProperty.all<Size>(Size(double.infinity, 48)),
             backgroundColor: MaterialStateProperty.all<Color>(dmGreenColor),
             foregroundColor: MaterialStateProperty.all(Colors.white),
             textStyle: MaterialStateProperty.all(TextStyle(
@@ -192,7 +189,6 @@ final darkTheme = ThemeData(
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w700,
                 fontSize: 14)),
-            
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
@@ -224,7 +220,6 @@ final darkTheme = ThemeData(
       hintStyle: dmRoboto16W400.copyWith(color: dmInactiveBlackColor),
       errorStyle: TextStyle(height: 0),
       focusedErrorBorder: OutlineInputBorder(
-
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(color: dmRedColor.withOpacity(0.4), width: 2),
       ),

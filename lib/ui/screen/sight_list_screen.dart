@@ -32,12 +32,12 @@ class _SightListScreenState extends State<SightListScreen> {
                   ignoring: true,
                   child: SearchBar(
                     onFiltersChanged: (List<Sight> value) => _sightsList,
-                    onQueryChanged: (String query) {
-
-                    }, onFocusChanged: (bool value) {  },
+                    onQueryChanged: (String query) {},
+                    onFocusChanged: (bool value) {},
                   )),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchScreen()));
               },
             ),
           ),
