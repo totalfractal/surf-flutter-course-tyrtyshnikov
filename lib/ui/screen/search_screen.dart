@@ -150,7 +150,7 @@ class _SearchScreenState extends State<SearchScreen> {
     });
     return sightsList;
   }
-  
+
   Column _getSearchResultWidgets() {
     List<SearchResult> _resultSightWidgets = [];
     _sightsList.forEach((element) {

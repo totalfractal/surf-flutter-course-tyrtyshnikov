@@ -188,7 +188,6 @@ class SightDetails extends StatelessWidget {
               child: Material(
                   // borderRadius: BorderRadius.circular(12),
                   shape: RoundedRectangleBorder(
-                    
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: InkWell(

@@ -123,19 +123,22 @@ class SightCard extends StatelessWidget {
 
   Widget interactionButtons() {
     return Container(
-              width: 45,
-              child: Material(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                child: InkWell(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  child: Ink(child: Image.asset("res/icons/menu/Heart.png",)),
-                  onTap: () => {
-                    print("you like this!"),
-                  },
-                ),
-              ),
-            );
+      width: 45,
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        child: InkWell(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          child: Ink(
+              child: Image.asset(
+            "res/icons/menu/Heart.png",
+          )),
+          onTap: () => {
+            print("you like this!"),
+          },
+        ),
+      ),
+    );
   }
 
   Column informationColumn(BuildContext context) {
