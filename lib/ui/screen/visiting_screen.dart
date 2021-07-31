@@ -11,7 +11,7 @@ import '../../mocks.dart';
 class VisitingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var visitList2 = [
+    var wantToVisitList = [
       Sight(
           name: mocks[0][0],
           lat: double.parse(mocks[0][1]),
@@ -26,6 +26,22 @@ class VisitingScreen extends StatelessWidget {
           url: mocks[1][3],
           details: mocks[1][4],
           type: mocks[1][5])
+    ];
+    var visitedList = [
+      Sight(
+          name: mocks[2][0],
+          lat: double.parse(mocks[2][1]),
+          lon: double.parse(mocks[2][2]),
+          url: mocks[2][3],
+          details: mocks[2][4],
+          type: mocks[2][5]),
+      Sight(
+          name: mocks[3][0],
+          lat: double.parse(mocks[3][1]),
+          lon: double.parse(mocks[3][2]),
+          url: mocks[3][3],
+          details: mocks[3][4],
+          type: mocks[3][5]),
     ];
     return DefaultTabController(
       length: 2,
@@ -59,16 +75,8 @@ class VisitingScreen extends StatelessWidget {
         ),
         bottomNavigationBar: BottomNavBar(),
         body: TabBarView(children: [
-          WantToVisitTab(wantToVisitList: visitList2),
-          VisitedTab(visitedList: [
-            Sight(
-                name: mocks[1][0],
-                lat: double.parse(mocks[1][1]),
-                lon: double.parse(mocks[1][2]),
-                url: mocks[1][3],
-                details: mocks[1][4],
-                type: mocks[1][5])
-          ])
+          WantToVisitTab(wantToVisitList: wantToVisitList),
+          VisitedTab(visitedList: visitedList)
         ]),
       ),
     );
@@ -85,76 +93,75 @@ class WantToVisitTab extends StatefulWidget {
 }
 
 class _WantToVisitTabState extends State<WantToVisitTab> {
- // List<Widget> _wantToVisitCardsList = [];
   late Column _wantToVisitWidgets;
 
   @override
   void initState() {
-   // _wantToVisitCardsList = _getWantToVisitListWidgets();
-   super.initState();
-   _wantToVisitWidgets = _getWantToVisitWidgets();
+    // _wantToVisitCardsList = _getWantToVisitListWidgets();
+    super.initState();
+    _wantToVisitWidgets = _getWantToVisitWidgets();
   }
 
   @override
   Widget build(BuildContext context) {
     return widget.wantToVisitList.isEmpty
-        ? Center(
-            child: Column(
-              children: [
-            Container(
-              child: Image.asset(
-                "res/icons/other/Card.png",
-                height: 64,
-                width: 64,
-                fit: BoxFit.fill,
-                filterQuality: FilterQuality.high,
-                color: hexToColor("#7C7E92"),
-                scale: 2,
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Image.asset(
+                  "res/icons/other/Card.png",
+                  height: 64,
+                  width: 64,
+                  fit: BoxFit.fill,
+                  filterQuality: FilterQuality.high,
+                  color: hexToColor("#7C7E92"),
+                  scale: 2,
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 53),
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 24, bottom: 8),
-                    child: Text(
-                      "Пусто",
-                      style: Theme.of(context).primaryTextTheme.headline2,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 53),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 24, bottom: 8),
+                      child: Text(
+                        "Пусто",
+                        style: Theme.of(context).primaryTextTheme.headline2,
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    child: Text(
-                      "Отмечайте понравившиеся места и они появятся здесь.",
-                      style: Theme.of(context).primaryTextTheme.headline3,
-                      textAlign: TextAlign.center,
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: Text(
+                        "Отмечайте понравившиеся места и они появятся здесь.",
+                        style: Theme.of(context).primaryTextTheme.headline3,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-              ],
-            ),
+            ],
           )
-        : SingleChildScrollView(
-      child: _wantToVisitWidgets
-    );
+        : SingleChildScrollView(child: _wantToVisitWidgets);
   }
 
   Column _getWantToVisitWidgets() {
     List<Widget> list = [];
-    for (int index = 0; index < widget.wantToVisitList.length; index++){
+    for (int index = 0; index < widget.wantToVisitList.length; index++) {
       list.add(Padding(
         padding: const EdgeInsets.all(16),
-        child: WantSightCard(
-          key: ValueKey(widget.wantToVisitList[index].toString()),
-          onDeleteTap: () => _deleteSight(index),
+        child: WantToVisitSightCard(
+          // key: ValueKey(widget.wantToVisitList[index].toString()),
           sight: widget.wantToVisitList[index],
+          onDeleteTap: () => _deleteSight(index),
+          onCalendarTap: () => print("add to calendar"),
         ),
       ));
     }
-    return Column(children: list,);
+    return Column(
+      children: list,
+    );
   }
 
   void _deleteSight(int index) {
@@ -165,419 +172,78 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
   }
 }
 
-class WantSightCard extends SightCard{
-  const WantSightCard(
-      {Key? key, required Sight sight, required this.onDeleteTap}) : super(sight: sight, key: key);
+class WantToVisitSightCard extends SightCard {
+  const WantToVisitSightCard(
+      {Key? key,
+      required Sight sight,
+      required this.onDeleteTap,
+      required this.onCalendarTap})
+      : super(sight: sight, key: key);
 
   final VoidCallback onDeleteTap;
+  final VoidCallback onCalendarTap;
 
   @override
   Column informationColumn(BuildContext context) {
-    return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child: Text(
-                            sight.name.isEmpty ? "Название" : sight.name,
-                            style:
-                                Theme.of(context).primaryTextTheme.headline4),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 2),
-                        child: Text("Запланировано на 12 окт. 2020",
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .subtitle2!
-                                .copyWith(color: hexToColor("#4CAF50"))),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text("закрыто до 9:00",
-                            textAlign: TextAlign.start,
-                            style:
-                                Theme.of(context).primaryTextTheme.subtitle2),
-                      ),
-                    ]);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 2),
+        child: Text(sight.name.isEmpty ? "Название" : sight.name,
+            style: Theme.of(context).primaryTextTheme.headline4),
+      ),
+      Container(
+        padding: EdgeInsets.only(top: 2),
+        child: Text("Запланировано на 12 окт. 2020",
+            textAlign: TextAlign.start,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .subtitle2!
+                .copyWith(color: hexToColor("#4CAF50"))),
+      ),
+      Container(
+        padding: EdgeInsets.only(top: 16),
+        child: Text("закрыто до 9:00",
+            textAlign: TextAlign.start,
+            style: Theme.of(context).primaryTextTheme.subtitle2),
+      ),
+    ]);
   }
 
   @override
   Widget interactionButtons() {
-    return Row(
-                  children: [
-                Container(
-                  width: 45,
-                  child: Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    child: InkWell(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      /* padding: EdgeInsets.zero,
-                                        alignment: Alignment.topCenter, */
-                      child: Image.asset(
-                    "res/icons/other/Calendar.png",
-                      ),
-                      onTap: () {
-                    print("Добавить в календарь");
-                      },
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 45,
-                  child: Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                      child: InkWell(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                          child: Image.asset(
-                            "res/icons/other/Delete.png",
-                          ),
-                          onTap: () => onDeleteTap(),
-                          )),
-                )
-              ]);
-  }
-
-}
-
-class WantToVisitSightCard extends StatelessWidget {
-  const WantToVisitSightCard(
-      {Key? key, required this.sight, required this.onDeleteTap})
-      : super(key: key);
-
-  final Sight sight;
-  final VoidCallback onDeleteTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          child: Column(
-            children: [
-              Container(
-                height: 96,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      topRight: Radius.circular(12)),
-                  gradient: new LinearGradient(
-                      colors: [
-                        Colors.black38,
-                        Colors.black12,
-                      ],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 0.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      topRight: Radius.circular(12)),
-                  child: Image.network(
-                    sight.url,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadiusDirectional.only(
-                      bottomEnd: Radius.circular(12),
-                      bottomStart: Radius.circular(12),
-                    ),
-                    color: isDarkMode
-                        ? dmSightCardContainerColor
-                        : lmSightCardContainerColor),
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child: Text(
-                            sight.name.isEmpty ? "Название" : sight.name,
-                            style:
-                                Theme.of(context).primaryTextTheme.headline4),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 2),
-                        child: Text("Запланировано на 12 окт. 2020",
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .subtitle2!
-                                .copyWith(color: hexToColor("#4CAF50"))),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text("закрыто до 9:00",
-                            textAlign: TextAlign.start,
-                            style:
-                                Theme.of(context).primaryTextTheme.subtitle2),
-                      ),
-                    ]),
-              ),
-            ],
+    return Row(children: [
+      Container(
+        width: 45,
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          child: InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            child: Image.asset(
+              "res/icons/other/Calendar.png",
+            ),
+            onTap: () => onCalendarTap(),
           ),
         ),
-        new Positioned.fill(
-            child: new Material(
-                color: Colors.transparent,
-                child: new InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SightDetails(
-                                  sight: sight,
-                                )));
-                  },
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                ))),
-        Container(
-          margin: EdgeInsets.only(left: 16),
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  child: Text(
-                    sight.type.isEmpty ? "категория" : sight.type.toLowerCase(),
-                    style: Theme.of(context).primaryTextTheme.caption,
-                  ),
-                ),
+      ),
+      Container(
+        width: 45,
+        child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              child: Image.asset(
+                "res/icons/other/Delete.png",
               ),
-              Row(
-                  children: [
-                Container(
-                  width: 45,
-                  child: Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    child: InkWell(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      /* padding: EdgeInsets.zero,
-                                        alignment: Alignment.topCenter, */
-                      child: Image.asset(
-                    "res/icons/other/Calendar.png",
-                      ),
-                      onTap: () {
-                    print("Добавить в календарь");
-                      },
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 45,
-                  child: Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                      child: InkWell(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                          child: Image.asset(
-                            "res/icons/other/Delete.png",
-                          ),
-                          onTap: () => onDeleteTap(),
-                          )),
-                )
-              ]),
-            ],
-          ),
-        ),
-      ],
-    );
+              onTap: () => onDeleteTap(),
+            )),
+      )
+    ]);
   }
 }
 
-/* class AbstractSightCard extends StatelessWidget {
-  const AbstractSightCard(
-      {Key? key, required this.sight})
-      : super(key: key);
-
-  final Sight sight;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          child: Column(
-            children: [
-              Container(
-                height: 96,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      topRight: Radius.circular(12)),
-                  gradient: new LinearGradient(
-                      colors: [
-                        Colors.black38,
-                        Colors.black12,
-                      ],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 0.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      topRight: Radius.circular(12)),
-                  child: Image.network(
-                    sight.url,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadiusDirectional.only(
-                      bottomEnd: Radius.circular(12),
-                      bottomStart: Radius.circular(12),
-                    ),
-                    color: isDarkMode
-                        ? dmSightCardContainerColor
-                        : lmSightCardContainerColor),
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.all(16.0),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(),
-                  child: informationColumn(context),
-                ),
-              ),
-            ],
-          ),
-        ),
-        new Positioned.fill(
-            child: new Material(
-                color: Colors.transparent,
-                child: new InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SightDetails(
-                                  sight: sight,
-                                )));
-                  },
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                ))),
-        Container(
-          padding: EdgeInsets.only(top: 16, left: 16),
-          //alignment: Alignment.topCenter,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Container(
-                  child: Text(
-                    sight.type.isEmpty ? "категория" : sight.type.toLowerCase(),
-                    style: Theme.of(context).primaryTextTheme.caption,
-                  ),
-                ),
-              ),
-              Row(//buttonPadding: EdgeInsets.zero,
-                  children: [
-                Material(
-                    child: InkWell(
-                  /* padding: EdgeInsets.zero,
-                                        alignment: Alignment.topCenter, */
-                  child: Image.asset(
-                    "res/icons/other/Calendar.png",
-                  ),
-                  onTap: () {
-                    print("Добавить в календарь");
-                  },
-                )),
-                Material(
-                    child: IconButton(
-                        //padding: EdgeInsets.zero,
-                        alignment: Alignment.topCenter,
-                        icon: Image.asset(
-                          "res/icons/other/Delete.png",
-                        ),
-                        onPressed: () {
-                         // onDeleteTap();
-                        }))
-              ]),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  @protected
-  Column informationColumn(BuildContext context) {
-    return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child: Text(
-                            sight.name.isEmpty ? "Название" : sight.name,
-                            style:
-                                Theme.of(context).primaryTextTheme.headline4),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 2),
-                        child: Text("Запланировано на 12 окт. 2020",
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .subtitle2!
-                                .copyWith(color: hexToColor("#4CAF50"))),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text("закрыто до 9:00",
-                            textAlign: TextAlign.start,
-                            style:
-                                Theme.of(context).primaryTextTheme.subtitle2),
-                      ),
-                    ]);
-  }
-} */
-
-class VisitedTab extends StatelessWidget {
+class VisitedTab extends StatefulWidget {
   const VisitedTab({
     key,
     required this.visitedList,
@@ -586,8 +252,21 @@ class VisitedTab extends StatelessWidget {
   final List<Sight> visitedList;
 
   @override
+  _VisitedTabState createState() => _VisitedTabState();
+}
+
+class _VisitedTabState extends State<VisitedTab> {
+  late Column _visitedWidgets;
+
+  @override
+  void initState() {
+    super.initState();
+    _visitedWidgets = _getVisitedListWidgets();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return visitedList.isEmpty
+    return widget.visitedList.isEmpty
         ? Center(
             child: SingleChildScrollView(
                 child: Column(
@@ -628,34 +307,102 @@ class VisitedTab extends StatelessWidget {
               ],
             )),
           )
-        : Column(
-            children: _getVisitedListWidgets(),
-          );
+        : _visitedWidgets;
   }
 
-  List<Widget> _getVisitedListWidgets() {
+  Column _getVisitedListWidgets() {
     List<Widget> list = [];
-    visitedList.forEach((element) {
+    for (int index = 0; index < widget.visitedList.length; index++) {
       list.add(Padding(
         padding: const EdgeInsets.all(16),
         child: VisitedSightCard(
-          sight: element,
+          sight: widget.visitedList[index],
+          onShareTap: () => print("share"),
+          onDeleteTap: () => _deleteSight(index),
         ),
       ));
+    }
+    return Column(children: list);
+  }
+
+  void _deleteSight(int index) {
+    setState(() {
+      widget.visitedList.removeAt(index);
+      _visitedWidgets = _getVisitedListWidgets();
     });
-    return list;
   }
 }
 
-class VisitedSightCard extends StatelessWidget {
-  const VisitedSightCard({
-    key,
-    required this.sight,
-  }) : super(key: key);
+class VisitedSightCard extends SightCard {
+  const VisitedSightCard(
+      {key,
+      required Sight sight,
+      required this.onShareTap,
+      required this.onDeleteTap})
+      : super(key: key, sight: sight);
 
-  final Sight sight;
+  final VoidCallback onShareTap;
+  final VoidCallback onDeleteTap;
 
   @override
+  Column informationColumn(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 2),
+        child: Text(
+          sight.name.isEmpty ? "Название" : sight.name,
+          style: Theme.of(context).primaryTextTheme.headline4,
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.only(top: 2),
+        child: Text("Цель достигнута 12 окт. 2020",
+            textAlign: TextAlign.start,
+            style: Theme.of(context).primaryTextTheme.subtitle2),
+      ),
+      Container(
+        padding: EdgeInsets.only(top: 16),
+        child: Text("закрыто до 9:00",
+            textAlign: TextAlign.start,
+            style: Theme.of(context).primaryTextTheme.subtitle2),
+      ),
+    ]);
+  }
+
+  @override
+  Widget interactionButtons() {
+    return Row(children: [
+      Container(
+        width: 45,
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          child: InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            child: Image.asset(
+              "res/icons/other/Share.png",
+            ),
+            onTap: () => onShareTap(),
+          ),
+        ),
+      ),
+      Container(
+        width: 45,
+        child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              child: Image.asset(
+                "res/icons/other/Delete.png",
+              ),
+              onTap: () => onDeleteTap(),
+            )),
+      )
+    ]);
+  }
+
+  /* @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
@@ -821,5 +568,5 @@ class VisitedSightCard extends StatelessWidget {
                 )))
       ],
     );
-  }
+  } */
 }
