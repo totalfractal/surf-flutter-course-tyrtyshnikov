@@ -6,10 +6,10 @@ import '../../globals.dart';
 class SightDetails extends StatelessWidget {
   const SightDetails({
     key,
-    this.sight,
+    required this.sight,
   }) : super(key: key);
 
-  final Sight? sight;
+  final Sight sight;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +32,7 @@ class SightDetails extends StatelessWidget {
                     tileMode: TileMode.clamp),
               ),
               child: Image.network(
-                sight!.url!,
+                sight.url,
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) {
@@ -60,7 +60,7 @@ class SightDetails extends StatelessWidget {
                       margin: EdgeInsets.symmetric(vertical: 2),
                       alignment: Alignment.topLeft,
                       child: Text(
-                        sight!.name!,
+                        sight.name,
                         textAlign: TextAlign.start,
                         style: Theme.of(context).primaryTextTheme.headline1,
                       )),
@@ -72,7 +72,7 @@ class SightDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          child: Text(sight!.type!.toLowerCase(),
+                          child: Text(sight.type.toLowerCase(),
                               textAlign: TextAlign.start,
                               style:
                                   Theme.of(context).primaryTextTheme.subtitle1),
@@ -89,7 +89,7 @@ class SightDetails extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 24),
-                    child: Text(sight!.details!,
+                    child: Text(sight.details,
                         textAlign: TextAlign.justify,
                         style: Theme.of(context).primaryTextTheme.bodyText1),
                   ),
@@ -188,6 +188,7 @@ class SightDetails extends StatelessWidget {
               child: Material(
                   // borderRadius: BorderRadius.circular(12),
                   shape: RoundedRectangleBorder(
+                    
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: InkWell(

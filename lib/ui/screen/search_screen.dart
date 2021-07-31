@@ -150,24 +150,7 @@ class _SearchScreenState extends State<SearchScreen> {
     });
     return sightsList;
   }
-
-  /* Column _getSearchResultsOnInit() {
-    List<SearchResult> _initSearchWidgets = [];
-    mocks.forEach((element) {
-      _initSearchWidgets.add(SearchResult(
-        query: "",
-        sight: Sight(
-            name: element[0],
-            lat: double.parse(element[1]),
-            lon: double.parse(element[2]),
-            url: element[3],
-            details: element[4],
-            type: element[5]),
-      ));
-    });
-    return Column(children: _initSearchWidgets);
-  } */
-
+  
   Column _getSearchResultWidgets() {
     List<SearchResult> _resultSightWidgets = [];
     _sightsList.forEach((element) {
@@ -182,7 +165,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Column _getHilightSearchResultWidgets(String query) {
     List<SearchResult> _resultSightWidgets = [];
     _sightsList.forEach((element) {
-      if (element.name!.toLowerCase().contains(query.toLowerCase())) {
+      if (element.name.toLowerCase().contains(query.toLowerCase())) {
         _resultSightWidgets.add(SearchResult(
           query: query,
           sight: element,
@@ -209,13 +192,11 @@ class SearchHistoryUnit extends StatelessWidget {
           Expanded(
             child: Container(
               child: Text(
-                sight.name!,
+                sight.name,
                 style: Theme.of(context)
                     .primaryTextTheme
                     .bodyText2!
                     .copyWith(color: lmSecondary2Color),
-                /* overflow: TextOverflow.clip,
-                softWrap: false, */
                 maxLines: 3,
               ),
             ),
@@ -266,7 +247,7 @@ class SearchResult extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
-                  sight.url!,
+                  sight.url,
                   height: 56,
                   width: 56,
                   fit: BoxFit.cover,
@@ -287,7 +268,7 @@ class SearchResult extends StatelessWidget {
                         maxLines: 4,
                         text: TextSpan(
                             children: highlightOccurrences(
-                                sight.name!,
+                                sight.name,
                                 query,
                                 Theme.of(context)
                                     .primaryTextTheme
@@ -302,7 +283,7 @@ class SearchResult extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.symmetric(vertical: 4),
                       child: Text(
-                        sight.type!,
+                        sight.type,
                         textAlign: TextAlign.start,
                         style: Theme.of(context)
                             .primaryTextTheme
