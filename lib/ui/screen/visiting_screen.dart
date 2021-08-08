@@ -6,8 +6,6 @@ import 'package:places/ui/screen/sight_details.dart';
 import '../../globals.dart';
 import '../../mocks.dart';
 
-//TODO: Сделать наследование для карточек
-
 class VisitingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -97,7 +95,6 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
 
   @override
   void initState() {
-    // _wantToVisitCardsList = _getWantToVisitListWidgets();
     super.initState();
     _wantToVisitWidgets = _getWantToVisitWidgets();
   }
@@ -152,7 +149,7 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
       list.add(Padding(
         padding: const EdgeInsets.all(16),
         child: WantToVisitSightCard(
-          // key: ValueKey(widget.wantToVisitList[index].toString()),
+          key: ValueKey(widget.wantToVisitList[index].name),
           sight: widget.wantToVisitList[index],
           onDeleteTap: () => _deleteSight(index),
           onCalendarTap: () => print("add to calendar"),
@@ -316,6 +313,7 @@ class _VisitedTabState extends State<VisitedTab> {
       list.add(Padding(
         padding: const EdgeInsets.all(16),
         child: VisitedSightCard(
+          key: ValueKey(widget.visitedList[index].name),
           sight: widget.visitedList[index],
           onShareTap: () => print("share"),
           onDeleteTap: () => _deleteSight(index),
