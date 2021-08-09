@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 
-import '../../../../globals.dart';
+import '../../../../globals.dart' as globals;
 import 'visited_sight_card.dart';
 import 'visiting_drag_target.dart';
 
@@ -39,7 +39,7 @@ class _VisitedTabState extends State<VisitedTab> {
                     width: 64,
                     fit: BoxFit.fill,
                     filterQuality: FilterQuality.high,
-                    color: hexToColor("#7C7E92"),
+                    color: globals.hexToColor("#7C7E92"),
                     scale: 2,
                   ),
                 ),
@@ -72,34 +72,29 @@ class _VisitedTabState extends State<VisitedTab> {
   }
 
   Column _getVisitedListWidgets() {
+    _saveGlobalList();
     List<Widget> list = [];
     list.add(VisitingDragTarget(
-      index: 0,
-      onAccept: (dragIndex, targetIndex) {
-        print("$dragIndex, $targetIndex");
-        _moveSight(dragIndex, targetIndex);
-      },
-    ));
-    for (int index = 0; index < widget.visitedList.length; index++) {
+        index: 0,
+        onAccept: (dragIndex, targetIndex) =>
+            _moveSight(dragIndex, targetIndex)));
+    for (int index = 0; index < globals.visitedList.length; index++) {
       list.add(Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: VisitedSightCard(
-          key: ValueKey(widget.visitedList[index].name),
+          key: ValueKey(globals.visitedList[index].name),
           index: index,
-          sight: widget.visitedList[index],
+          sight: globals.visitedList[index],
           onShareTap: () => print("share"),
           onDeleteTap: () => _deleteSight(index),
         ),
       ));
-       list.add(VisitingDragTarget(
-        index: index + 1,
-        onAccept: (dragIndex, targetIndex) {
-          print("$dragIndex, $targetIndex");
-          _moveSight(dragIndex, targetIndex);
-        },
-      ));
+      list.add(VisitingDragTarget(
+          index: index + 1,
+          onAccept: (dragIndex, targetIndex) =>
+              _moveSight(dragIndex, targetIndex)));
     }
-    
+
     return Column(children: list);
   }
 
@@ -107,7 +102,7 @@ class _VisitedTabState extends State<VisitedTab> {
     if (targetIndex != dragIndex + 1 && targetIndex != dragIndex) {
       setState(() {
         var movedSight = widget.visitedList.removeAt(dragIndex);
-        widget.visitedList.insert(targetIndex, movedSight);
+        globals.visitedList.insert(targetIndex, movedSight);
         _visitedWidgets = _getVisitedListWidgets();
       });
     }
@@ -115,8 +110,12 @@ class _VisitedTabState extends State<VisitedTab> {
 
   void _deleteSight(int index) {
     setState(() {
-      widget.visitedList.removeAt(index);
+      globals.visitedList.removeAt(index);
       _visitedWidgets = _getVisitedListWidgets();
     });
+  }
+
+  void _saveGlobalList() {
+    globals.visitedList = widget.visitedList;
   }
 }
