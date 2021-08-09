@@ -45,7 +45,7 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
       newPhotoList.add(PhotoOfSight(
         index: i,
         image: _photosWidgets[i].image,
-        onDeleteTap: (index) => _deletePhoto(index),
+        onDelete: (index) => _deletePhoto(index),
       ));
     }
     _photosWidgets = newPhotoList;
@@ -56,7 +56,7 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
       key: ValueKey("Photo #${_photosWidgets.length}"),
       index: _photosWidgets.length,
       image: Image.network(_getPhoto()),
-      onDeleteTap: (index) => _deletePhoto(index),
+      onDelete: (index) => _deletePhoto(index),
     );
     setState(() {
       _photosWidgets.add(photo);
@@ -108,47 +108,61 @@ class AddButton extends StatelessWidget {
   }
 }
 
-class PhotoOfSight extends StatelessWidget {
+class PhotoOfSight extends StatefulWidget {
   const PhotoOfSight({
     Key? key,
     required this.index,
     required this.image,
-    required this.onDeleteTap,
+    required this.onDelete,
   }) : super(key: key);
 
   final int index;
   final Image image;
-  final Function(int) onDeleteTap;
+  final Function(int) onDelete;
 
   @override
+  _PhotoOfSightState createState() => _PhotoOfSightState();
+}
+
+class _PhotoOfSightState extends State<PhotoOfSight> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8),
-      height: 72,
-      width: 72,
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Stack(
-        children: [
-          ClipRRect(
-            child: image,
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
-          GestureDetector(
-            child: Container(
-              margin: EdgeInsets.all(4),
-              alignment: Alignment.topRight,
-              child: ImageIcon(
-                AssetImage(
-                  "res/icons/other/Clear.png",
-                ),
-                color: lmPrimaryColor,
-              ),
+    return Dismissible(
+      key: UniqueKey(),
+      direction: DismissDirection.up,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8),
+        height: 72,
+        width: 72,
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(12))),
+        child: Stack(
+          children: [
+            ClipRRect(
+              child: widget.image,
+              borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
-            onTap: () => onDeleteTap(index),
-          )
-        ],
+            GestureDetector(
+              child: Container(
+                margin: EdgeInsets.all(4),
+                alignment: Alignment.topRight,
+                child: ImageIcon(
+                  AssetImage(
+                    "res/icons/other/Clear.png",
+                  ),
+                  color: lmPrimaryColor,
+                ),
+              ),
+              onTap: () => widget.onDelete(widget.index),
+            )
+          ],
+        ),
       ),
+      onDismissed: (direction) {
+        setState(() {
+          widget.onDelete(widget.index);
+        });
+      },
     );
   }
 }
