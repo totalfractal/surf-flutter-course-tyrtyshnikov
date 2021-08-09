@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/search_screen.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/widgets/sight_card.dart';
 import 'package:places/ui/screen/widgets/search_bar.dart';
 
 import '../../globals.dart';
+import 'widgets/bottom_nav_bar.dart';
 
 class SightListScreen extends StatefulWidget {
   SightListScreen({Key? key, required this.title}) : super(key: key);

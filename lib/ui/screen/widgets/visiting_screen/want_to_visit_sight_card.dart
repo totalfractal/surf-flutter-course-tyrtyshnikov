@@ -3,15 +3,16 @@ import 'package:places/domain/sight.dart';
 import 'package:places/globals.dart';
 import 'package:places/ui/screen/res/colors.dart';
 
-import '../../sight_card.dart';
+import '../sight_card.dart';
 
 class WantToVisitSightCard extends SightCard {
   const WantToVisitSightCard(
       {Key? key,
+      required int index,
       required Sight sight,
       required this.onDeleteTap,
       required this.onCalendarTap})
-      : super(sight: sight, key: key);
+      : super(sight: sight, key: key, index: index);
 
   final VoidCallback onDeleteTap;
   final VoidCallback onCalendarTap;

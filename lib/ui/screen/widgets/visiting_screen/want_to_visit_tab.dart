@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/ui/screen/widgets/visiting_screen/visiting_drag_target.dart';
 
 import '../../../../globals.dart';
 import 'want_to_visit_sight_card.dart';
@@ -68,20 +69,45 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
 
   Column _getWantToVisitWidgets() {
     List<Widget> list = [];
+    list.add(VisitingDragTarget(
+      index: 0,
+      onAccept: (dragIndex, targetIndex) {
+        print("$dragIndex, $targetIndex");
+        _moveSight(dragIndex, targetIndex);
+      },
+    ));
     for (int index = 0; index < widget.wantToVisitList.length; index++) {
       list.add(Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: WantToVisitSightCard(
           key: ValueKey(widget.wantToVisitList[index].name),
+          index: index,
           sight: widget.wantToVisitList[index],
           onDeleteTap: () => _deleteSight(index),
           onCalendarTap: () => print("add to calendar"),
         ),
       ));
+      list.add(VisitingDragTarget(
+        index: index + 1,
+        onAccept: (dragIndex, targetIndex) {
+          print("$dragIndex, $targetIndex");
+          _moveSight(dragIndex, targetIndex);
+        },
+      ));
     }
     return Column(
       children: list,
     );
+  }
+
+  void _moveSight(int dragIndex, int targetIndex) {
+    if (targetIndex != dragIndex + 1 && targetIndex != dragIndex) {
+      setState(() {
+        var movedSight = widget.wantToVisitList.removeAt(dragIndex);
+        widget.wantToVisitList.insert(targetIndex, movedSight);
+        _wantToVisitWidgets = _getWantToVisitWidgets();
+      });
+    }
   }
 
   void _deleteSight(int index) {

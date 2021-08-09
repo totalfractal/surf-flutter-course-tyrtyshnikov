@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/screen/res/colors.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/widgets/sight_card.dart';
 import 'package:places/ui/screen/sight_details.dart';
 import 'package:places/ui/screen/widgets/visiting_screen/visited_sight_card.dart';
 import '../../globals.dart';
 import '../../mocks.dart';
+import 'widgets/bottom_nav_bar.dart';
 import 'widgets/visiting_screen/visited_tab.dart';
 import 'widgets/visiting_screen/want_to_visit_sight_card.dart';
 import 'widgets/visiting_screen/want_to_visit_tab.dart';

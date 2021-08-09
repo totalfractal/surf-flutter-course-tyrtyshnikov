@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 
-import '../../sight_card.dart';
+import '../sight_card.dart';
 
 class VisitedSightCard extends SightCard {
   const VisitedSightCard(
       {key,
+      required int index,
       required Sight sight,
       required this.onShareTap,
       required this.onDeleteTap})

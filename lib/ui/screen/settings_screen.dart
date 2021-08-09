@@ -5,6 +5,8 @@ import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/res/themes.dart';
 import 'package:provider/provider.dart';
 
+import 'widgets/bottom_nav_bar.dart';
+
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
@@ -36,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: globals.BottomNavBar(),
+      bottomNavigationBar: BottomNavBar(),
       body: Container(
         padding: EdgeInsets.all(16),
         child: Column(
