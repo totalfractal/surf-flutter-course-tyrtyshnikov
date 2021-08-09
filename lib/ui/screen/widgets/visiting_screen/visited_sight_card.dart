@@ -10,7 +10,7 @@ class VisitedSightCard extends SightCard {
       required Sight sight,
       required this.onShareTap,
       required this.onDeleteTap})
-      : super(key: key, sight: sight);
+      : super(key: key, sight: sight, index: index);
 
   final VoidCallback onShareTap;
   final VoidCallback onDeleteTap;

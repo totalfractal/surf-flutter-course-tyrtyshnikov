@@ -62,7 +62,6 @@ class _SightCardState extends State<SightCard> {
   Widget build(BuildContext context) {
     var cardStack = Container(
       width: MediaQuery.of(context).size.width-32,
-      height: 198,
       child: Stack(
         key: globalKey,
         children: [

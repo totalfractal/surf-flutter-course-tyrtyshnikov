@@ -82,7 +82,7 @@ class _VisitedTabState extends State<VisitedTab> {
     ));
     for (int index = 0; index < widget.visitedList.length; index++) {
       list.add(Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: VisitedSightCard(
           key: ValueKey(widget.visitedList[index].name),
           index: index,
