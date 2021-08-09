@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import '../../globals.dart';
 
-
 class SightDetails extends StatelessWidget {
   const SightDetails({
     key,
-    this.sight,
+    required this.sight,
   }) : super(key: key);
 
-  final Sight? sight;
+  final Sight sight;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +32,7 @@ class SightDetails extends StatelessWidget {
                     tileMode: TileMode.clamp),
               ),
               child: Image.network(
-                sight!.url!,
+                sight.url,
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) {
@@ -53,14 +52,15 @@ class SightDetails extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 16.0, left: 16, right: 16, bottom: 2),
+              padding:
+                  EdgeInsets.only(top: 16.0, left: 16, right: 16, bottom: 2),
               child: Column(
                 children: [
                   Container(
                       margin: EdgeInsets.symmetric(vertical: 2),
                       alignment: Alignment.topLeft,
                       child: Text(
-                        sight!.name!,
+                        sight.name,
                         textAlign: TextAlign.start,
                         style: Theme.of(context).primaryTextTheme.headline1,
                       )),
@@ -72,22 +72,24 @@ class SightDetails extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          child: Text(sight!.type!.toLowerCase(),
+                          child: Text(sight.type.toLowerCase(),
                               textAlign: TextAlign.start,
-                              style: Theme.of(context).primaryTextTheme.subtitle1),
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle1),
                         ),
                         Container(
                           margin: EdgeInsets.only(left: 16),
                           child: Text("закрыто до 9:00",
                               textAlign: TextAlign.start,
-                              style: Theme.of(context).primaryTextTheme.subtitle2),
+                              style:
+                                  Theme.of(context).primaryTextTheme.subtitle2),
                         ),
                       ],
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 24),
-                    child: Text(sight!.details!,
+                    child: Text(sight.details,
                         textAlign: TextAlign.justify,
                         style: Theme.of(context).primaryTextTheme.bodyText1),
                   ),
@@ -101,24 +103,25 @@ class SightDetails extends StatelessWidget {
                         children: [
                           Image.asset("res/icons/other/GO.png"),
                           SizedBox(width: 8),
-                          Text('Построить маршрут'.toUpperCase(), ),
+                          Text(
+                            'Построить маршрут'.toUpperCase(),
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 24),
                     child: Theme(
                       data: ThemeData(
                         elevatedButtonTheme: ElevatedButtonThemeData(
                             style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.transparent),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.transparent),
                           foregroundColor: MaterialStateProperty.all<Color>(
                               hexToColor("#3B3E5B")),
-                          shadowColor:
-                              MaterialStateProperty.all<Color>(Colors.transparent),
+                          shadowColor: MaterialStateProperty.all<Color>(
+                              Colors.transparent),
                         )),
                       ),
                       child: ButtonBar(
@@ -128,12 +131,22 @@ class SightDetails extends StatelessWidget {
                             onPressed: () {
                               print("Запланировано");
                             },
-                            
                             child: Row(
                               children: [
-                                Image.asset("res/icons/other/Calendar.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),
-                                SizedBox(width: 9,),
-                                Text('Запланировать', style: TextStyle(color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),)
+                                Image.asset("res/icons/other/Calendar.png",
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : hexToColor("#3B3E5B")),
+                                SizedBox(
+                                  width: 9,
+                                ),
+                                Text(
+                                  'Запланировать',
+                                  style: TextStyle(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : hexToColor("#3B3E5B")),
+                                )
                               ],
                             ),
                           ),
@@ -144,9 +157,20 @@ class SightDetails extends StatelessWidget {
                             style: ButtonStyle(),
                             child: Row(
                               children: [
-                                Image.asset("res/icons/menu/Heart.png", color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),
-                                SizedBox(width: 9,),
-                                Text('В избранное', style: TextStyle(color: isDarkMode ? Colors.white : hexToColor("#3B3E5B")),),
+                                Image.asset("res/icons/menu/Heart.png",
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : hexToColor("#3B3E5B")),
+                                SizedBox(
+                                  width: 9,
+                                ),
+                                Text(
+                                  'В избранное',
+                                  style: TextStyle(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : hexToColor("#3B3E5B")),
+                                ),
                               ],
                             ),
                           ),
@@ -159,20 +183,21 @@ class SightDetails extends StatelessWidget {
             ),
           ]),
           Positioned(
-            top: 36,
-            left: 16,
-            child: Material(
-             // borderRadius: BorderRadius.circular(12),
-              shape: RoundedRectangleBorder(
-
-      borderRadius: BorderRadius.circular(12.0),
-
-    ),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(12.0),
-                child: ImageIcon(AssetImage("res/icons/other/Arrow.png"),size: 32,),
-                onTap: () => Navigator.pop(context),
-              )))
+              top: 36,
+              left: 16,
+              child: Material(
+                  // borderRadius: BorderRadius.circular(12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: ImageIcon(
+                      AssetImage("res/icons/other/Arrow.png"),
+                      size: 32,
+                    ),
+                    onTap: () => Navigator.pop(context),
+                  )))
         ],
       ),
     );

@@ -15,8 +15,9 @@ import 'globals.dart' as globals;
 
 void main() {
   return runApp(ChangeNotifierProvider(
-  child: App(),
-  create: (BuildContext context) => ThemeProvider(isDarkMode: true),));
+    child: App(),
+    create: (BuildContext context) => ThemeProvider(isDarkMode: true),
+  ));
 }
 
 class App extends StatefulWidget {
@@ -27,25 +28,26 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         return MaterialApp(
-        title: 'First App',
-      //  home: SearchScreen(),
-       // home: AddSightScreenCategory(setCategory: (value){}),
-       // home: AddSightScreenCategory(setCategory: (value){} ),
-       // home: AddSightScreen(),
-       // home: SettingsScreen(),
-        // home: FilterScreen(),
-        // home: VisitingScreen(),
-         home: SightListScreen(title: "Список интересных мест",),
-        // home: SightDetails(sight: Sight(name: mocks[0][0], lat: mocks[0][1], lon: mocks[0][2], url: mocks[0][3], details: mocks[0][4], type: mocks[0][5]),),
-        //theme: globals.isDarkMode ? darkTheme : lightTheme,
-        theme: themeProvider.getTheme,
-      );
+          title: 'First App',
+          //  home: SearchScreen(),
+          // home: AddSightScreenCategory(setCategory: (value){}),
+          // home: AddSightScreenCategory(setCategory: (value){} ),
+          // home: AddSightScreen(),
+          // home: SettingsScreen(),
+          // home: FilterScreen(),
+          home: VisitingScreen(),
+          /*  home: SightListScreen(
+            title: "Список интересных мест",
+          ), */
+          // home: SightDetails(sight: Sight(name: mocks[0][0], lat: mocks[0][1], lon: mocks[0][2], url: mocks[0][3], details: mocks[0][4], type: mocks[0][5]),),
+          //theme: globals.isDarkMode ? darkTheme : lightTheme,
+          theme: themeProvider.getTheme,
+        );
       },
     );
   }

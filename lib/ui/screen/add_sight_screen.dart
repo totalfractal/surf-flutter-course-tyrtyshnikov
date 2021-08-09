@@ -16,19 +16,20 @@ class AddSightScreen extends StatefulWidget {
 
 class _AddSightScreenState extends State<AddSightScreen> {
   bool _isFieldsFill = false;
-  TextEditingController _nameFieldTextController  = TextEditingController();
-  TextEditingController _latFieldTextController  = TextEditingController();
-  TextEditingController _lonFieldTextController  = TextEditingController();
-  TextEditingController _descriptionFieldTextController  = TextEditingController();
+  TextEditingController _nameFieldTextController = TextEditingController();
+  TextEditingController _latFieldTextController = TextEditingController();
+  TextEditingController _lonFieldTextController = TextEditingController();
+  TextEditingController _descriptionFieldTextController =
+      TextEditingController();
   String _category = "Не выбрано";
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void dispose(){
+  void dispose() {
     _nameFieldTextController.dispose();
-_latFieldTextController.dispose();
-_lonFieldTextController.dispose();
-_descriptionFieldTextController.dispose();
+    _latFieldTextController.dispose();
+    _lonFieldTextController.dispose();
+    _descriptionFieldTextController.dispose();
     super.dispose();
   }
 
@@ -412,6 +413,7 @@ extension Utility on BuildContext {
   void nextEditableTextFocus() {
     do {
       FocusScope.of(this).nextFocus();
-    } while (FocusScope.of(this).focusedChild!.context!.widget is! EditableText);
+    } while (
+        FocusScope.of(this).focusedChild!.context!.widget is! EditableText);
   }
 }

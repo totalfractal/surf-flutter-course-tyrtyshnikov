@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/screen/res/colors.dart';
+import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/sight_details.dart';
 import '../../globals.dart';
 import '../../mocks.dart';
 
@@ -9,6 +11,38 @@ import '../../mocks.dart';
 class VisitingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var wantToVisitList = [
+      Sight(
+          name: mocks[0][0],
+          lat: double.parse(mocks[0][1]),
+          lon: double.parse(mocks[0][2]),
+          url: mocks[0][3],
+          details: mocks[0][4],
+          type: mocks[0][5]),
+      Sight(
+          name: mocks[1][0],
+          lat: double.parse(mocks[1][1]),
+          lon: double.parse(mocks[1][2]),
+          url: mocks[1][3],
+          details: mocks[1][4],
+          type: mocks[1][5])
+    ];
+    var visitedList = [
+      Sight(
+          name: mocks[2][0],
+          lat: double.parse(mocks[2][1]),
+          lon: double.parse(mocks[2][2]),
+          url: mocks[2][3],
+          details: mocks[2][4],
+          type: mocks[2][5]),
+      Sight(
+          name: mocks[3][0],
+          lat: double.parse(mocks[3][1]),
+          lon: double.parse(mocks[3][2]),
+          url: mocks[3][3],
+          details: mocks[3][4],
+          type: mocks[3][5]),
+    ];
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -41,101 +75,175 @@ class VisitingScreen extends StatelessWidget {
         ),
         bottomNavigationBar: BottomNavBar(),
         body: TabBarView(children: [
-          WantToVisitTab(visitList: [
-            Sight(
-                name: mocks[0][0],
-                lat: double.parse(mocks[0][1]),
-                lon: double.parse(mocks[0][2]),
-                url: mocks[0][3],
-                details: mocks[0][4],
-                type: mocks[0][5])
-          ]),
-          VisitedTab(visitedList: [
-            Sight(
-                name: mocks[1][0],
-                lat: double.parse(mocks[1][1]),
-                lon: double.parse(mocks[1][2]),
-                url: mocks[1][3],
-                details: mocks[1][4],
-                type: mocks[1][5])
-          ])
+          WantToVisitTab(wantToVisitList: wantToVisitList),
+          VisitedTab(visitedList: visitedList)
         ]),
       ),
     );
   }
 }
 
-class WantToVisitTab extends StatelessWidget {
-  const WantToVisitTab({
-    key,
-    required this.visitList,
-  }) : super(key: key);
+class WantToVisitTab extends StatefulWidget {
+  const WantToVisitTab({key, required this.wantToVisitList}) : super(key: key);
 
-  final List<Sight> visitList;
+  final List<Sight> wantToVisitList;
+
+  @override
+  _WantToVisitTabState createState() => _WantToVisitTabState();
+}
+
+class _WantToVisitTabState extends State<WantToVisitTab> {
+  late Column _wantToVisitWidgets;
+
+  @override
+  void initState() {
+    // _wantToVisitCardsList = _getWantToVisitListWidgets();
+    super.initState();
+    _wantToVisitWidgets = _getWantToVisitWidgets();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return visitList.isEmpty
-        ? Center(
-            child: SingleChildScrollView(
+    return widget.wantToVisitList.isEmpty
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Image.asset(
+                  "res/icons/other/Card.png",
+                  height: 64,
+                  width: 64,
+                  fit: BoxFit.fill,
+                  filterQuality: FilterQuality.high,
+                  color: hexToColor("#7C7E92"),
+                  scale: 2,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 53),
                 child: Column(
-              children: [
-                Container(
-                  child: Image.asset(
-                    "res/icons/other/Card.png",
-                    height: 64,
-                    width: 64,
-                    fit: BoxFit.fill,
-                    filterQuality: FilterQuality.high,
-                    color: hexToColor("#7C7E92"),
-                    scale: 2,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 53),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 24, bottom: 8),
-                        child: Text(
-                          "Пусто",
-                          style: Theme.of(context).primaryTextTheme.headline2,
-                        ),
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 24, bottom: 8),
+                      child: Text(
+                        "Пусто",
+                        style: Theme.of(context).primaryTextTheme.headline2,
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 40),
-                        child: Text(
-                          "Отмечайте понравившиеся места и они появятся здесь.",
-                          style: Theme.of(context).primaryTextTheme.headline3,
-                          textAlign: TextAlign.center,
-                        ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: Text(
+                        "Отмечайте понравившиеся места и они появятся здесь.",
+                        style: Theme.of(context).primaryTextTheme.headline3,
+                        textAlign: TextAlign.center,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            )),
+              ),
+            ],
           )
-        : Column(
-            children: _getWantToVisitListWidgets(),
-          );
+        : SingleChildScrollView(child: _wantToVisitWidgets);
   }
 
-  List<Widget> _getWantToVisitListWidgets() {
+  Column _getWantToVisitWidgets() {
     List<Widget> list = [];
-    visitList.forEach((element) {
+    for (int index = 0; index < widget.wantToVisitList.length; index++) {
       list.add(Padding(
         padding: const EdgeInsets.all(16),
         child: WantToVisitSightCard(
-          sight: element,
+          // key: ValueKey(widget.wantToVisitList[index].toString()),
+          sight: widget.wantToVisitList[index],
+          onDeleteTap: () => _deleteSight(index),
+          onCalendarTap: () => print("add to calendar"),
         ),
       ));
+    }
+    return Column(
+      children: list,
+    );
+  }
+
+  void _deleteSight(int index) {
+    setState(() {
+      widget.wantToVisitList.removeAt(index);
+      _wantToVisitWidgets = _getWantToVisitWidgets();
     });
-    return list;
   }
 }
 
-class VisitedTab extends StatelessWidget {
+class WantToVisitSightCard extends SightCard {
+  const WantToVisitSightCard(
+      {Key? key,
+      required Sight sight,
+      required this.onDeleteTap,
+      required this.onCalendarTap})
+      : super(sight: sight, key: key);
+
+  final VoidCallback onDeleteTap;
+  final VoidCallback onCalendarTap;
+
+  @override
+  Column informationColumn(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 2),
+        child: Text(sight.name.isEmpty ? "Название" : sight.name,
+            style: Theme.of(context).primaryTextTheme.headline4),
+      ),
+      Container(
+        padding: EdgeInsets.only(top: 2),
+        child: Text("Запланировано на 12 окт. 2020",
+            textAlign: TextAlign.start,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .subtitle2!
+                .copyWith(color: hexToColor("#4CAF50"))),
+      ),
+      Container(
+        padding: EdgeInsets.only(top: 16),
+        child: Text("закрыто до 9:00",
+            textAlign: TextAlign.start,
+            style: Theme.of(context).primaryTextTheme.subtitle2),
+      ),
+    ]);
+  }
+
+  @override
+  Widget interactionButtons() {
+    return Row(children: [
+      Container(
+        width: 45,
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          child: InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            child: Image.asset(
+              "res/icons/other/Calendar.png",
+            ),
+            onTap: () => onCalendarTap(),
+          ),
+        ),
+      ),
+      Container(
+        width: 45,
+        child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              child: Image.asset(
+                "res/icons/other/Delete.png",
+              ),
+              onTap: () => onDeleteTap(),
+            )),
+      )
+    ]);
+  }
+}
+
+class VisitedTab extends StatefulWidget {
   const VisitedTab({
     key,
     required this.visitedList,
@@ -144,8 +252,21 @@ class VisitedTab extends StatelessWidget {
   final List<Sight> visitedList;
 
   @override
+  _VisitedTabState createState() => _VisitedTabState();
+}
+
+class _VisitedTabState extends State<VisitedTab> {
+  late Column _visitedWidgets;
+
+  @override
+  void initState() {
+    super.initState();
+    _visitedWidgets = _getVisitedListWidgets();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return visitedList.isEmpty
+    return widget.visitedList.isEmpty
         ? Center(
             child: SingleChildScrollView(
                 child: Column(
@@ -186,201 +307,102 @@ class VisitedTab extends StatelessWidget {
               ],
             )),
           )
-        : Column(
-            children: _getVisitedListWidgets(),
-          );
+        : _visitedWidgets;
   }
 
-  List<Widget> _getVisitedListWidgets() {
+  Column _getVisitedListWidgets() {
     List<Widget> list = [];
-    visitedList.forEach((element) {
+    for (int index = 0; index < widget.visitedList.length; index++) {
       list.add(Padding(
         padding: const EdgeInsets.all(16),
         child: VisitedSightCard(
-          sight: element,
+          sight: widget.visitedList[index],
+          onShareTap: () => print("share"),
+          onDeleteTap: () => _deleteSight(index),
         ),
       ));
+    }
+    return Column(children: list);
+  }
+
+  void _deleteSight(int index) {
+    setState(() {
+      widget.visitedList.removeAt(index);
+      _visitedWidgets = _getVisitedListWidgets();
     });
-    return list;
   }
 }
 
-class WantToVisitSightCard extends StatelessWidget {
-  const WantToVisitSightCard({
-    key,
-    required this.sight,
-  }) : super(key: key);
+class VisitedSightCard extends SightCard {
+  const VisitedSightCard(
+      {key,
+      required Sight sight,
+      required this.onShareTap,
+      required this.onDeleteTap})
+      : super(key: key, sight: sight);
 
-  final Sight sight;
+  final VoidCallback onShareTap;
+  final VoidCallback onDeleteTap;
 
   @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          child: Column(
-            children: [
-              Container(
-                height: 96,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      topRight: Radius.circular(12)),
-                  gradient: new LinearGradient(
-                      colors: [
-                        Colors.black38,
-                        Colors.black12,
-                      ],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 0.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
-                ),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12)),
-                      child: Image.network(
-                        sight.url!,
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          );
-                        },
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 16, left: 16),
-                      alignment: Alignment.topCenter,
-                      child: Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                sight.type!.isEmpty
-                                    ? "категория"
-                                    : sight.type!.toLowerCase(),
-                                style:
-                                    Theme.of(context).primaryTextTheme.caption,
-                              ),
-                            ),
-                          ),
-                          ButtonBar(buttonPadding: EdgeInsets.zero, children: [
-                            Container(
-                                alignment: Alignment.topCenter,
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  alignment: Alignment.topCenter,
-                                  icon: Image.asset(
-                                    "res/icons/other/Calendar.png",
-                                  ),
-                                  onPressed: () {
-                                    print("Добавить в календарь");
-                                  },
-                                )),
-                            Container(
-                                alignment: Alignment.topCenter,
-                                child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    alignment: Alignment.topCenter,
-                                    icon: Image.asset(
-                                      "res/icons/other/Delete.png",
-                                    ),
-                                    onPressed: () {
-                                      print("Удалить");
-                                    }))
-                          ]),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadiusDirectional.only(
-                      bottomEnd: Radius.circular(12),
-                      bottomStart: Radius.circular(12),
-                    ),
-                    color: isDarkMode
-                        ? dmSightCardContainerColor
-                        : lmSightCardContainerColor),
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.all(16.0),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Text(
-                              sight.name!.isEmpty ? "Название" : sight.name!,
-                              style:
-                                  Theme.of(context).primaryTextTheme.headline4),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 2),
-                          child: Text("Запланировано на 12 окт. 2020",
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context)
-                                  .primaryTextTheme
-                                  .subtitle2!
-                                  .copyWith(color: hexToColor("#4CAF50"))),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 16),
-                          child: Text("закрыто до 9:00",
-                              textAlign: TextAlign.start,
-                              style:
-                                  Theme.of(context).primaryTextTheme.subtitle2),
-                        ),
-                      ]),
-                ),
-              ),
-            ],
+  Column informationColumn(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 2),
+        child: Text(
+          sight.name.isEmpty ? "Название" : sight.name,
+          style: Theme.of(context).primaryTextTheme.headline4,
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.only(top: 2),
+        child: Text("Цель достигнута 12 окт. 2020",
+            textAlign: TextAlign.start,
+            style: Theme.of(context).primaryTextTheme.subtitle2),
+      ),
+      Container(
+        padding: EdgeInsets.only(top: 16),
+        child: Text("закрыто до 9:00",
+            textAlign: TextAlign.start,
+            style: Theme.of(context).primaryTextTheme.subtitle2),
+      ),
+    ]);
+  }
+
+  @override
+  Widget interactionButtons() {
+    return Row(children: [
+      Container(
+        width: 45,
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          child: InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            child: Image.asset(
+              "res/icons/other/Share.png",
+            ),
+            onTap: () => onShareTap(),
           ),
         ),
-        new Positioned.fill(
-            child: new Material(
-                color: Colors.transparent,
-                child: new InkWell(
-                  onTap: () {
-                    print("InkWell");
-                  },
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                )))
-      ],
-    );
+      ),
+      Container(
+        width: 45,
+        child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              child: Image.asset(
+                "res/icons/other/Delete.png",
+              ),
+              onTap: () => onDeleteTap(),
+            )),
+      )
+    ]);
   }
-}
 
-class VisitedSightCard extends StatelessWidget {
-  const VisitedSightCard({
-    key,
-    required this.sight,
-  }) : super(key: key);
-
-  final Sight sight;
-
-  @override
+  /* @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
@@ -411,7 +433,7 @@ class VisitedSightCard extends StatelessWidget {
                           topLeft: Radius.circular(12),
                           topRight: Radius.circular(12)),
                       child: Image.network(
-                        sight.url!,
+                        sight.url,
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent? loadingProgress) {
                           if (loadingProgress == null) {
@@ -442,9 +464,9 @@ class VisitedSightCard extends StatelessWidget {
                             child: Container(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                  sight.type!.isEmpty
+                                  sight.type.isEmpty
                                       ? "категория"
-                                      : sight.type!.toLowerCase(),
+                                      : sight.type.toLowerCase(),
                                   style: TextStyle(
                                     fontFamily: 'Roboto',
                                     fontStyle: FontStyle.normal,
@@ -504,7 +526,7 @@ class VisitedSightCard extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 2),
                           child: Text(
-                            sight.name!.isEmpty ? "Название" : sight.name!,
+                            sight.name.isEmpty ? "Название" : sight.name,
                             style: Theme.of(context).primaryTextTheme.headline4,
                           ),
                         ),
@@ -533,7 +555,12 @@ class VisitedSightCard extends StatelessWidget {
                 color: Colors.transparent,
                 child: new InkWell(
                   onTap: () {
-                    print("InkWell");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SightDetails(
+                                  sight: sight,
+                                )));
                   },
                   customBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -541,5 +568,5 @@ class VisitedSightCard extends StatelessWidget {
                 )))
       ],
     );
-  }
+  } */
 }

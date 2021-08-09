@@ -44,7 +44,6 @@ class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
           icon: ImageIcon(
             AssetImage("res/icons/other/Arrow.png"),
             color: Theme.of(context).iconTheme.color,
-            
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
