@@ -37,10 +37,10 @@ class _AppState extends State<App> {
           //  home: SearchScreen(),
           // home: AddSightScreenCategory(setCategory: (value){}),
           // home: AddSightScreenCategory(setCategory: (value){} ),
-           home: AddSightScreen(),
+          home: AddSightScreen(),
           // home: SettingsScreen(),
           // home: FilterScreen(),
-         // home: VisitingScreen(),
+          // home: VisitingScreen(),
           /*  home: SightListScreen(
             title: "Список интересных мест",
           ), */

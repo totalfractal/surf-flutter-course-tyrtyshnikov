@@ -13,8 +13,7 @@ class AddPhotosOfSight extends StatefulWidget {
 }
 
 class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
-  List<Widget> _photosWidgets = [];
-  //Row _photosRow = Row();
+  List<PhotoOfSight> _photosWidgets = [];
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +23,7 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
           padding: const EdgeInsets.only(right: 8.0),
           child: AddButton(
             onTap: () {
-              _addPhoto(PhotoOfSight(
-                key: ValueKey("Photo #${_photosWidgets.length}"),
-                image: Image.network(_getPhoto()),
-                onDeleteTap: () => _deletePhoto(_photosWidgets.length - 1),
-              ));
+              _addPhoto();
             },
           ),
         ),
@@ -46,16 +41,23 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
 
   void _getPhotosWidgets() {
     List<PhotoOfSight> newPhotoList = [];
-    for (int index = 0; index < _photosWidgets.length; index++) {
+    for (int i = 0; i < _photosWidgets.length; i++) {
       newPhotoList.add(PhotoOfSight(
-        image: Image.network(_getPhoto()),
-        onDeleteTap: () => _deletePhoto(index),
+        index: i,
+        image: _photosWidgets[i].image,
+        onDeleteTap: (index) => _deletePhoto(index),
       ));
     }
     _photosWidgets = newPhotoList;
   }
 
-  void _addPhoto(PhotoOfSight photo) {
+  void _addPhoto() {
+    var photo = PhotoOfSight(
+      key: ValueKey("Photo #${_photosWidgets.length}"),
+      index: _photosWidgets.length,
+      image: Image.network(_getPhoto()),
+      onDeleteTap: (index) => _deletePhoto(index),
+    );
     setState(() {
       _photosWidgets.add(photo);
     });
@@ -65,13 +67,12 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
     setState(() {
       _photosWidgets.removeAt(index);
       _getPhotosWidgets();
-      // _photosRow = _getPhotosRow();
     });
   }
 
   String _getPhoto() {
-    return faker.image
-        .image(width: 100, height: 100, keywords: const ["place"], random: true);
+    return faker.image.image(
+        width: 100, height: 100, keywords: const ["place"], random: true);
   }
 }
 
@@ -85,7 +86,7 @@ class AddButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
         child: Container(
           height: 72,
           width: 72,
@@ -102,19 +103,22 @@ class AddButton extends StatelessWidget {
             color: isDarkMode ? dmGreenColor : lmGreenColor,
           ),
         ),
-        onTap: () => onTap(),);
+        onTap: () => onTap(),
+        borderRadius: BorderRadius.all(Radius.circular(12)));
   }
 }
 
 class PhotoOfSight extends StatelessWidget {
   const PhotoOfSight({
     Key? key,
+    required this.index,
     required this.image,
     required this.onDeleteTap,
   }) : super(key: key);
 
+  final int index;
   final Image image;
-  final VoidCallback onDeleteTap;
+  final Function(int) onDeleteTap;
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +145,7 @@ class PhotoOfSight extends StatelessWidget {
                 color: lmPrimaryColor,
               ),
             ),
-            onTap: () => onDeleteTap(),
+            onTap: () => onDeleteTap(index),
           )
         ],
       ),
