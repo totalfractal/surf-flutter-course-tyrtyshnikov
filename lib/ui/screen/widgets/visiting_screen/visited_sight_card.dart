@@ -23,13 +23,16 @@ class VisitedSightCard extends SightCard {
         child: Text(
           sight.name.isEmpty ? "Название" : sight.name,
           style: Theme.of(context).primaryTextTheme.headline4,
+          maxLines: 1,
+            overflow: TextOverflow.ellipsis,
         ),
       ),
       Container(
         padding: EdgeInsets.only(top: 2),
         child: Text("Цель достигнута 12 окт. 2020",
             textAlign: TextAlign.start,
-            style: Theme.of(context).primaryTextTheme.subtitle2),
+            style: Theme.of(context).primaryTextTheme.subtitle2,),
+            
       ),
       Container(
         padding: EdgeInsets.only(top: 16),

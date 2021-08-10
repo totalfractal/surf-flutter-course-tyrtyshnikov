@@ -45,6 +45,8 @@ class SightCard extends StatefulWidget {
           child: Text(
             sight.name.isEmpty ? "Название" : sight.name,
             style: Theme.of(context).primaryTextTheme.headline5,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           )),
       Container(
         child: Text("закрыто до 9:00",
@@ -60,10 +62,33 @@ class _SightCardState extends State<SightCard> {
   bool isDrag = false;
   @override
   Widget build(BuildContext context) {
-    var cardStack = Container(
-      width: MediaQuery.of(context).size.width-32,
+    return LongPressDraggable<int>(
+      axis: Axis.vertical,
+      data: widget.index,
+      feedback: cardContainer(context),
+      onDragStarted: () {
+        setState(() {
+          isDrag = true;
+        });
+      },
+      onDragEnd: (details) {
+        setState(() {
+          isDrag = false;
+        });
+      },
+      child: isDrag ? SizedBox.shrink() : cardContainer(context),
+    );
+  }
+
+  Container cardContainer(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width - 32,
+      height: 198,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+        color: Colors.black,
+      ),
       child: Stack(
-        key: globalKey,
         children: [
           Container(
             decoration: BoxDecoration(
@@ -169,22 +194,6 @@ class _SightCardState extends State<SightCard> {
           ),
         ],
       ),
-    );
-
-    return LongPressDraggable<int>(
-      data: widget.index,
-      feedback: cardStack,
-      onDragStarted: () {
-        setState(() {
-          isDrag = true;
-        });
-      },
-      onDragEnd: (details) {
-        setState(() {
-          isDrag = false;
-        });
-      },
-      child: isDrag ? SizedBox.shrink() : cardStack,
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/ui/screen/res/colors.dart';
+import 'package:places/ui/screen/res/styles.dart';
 
 import '../../../../globals.dart' as globals;
 import 'visited_sight_card.dart';
@@ -19,6 +21,7 @@ class VisitedTab extends StatefulWidget {
 
 class _VisitedTabState extends State<VisitedTab> {
   late Column _visitedWidgets;
+  Map<String, Widget> _allWidgetsMap = {};
 
   @override
   void initState() {
@@ -81,12 +84,36 @@ class _VisitedTabState extends State<VisitedTab> {
     for (int index = 0; index < globals.visitedList.length; index++) {
       list.add(Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: VisitedSightCard(
-          key: ValueKey(globals.visitedList[index].name),
-          index: index,
-          sight: globals.visitedList[index],
-          onShareTap: () => print("share"),
-          onDeleteTap: () => _deleteSight(index),
+        child: Dismissible(
+          key: ValueKey(globals.visitedList[index].name + " dismissVisited"),
+          child: VisitedSightCard(
+            key: ValueKey(globals.visitedList[index].name + " cardVisited"),
+            index: index,
+            sight: globals.visitedList[index],
+            onShareTap: () => print("share"),
+            onDeleteTap: () =>
+                _deleteSight(index, globals.visitedList[index].name),
+          ),
+          background: Container(
+              margin: EdgeInsets.all(16),
+              alignment: Alignment.centerRight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("res/icons/other/Bucket.png"),
+                  Container(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Text(
+                      "Удалить",
+                      style: lmRoboto12W400.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          onDismissed: (direction) =>
+              _deleteSight(index, globals.wantToVisitList[index].name),
+          direction: DismissDirection.endToStart,
         ),
       ));
       list.add(VisitingDragTarget(
@@ -113,9 +140,10 @@ class _VisitedTabState extends State<VisitedTab> {
     }
   }
 
-  void _deleteSight(int index) {
+  void _deleteSight(int index, String key) {
     setState(() {
-      globals.visitedList.removeAt(index);
+      widget.visitedList.removeAt(index);
+      _allWidgetsMap.remove(key);
       _visitedWidgets = _getVisitedListWidgets();
     });
   }

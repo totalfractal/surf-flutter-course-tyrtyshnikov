@@ -23,7 +23,9 @@ class WantToVisitSightCard extends SightCard {
       Container(
         padding: EdgeInsets.symmetric(vertical: 2),
         child: Text(sight.name.isEmpty ? "Название" : sight.name,
-            style: Theme.of(context).primaryTextTheme.headline4),
+            style: Theme.of(context).primaryTextTheme.headline4,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,),
       ),
       Container(
         padding: EdgeInsets.only(top: 2),
