@@ -99,7 +99,11 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
     if (targetIndex != dragIndex + 1 && targetIndex != dragIndex) {
       setState(() {
         var movedSight = globals.wantToVisitList.removeAt(dragIndex);
-        globals.wantToVisitList.insert(targetIndex, movedSight);
+        if (targetIndex == globals.wantToVisitList.length + 1) {
+          globals.wantToVisitList.insert(targetIndex - 1, movedSight);
+        } else {
+          globals.wantToVisitList.insert(targetIndex, movedSight);
+        }
         _wantToVisitWidgets = _getWantToVisitWidgets();
       });
     }

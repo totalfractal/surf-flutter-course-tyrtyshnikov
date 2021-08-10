@@ -101,8 +101,13 @@ class _VisitedTabState extends State<VisitedTab> {
   void _moveSight(int dragIndex, int targetIndex) {
     if (targetIndex != dragIndex + 1 && targetIndex != dragIndex) {
       setState(() {
-        var movedSight = widget.visitedList.removeAt(dragIndex);
-        globals.visitedList.insert(targetIndex, movedSight);
+        var movedSight = globals.visitedList.removeAt(dragIndex);
+        if (targetIndex == globals.visitedList.length + 1) {
+          globals.visitedList.insert(targetIndex - 1, movedSight);
+        } else {
+          globals.visitedList.insert(targetIndex, movedSight);
+        }
+
         _visitedWidgets = _getVisitedListWidgets();
       });
     }

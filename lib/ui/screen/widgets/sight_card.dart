@@ -171,7 +171,7 @@ class _SightCardState extends State<SightCard> {
       ),
     );
 
-    return Draggable<int>(
+    return LongPressDraggable<int>(
       data: widget.index,
       feedback: cardStack,
       onDragStarted: () {
