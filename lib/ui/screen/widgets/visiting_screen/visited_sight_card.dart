@@ -76,3 +76,27 @@ class VisitedSightCard extends SightCard {
     ]);
   }
 }
+
+class _VisitedSightCardState extends SightCardState<VisitedSightCard> {
+  GlobalKey globalKey = GlobalKey();
+  bool isDrag = false;
+  @override
+  Widget build(BuildContext context) {
+    return LongPressDraggable<int>(
+      axis: Axis.vertical,
+      data: widget.index,
+      feedback: widget.cardContainer(context),
+      onDragStarted: () {
+        setState(() {
+          isDrag = true;
+        });
+      },
+      onDragEnd: (details) {
+        setState(() {
+          isDrag = false;
+        });
+      },
+      child: isDrag ? SizedBox.shrink() : widget.cardContainer(context),
+    );
+  }
+}

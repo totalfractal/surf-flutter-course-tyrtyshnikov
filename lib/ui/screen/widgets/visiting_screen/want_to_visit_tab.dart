@@ -72,52 +72,16 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
 
   Column _getWantToVisitWidgets() {
     _saveGlobalList();
-    _allWidgetsMap = {};
-    _allWidgetsMap["DragTarget 0"] = VisitingDragTarget(
-        index: 0,
-        onAccept: (dragIndex, targetIndex) =>
-            _moveSight(dragIndex, targetIndex));
+    _allWidgetsMap = {
+      "DragTarget 0": VisitingDragTarget(
+          index: 0,
+          onAccept: (dragIndex, targetIndex) =>
+              _moveSight(dragIndex, targetIndex)),
+    };
     for (int index = 0; index < globals.wantToVisitList.length; index++) {
       _allWidgetsMap[globals.wantToVisitList[index].name] = Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Dismissible(
-          key: ValueKey(globals.wantToVisitList[index].name + " dismissWant"),
-          child: WantToVisitSightCard(
-            key: ValueKey(globals.wantToVisitList[index].name + " cardWant"),
-            index: index,
-            sight: globals.wantToVisitList[index],
-            onDeleteTap: () =>
-                _deleteSight(index, globals.wantToVisitList[index].name),
-            onCalendarTap: () => print("add to calendar"),
-          ),
-          background: Container(
-            height: 198,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              color: globals.isDarkMode ? dmRedColor : lmRedColor,
-            ),
-            child: Container(
-              margin: EdgeInsets.all(16),
-              alignment: Alignment.centerRight,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset("res/icons/other/Bucket.png"),
-                  Container(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Text(
-                      "Удалить",
-                      style: lmRoboto12W400.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          onDismissed: (direction) =>
-              _deleteSight(index, globals.wantToVisitList[index].name),
-          direction: DismissDirection.endToStart,
-        ),
+        child: _getDismissibleSightCard(index),
       );
       _allWidgetsMap["DragTarget ${index + 1}"] = VisitingDragTarget(
           index: index + 1,
@@ -127,6 +91,48 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
     return Column(
       children: _allWidgetsMap.entries.map((e) => e.value).toList(),
     );
+  }
+
+  Dismissible _getDismissibleSightCard(int index) {
+    return Dismissible(
+        key: ValueKey(globals.wantToVisitList[index].name + " dismissWant"),
+        child: WantToVisitSightCard(
+          key: ValueKey(globals.wantToVisitList[index].name + " cardWant"),
+          index: index,
+          sight: globals.wantToVisitList[index],
+          onDeleteTap: () =>
+              _deleteSight(index, globals.wantToVisitList[index].name),
+          onCalendarTap: () => print("add to calendar"),
+        ),
+        background: Container(
+          height: 198,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+            color: globals.isDarkMode ? dmRedColor : lmRedColor,
+          ),
+          child: Container(
+            margin: EdgeInsets.all(16),
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("res/icons/other/Bucket.png"),
+                Container(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Text(
+                    "Удалить",
+                    style: lmRoboto12W400.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.w500),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        onDismissed: (direction) =>
+            _deleteSight(index, globals.wantToVisitList[index].name),
+        direction: DismissDirection.endToStart,
+      );
   }
 
   void _moveSight(int dragIndex, int targetIndex) {

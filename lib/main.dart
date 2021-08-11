@@ -16,7 +16,7 @@ import 'globals.dart' as globals;
 void main() {
   return runApp(ChangeNotifierProvider(
     child: App(),
-    create: (BuildContext context) => ThemeProvider(isDarkMode: false),
+    create: (BuildContext context) => ThemeProvider(isDarkMode: true),
   ));
 }
 
@@ -37,11 +37,11 @@ class _AppState extends State<App> {
           //  home: SearchScreen(),
           // home: AddSightScreenCategory(setCategory: (value){}),
           // home: AddSightScreenCategory(setCategory: (value){} ),
-        //  home: AddSightScreen(),
+         // home: AddSightScreen(),
           // home: SettingsScreen(),
           // home: FilterScreen(),
            home: VisitingScreen(),
-          /*  home: SightListScreen(
+           /* home: SightListScreen(
             title: "Список интересных мест",
           ), */
           // home: SightDetails(sight: Sight(name: mocks[0][0], lat: mocks[0][1], lon: mocks[0][2], url: mocks[0][3], details: mocks[0][4], type: mocks[0][5]),),

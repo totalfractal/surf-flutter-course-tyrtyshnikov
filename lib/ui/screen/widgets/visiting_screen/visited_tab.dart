@@ -84,37 +84,7 @@ class _VisitedTabState extends State<VisitedTab> {
     for (int index = 0; index < globals.visitedList.length; index++) {
       list.add(Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Dismissible(
-          key: ValueKey(globals.visitedList[index].name + " dismissVisited"),
-          child: VisitedSightCard(
-            key: ValueKey(globals.visitedList[index].name + " cardVisited"),
-            index: index,
-            sight: globals.visitedList[index],
-            onShareTap: () => print("share"),
-            onDeleteTap: () =>
-                _deleteSight(index, globals.visitedList[index].name),
-          ),
-          background: Container(
-              margin: EdgeInsets.all(16),
-              alignment: Alignment.centerRight,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset("res/icons/other/Bucket.png"),
-                  Container(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Text(
-                      "Удалить",
-                      style: lmRoboto12W400.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          onDismissed: (direction) =>
-              _deleteSight(index, globals.wantToVisitList[index].name),
-          direction: DismissDirection.endToStart,
-        ),
+        child: _getDismissibleSightCard(index),
       ));
       list.add(VisitingDragTarget(
           index: index + 1,
@@ -123,6 +93,48 @@ class _VisitedTabState extends State<VisitedTab> {
     }
 
     return Column(children: list);
+  }
+
+  Dismissible _getDismissibleSightCard(int index) {
+    return Dismissible(
+        key: ValueKey(globals.visitedList[index].name + " dismissVisited"),
+        child: VisitedSightCard(
+          key: ValueKey(globals.visitedList[index].name + " cardVisited"),
+          index: index,
+          sight: globals.visitedList[index],
+          onShareTap: () => print("share"),
+          onDeleteTap: () =>
+              _deleteSight(index, globals.visitedList[index].name),
+        ),
+        background: Container(
+          height: 198,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+            color: globals.isDarkMode ? dmRedColor : lmRedColor,
+          ),
+          child: Container(
+            margin: EdgeInsets.all(16),
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("res/icons/other/Bucket.png"),
+                Container(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Text(
+                    "Удалить",
+                    style: lmRoboto12W400.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.w500),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        onDismissed: (direction) =>
+            _deleteSight(index, globals.wantToVisitList[index].name),
+        direction: DismissDirection.endToStart,
+      );
   }
 
   void _moveSight(int dragIndex, int targetIndex) {

@@ -18,14 +18,19 @@ class WantToVisitSightCard extends SightCard {
   final VoidCallback onCalendarTap;
 
   @override
+  _WantToVisitSightCardState createState() => _WantToVisitSightCardState();
+
+  @override
   Column informationColumn(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
         padding: EdgeInsets.symmetric(vertical: 2),
-        child: Text(sight.name.isEmpty ? "Название" : sight.name,
-            style: Theme.of(context).primaryTextTheme.headline4,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,),
+        child: Text(
+          sight.name.isEmpty ? "Название" : sight.name,
+          style: Theme.of(context).primaryTextTheme.headline4,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
       Container(
         padding: EdgeInsets.only(top: 2),
@@ -76,5 +81,29 @@ class WantToVisitSightCard extends SightCard {
             )),
       )
     ]);
+  }
+}
+
+class _WantToVisitSightCardState extends SightCardState<WantToVisitSightCard> {
+  GlobalKey globalKey = GlobalKey();
+  bool isDrag = false;
+  @override
+  Widget build(BuildContext context) {
+    return LongPressDraggable<int>(
+      axis: Axis.vertical,
+      data: widget.index,
+      feedback: widget.cardContainer(context),
+      onDragStarted: () {
+        setState(() {
+          isDrag = true;
+        });
+      },
+      onDragEnd: (details) {
+        setState(() {
+          isDrag = false;
+        });
+      },
+      child: isDrag ? SizedBox.shrink() : widget.cardContainer(context),
+    );
   }
 }

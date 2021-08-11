@@ -40,14 +40,14 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
   }
 
   void _getPhotosWidgets() {
-    List<PhotoOfSight> newPhotoList = [];
-    for (int i = 0; i < _photosWidgets.length; i++) {
-      newPhotoList.add(PhotoOfSight(
-        index: i,
-        image: _photosWidgets[i].image,
-        onDelete: (index) => _deletePhoto(index),
-      ));
-    }
+    List<PhotoOfSight> newPhotoList = [
+      for (int i = 0; i < _photosWidgets.length; i++)
+        PhotoOfSight(
+          index: i,
+          image: _photosWidgets[i].image,
+          onDelete: (index) => _deletePhoto(index),
+        )
+    ];
     _photosWidgets = newPhotoList;
   }
 
@@ -134,8 +134,6 @@ class _PhotoOfSightState extends State<PhotoOfSight> {
         margin: EdgeInsets.symmetric(horizontal: 8),
         height: 72,
         width: 72,
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(12))),
         child: Stack(
           children: [
             ClipRRect(
