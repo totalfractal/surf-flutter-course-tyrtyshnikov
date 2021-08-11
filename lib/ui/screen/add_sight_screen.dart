@@ -6,6 +6,7 @@ import 'package:places/ui/screen/res/colors.dart';
 import 'package:provider/provider.dart';
 
 import 'add_sight_screen_category.dart';
+import 'widgets/add_photos_of_sight.dart';
 
 class AddSightScreen extends StatefulWidget {
   const AddSightScreen({Key? key}) : super(key: key);
@@ -85,6 +86,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 },
                 child: Column(
                   children: [
+                    Container(
+                        padding: EdgeInsets.only(bottom: 12),
+                        child: AddPhotosOfSight()),
                     Container(
                       child: Column(
                         children: [

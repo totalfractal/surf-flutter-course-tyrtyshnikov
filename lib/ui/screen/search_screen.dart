@@ -3,11 +3,12 @@ import 'package:flutter/scheduler.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/res/colors.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/widgets/sight_card.dart';
 import 'package:places/ui/screen/sight_details.dart';
 import 'package:places/ui/screen/widgets/search_bar.dart';
 
 import '../../globals.dart';
+import 'widgets/bottom_nav_bar.dart';
 
 class SearchScreen extends StatefulWidget {
   SearchScreen({
