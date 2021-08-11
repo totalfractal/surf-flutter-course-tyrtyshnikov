@@ -59,7 +59,6 @@ class SightCard extends StatefulWidget {
   Container cardContainer(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width - 32,
-      //height: 198,
       child: Stack(
         children: [
           Column(
@@ -169,6 +168,5 @@ class SightCardState<T extends SightCard> extends State<T> {
   @override
   Widget build(BuildContext context) {
     return widget.cardContainer(context);
-    
   }
 }
