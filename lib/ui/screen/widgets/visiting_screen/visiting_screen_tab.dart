@@ -2,35 +2,41 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/res/styles.dart';
-import 'package:places/ui/screen/widgets/visiting_screen/visiting_drag_target.dart';
 
-import '../../../../globals.dart' as globals;
+import 'visiting_drag_target.dart';
 import 'want_to_visit_sight_card.dart';
 
-class WantToVisitTab extends StatefulWidget {
-  const WantToVisitTab({key, required this.wantToVisitList}) : super(key: key);
+class VisitingScreenTab extends StatefulWidget {
+  const VisitingScreenTab(
+      {Key? key, required this.sightList, required this.title})
+      : super(key: key);
 
-  final List<Sight> wantToVisitList;
+  final List<Sight> sightList;
+  final String title;
 
   @override
-  _WantToVisitTabState createState() => _WantToVisitTabState();
+  _VisitingScreenTabState createState() => _VisitingScreenTabState();
 }
 
-class _WantToVisitTabState extends State<WantToVisitTab> {
-  late Column _wantToVisitWidgets;
+class _VisitingScreenTabState extends State<VisitingScreenTab> {
   Map<String, Widget> _allWidgetsMap = {};
+  late List<Sight> _globalList;
 
   @override
   void initState() {
     super.initState();
     _getWantToVisitWidgets();
+    _globalList =
+        widget.title == "Хочу посетить" ? _globalList : globals.visitedList;
+    _saveGlobalList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return globals.wantToVisitList.isEmpty
+    return widget.sightList.isEmpty
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -85,8 +91,8 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
           onAccept: (dragIndex, targetIndex) =>
               _moveSight(dragIndex, targetIndex)),
     };
-    for (int index = 0; index < globals.wantToVisitList.length; index++) {
-      _allWidgetsMap[globals.wantToVisitList[index].name] = Padding(
+    for (int index = 0; index < _globalList.length; index++) {
+      _allWidgetsMap[_globalList[index].name] = Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: _getDismissibleSightCard(index),
       );
@@ -99,13 +105,12 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
 
   Dismissible _getDismissibleSightCard(int index) {
     return Dismissible(
-      key: ValueKey(globals.wantToVisitList[index].name + " dismissWant"),
+      key: ValueKey(_globalList[index].name + " dismissWant"),
       child: WantToVisitSightCard(
-        key: ValueKey(globals.wantToVisitList[index].name + " cardWant"),
+        key: ValueKey(_globalList[index].name + " cardWant"),
         index: index,
-        sight: globals.wantToVisitList[index],
-        onDeleteTap: () =>
-            _deleteSight(index, globals.wantToVisitList[index].name),
+        sight: _globalList[index],
+        onDeleteTap: () => _deleteSight(index, _globalList[index].name),
         onCalendarTap: () => print("add to calendar"),
       ),
       background: Container(
@@ -133,8 +138,7 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
           ),
         ),
       ),
-      onDismissed: (direction) =>
-          _deleteSight(index, globals.wantToVisitList[index].name),
+      onDismissed: (direction) => _deleteSight(index, _globalList[index].name),
       direction: DismissDirection.endToStart,
     );
   }
@@ -142,11 +146,11 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
   void _moveSight(int dragIndex, int targetIndex) {
     if (targetIndex != dragIndex + 1 && targetIndex != dragIndex) {
       setState(() {
-        var movedSight = globals.wantToVisitList.removeAt(dragIndex);
-        if (targetIndex == globals.wantToVisitList.length + 1) {
-          globals.wantToVisitList.insert(targetIndex - 1, movedSight);
+        var movedSight = _globalList.removeAt(dragIndex);
+        if (targetIndex == _globalList.length + 1) {
+          _globalList.insert(targetIndex - 1, movedSight);
         } else {
-          globals.wantToVisitList.insert(targetIndex, movedSight);
+          _globalList.insert(targetIndex, movedSight);
         }
         _getWantToVisitWidgets();
       });
@@ -155,13 +159,13 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
 
   void _deleteSight(int index, String key) {
     setState(() {
-      widget.wantToVisitList.removeAt(index);
+      widget.sightList.removeAt(index);
       _allWidgetsMap.remove(key);
       _getWantToVisitWidgets();
     });
   }
 
   void _saveGlobalList() {
-    globals.wantToVisitList = widget.wantToVisitList;
+    _globalList = widget.sightList;
   }
 }
