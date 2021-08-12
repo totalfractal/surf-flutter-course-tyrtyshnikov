@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/screen/res/colors.dart';
@@ -23,7 +25,7 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
   @override
   void initState() {
     super.initState();
-    _wantToVisitWidgets = _getWantToVisitWidgets();
+    _getWantToVisitWidgets();
   }
 
   @override
@@ -67,10 +69,15 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
               ),
             ],
           )
-        : SingleChildScrollView(child: _wantToVisitWidgets);
+        : ListView(
+            physics: Platform.isAndroid
+                ? ClampingScrollPhysics()
+                : BouncingScrollPhysics(),
+            children: _allWidgetsMap.entries.map((e) => e.value).toList(),
+          );
   }
 
-  Column _getWantToVisitWidgets() {
+  void _getWantToVisitWidgets() {
     _saveGlobalList();
     _allWidgetsMap = {
       "DragTarget 0": VisitingDragTarget(
@@ -88,51 +95,48 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
           onAccept: (dragIndex, targetIndex) =>
               _moveSight(dragIndex, targetIndex));
     }
-    return Column(
-      children: _allWidgetsMap.entries.map((e) => e.value).toList(),
-    );
   }
 
   Dismissible _getDismissibleSightCard(int index) {
     return Dismissible(
-        key: ValueKey(globals.wantToVisitList[index].name + " dismissWant"),
-        child: WantToVisitSightCard(
-          key: ValueKey(globals.wantToVisitList[index].name + " cardWant"),
-          index: index,
-          sight: globals.wantToVisitList[index],
-          onDeleteTap: () =>
-              _deleteSight(index, globals.wantToVisitList[index].name),
-          onCalendarTap: () => print("add to calendar"),
-        ),
-        background: Container(
-          height: 198,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            color: globals.isDarkMode ? dmRedColor : lmRedColor,
-          ),
-          child: Container(
-            margin: EdgeInsets.all(16),
-            alignment: Alignment.centerRight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset("res/icons/other/Bucket.png"),
-                Container(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Text(
-                    "Удалить",
-                    style: lmRoboto12W400.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.w500),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        onDismissed: (direction) =>
+      key: ValueKey(globals.wantToVisitList[index].name + " dismissWant"),
+      child: WantToVisitSightCard(
+        key: ValueKey(globals.wantToVisitList[index].name + " cardWant"),
+        index: index,
+        sight: globals.wantToVisitList[index],
+        onDeleteTap: () =>
             _deleteSight(index, globals.wantToVisitList[index].name),
-        direction: DismissDirection.endToStart,
-      );
+        onCalendarTap: () => print("add to calendar"),
+      ),
+      background: Container(
+        height: 198,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          color: globals.isDarkMode ? dmRedColor : lmRedColor,
+        ),
+        child: Container(
+          margin: EdgeInsets.all(16),
+          alignment: Alignment.centerRight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("res/icons/other/Bucket.png"),
+              Container(
+                padding: EdgeInsets.only(top: 10),
+                child: Text(
+                  "Удалить",
+                  style: lmRoboto12W400.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w500),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+      onDismissed: (direction) =>
+          _deleteSight(index, globals.wantToVisitList[index].name),
+      direction: DismissDirection.endToStart,
+    );
   }
 
   void _moveSight(int dragIndex, int targetIndex) {
@@ -144,7 +148,7 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
         } else {
           globals.wantToVisitList.insert(targetIndex, movedSight);
         }
-        _wantToVisitWidgets = _getWantToVisitWidgets();
+        _getWantToVisitWidgets();
       });
     }
   }
@@ -153,7 +157,7 @@ class _WantToVisitTabState extends State<WantToVisitTab> {
     setState(() {
       widget.wantToVisitList.removeAt(index);
       _allWidgetsMap.remove(key);
-      _wantToVisitWidgets = _getWantToVisitWidgets();
+      _getWantToVisitWidgets();
     });
   }
 

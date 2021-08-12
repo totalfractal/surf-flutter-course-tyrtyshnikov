@@ -52,24 +52,25 @@ class WantToVisitSightCard extends SightCard {
 
   @override
   Widget interactionButtons() {
-    return Row(children: [
-      Container(
-        width: 45,
-        child: Material(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          child: InkWell(
+    return Row(
+      children: [
+        Container(
+          width: 45,
+          child: Material(
+            color: Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(20)),
-            child: Image.asset(
-              "res/icons/other/Calendar.png",
+            child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              child: Image.asset(
+                "res/icons/other/Calendar.png",
+              ),
+              onTap: () => onCalendarTap(),
             ),
-            onTap: () => onCalendarTap(),
           ),
         ),
-      ),
-      Container(
-        width: 45,
-        child: Material(
+        Container(
+          width: 45,
+          child: Material(
             color: Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(20)),
             child: InkWell(
@@ -78,9 +79,11 @@ class WantToVisitSightCard extends SightCard {
                 "res/icons/other/Delete.png",
               ),
               onTap: () => onDeleteTap(),
-            )),
-      )
-    ]);
+            ),
+          ),
+        )
+      ],
+    );
   }
 }
 

@@ -124,21 +124,23 @@ class SightCard extends StatefulWidget {
             ],
           ),
           new Positioned.fill(
-              child: new Material(
-                  color: Colors.transparent,
-                  child: new InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SightDetails(
-                                    sight: sight,
-                                  )));
-                    },
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                    ),
-                  ))),
+            child: new Material(
+              color: Colors.transparent,
+              child: new InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SightDetails(
+                                sight: sight,
+                              )));
+                },
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                ),
+              ),
+            ),
+          ),
           Container(
             margin: EdgeInsets.only(left: 16),
             child: Row(

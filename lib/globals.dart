@@ -11,5 +11,3 @@ Color hexToColor(String code) {
 
 List<Sight> visitedList = [];
 List<Sight> wantToVisitList = [];
-
-

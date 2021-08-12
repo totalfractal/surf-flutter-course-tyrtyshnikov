@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/screen/res/colors.dart';
@@ -26,7 +28,7 @@ class _VisitedTabState extends State<VisitedTab> {
   @override
   void initState() {
     super.initState();
-    _visitedWidgets = _getVisitedListWidgets();
+    _getVisitedListWidgets();
   }
 
   @override
@@ -71,70 +73,73 @@ class _VisitedTabState extends State<VisitedTab> {
               ],
             ),
           )
-        : SingleChildScrollView(child: _visitedWidgets);
+        : ListView(
+            physics: Platform.isAndroid
+                ? ClampingScrollPhysics()
+                : BouncingScrollPhysics(),
+            children: _allWidgetsMap.entries.map((e) => e.value).toList(),
+          );
   }
 
-  Column _getVisitedListWidgets() {
+  void _getVisitedListWidgets() {
     _saveGlobalList();
-    List<Widget> list = [];
-    list.add(VisitingDragTarget(
-        index: 0,
-        onAccept: (dragIndex, targetIndex) =>
-            _moveSight(dragIndex, targetIndex)));
+    _allWidgetsMap = {
+      "DragTarget 0": VisitingDragTarget(
+          index: 0,
+          onAccept: (dragIndex, targetIndex) =>
+              _moveSight(dragIndex, targetIndex)),
+    };
     for (int index = 0; index < globals.visitedList.length; index++) {
-      list.add(Padding(
+      _allWidgetsMap[globals.visitedList[index].name] = Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: _getDismissibleSightCard(index),
-      ));
-      list.add(VisitingDragTarget(
+      );
+      _allWidgetsMap["DragTarget ${index + 1}"] = VisitingDragTarget(
           index: index + 1,
           onAccept: (dragIndex, targetIndex) =>
-              _moveSight(dragIndex, targetIndex)));
+              _moveSight(dragIndex, targetIndex));
     }
-
-    return Column(children: list);
   }
 
   Dismissible _getDismissibleSightCard(int index) {
     return Dismissible(
-        key: ValueKey(globals.visitedList[index].name + " dismissVisited"),
-        child: VisitedSightCard(
-          key: ValueKey(globals.visitedList[index].name + " cardVisited"),
-          index: index,
-          sight: globals.visitedList[index],
-          onShareTap: () => print("share"),
-          onDeleteTap: () =>
-              _deleteSight(index, globals.visitedList[index].name),
+      key: ValueKey(globals.visitedList[index].name + " dismissVisited"),
+      child: VisitedSightCard(
+        key: ValueKey(globals.visitedList[index].name + " cardVisited"),
+        index: index,
+        sight: globals.visitedList[index],
+        onShareTap: () => print("share"),
+        onDeleteTap: () => _deleteSight(index, globals.visitedList[index].name),
+      ),
+      background: Container(
+        height: 198,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          color: globals.isDarkMode ? dmRedColor : lmRedColor,
         ),
-        background: Container(
-          height: 198,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            color: globals.isDarkMode ? dmRedColor : lmRedColor,
-          ),
-          child: Container(
-            margin: EdgeInsets.all(16),
-            alignment: Alignment.centerRight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset("res/icons/other/Bucket.png"),
-                Container(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Text(
-                    "Удалить",
-                    style: lmRoboto12W400.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.w500),
-                  ),
-                )
-              ],
-            ),
+        child: Container(
+          margin: EdgeInsets.all(16),
+          alignment: Alignment.centerRight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("res/icons/other/Bucket.png"),
+              Container(
+                padding: EdgeInsets.only(top: 10),
+                child: Text(
+                  "Удалить",
+                  style: lmRoboto12W400.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w500),
+                ),
+              )
+            ],
           ),
         ),
-        onDismissed: (direction) =>
-            _deleteSight(index, globals.wantToVisitList[index].name),
-        direction: DismissDirection.endToStart,
-      );
+      ),
+      onDismissed: (direction) =>
+          _deleteSight(index, globals.visitedList[index].name),
+      direction: DismissDirection.endToStart,
+    );
   }
 
   void _moveSight(int dragIndex, int targetIndex) {
@@ -146,8 +151,7 @@ class _VisitedTabState extends State<VisitedTab> {
         } else {
           globals.visitedList.insert(targetIndex, movedSight);
         }
-
-        _visitedWidgets = _getVisitedListWidgets();
+        _getVisitedListWidgets();
       });
     }
   }
@@ -156,7 +160,7 @@ class _VisitedTabState extends State<VisitedTab> {
     setState(() {
       widget.visitedList.removeAt(index);
       _allWidgetsMap.remove(key);
-      _visitedWidgets = _getVisitedListWidgets();
+      _getVisitedListWidgets();
     });
   }
 

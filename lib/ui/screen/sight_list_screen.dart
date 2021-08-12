@@ -54,7 +54,7 @@ class _SightListScreenState extends State<SightListScreen> {
       bottomNavigationBar: BottomNavBar(),
       body: Center(
         child: ListView.builder(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             physics: Platform.isAndroid
                 ? ClampingScrollPhysics()
                 : BouncingScrollPhysics(),
