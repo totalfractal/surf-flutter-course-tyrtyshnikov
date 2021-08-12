@@ -33,6 +33,7 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
         Expanded(
           child: OverscrollGlowAbsorber(
             child: ListView(
+              scrollDirection: Axis.horizontal,
               physics: Platform.isAndroid
                   ? ClampingScrollPhysics()
                   : BouncingScrollPhysics(),
@@ -48,6 +49,7 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
     List<PhotoOfSight> newPhotoList = [
       for (int i = 0; i < _photosWidgets.length; i++)
         PhotoOfSight(
+          key: UniqueKey(),
           index: i,
           image: _photosWidgets[i].image,
           onDelete: (index) => _deletePhoto(index),
@@ -65,6 +67,7 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
     );
     setState(() {
       _photosWidgets.add(photo);
+      _getPhotosWidgets();
     });
   }
 

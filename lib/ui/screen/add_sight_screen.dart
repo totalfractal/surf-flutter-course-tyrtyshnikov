@@ -64,8 +64,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
       body: Stack(
         children: [
           Padding(
-            padding:
-                const EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 48),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 48),
             child: SingleChildScrollView(
               child: Form(
                 key: _formKey,
@@ -87,6 +86,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 child: Column(
                   children: [
                     Container(
+                        height: 85,
                         padding: EdgeInsets.only(bottom: 12),
                         child: AddPhotosOfSight()),
                     Container(
@@ -180,7 +180,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          padding: const EdgeInsets.only(top: 24, bottom: 15),
+                          padding: const EdgeInsets.only(bottom: 15),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -208,7 +208,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.only(top: 24, bottom: 15),
+                          padding: const EdgeInsets.only(bottom: 15),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

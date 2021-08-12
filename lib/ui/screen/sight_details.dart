@@ -63,6 +63,8 @@ class SightDetails extends StatelessWidget {
                         sight.name,
                         textAlign: TextAlign.start,
                         style: Theme.of(context).primaryTextTheme.headline1,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
                       )),
                   Container(
                     // padding:
