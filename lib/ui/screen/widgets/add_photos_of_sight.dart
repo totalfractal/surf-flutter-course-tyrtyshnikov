@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:places/globals.dart';
@@ -28,11 +30,11 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
           ),
         ),
         Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: _photosWidgets,
-            ),
+          child: ListView(
+            physics: Platform.isAndroid
+                ? ClampingScrollPhysics()
+                : BouncingScrollPhysics(),
+            children: _photosWidgets,
           ),
         ),
       ],
