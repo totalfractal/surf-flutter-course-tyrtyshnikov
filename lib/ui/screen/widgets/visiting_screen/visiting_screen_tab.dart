@@ -5,6 +5,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/res/styles.dart';
+import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 
 import 'visiting_drag_target.dart';
 import 'want_to_visit_sight_card.dart';
@@ -75,11 +76,13 @@ class _VisitingScreenTabState extends State<VisitingScreenTab> {
               ),
             ],
           )
-        : ListView(
-            physics: Platform.isAndroid
-                ? ClampingScrollPhysics()
-                : BouncingScrollPhysics(),
-            children: _allWidgetsMap.entries.map((e) => e.value).toList(),
+        : OverscrollGlowAbsorber(
+            child: ListView(
+              physics: Platform.isAndroid
+                  ? ClampingScrollPhysics()
+                  : BouncingScrollPhysics(),
+              children: _allWidgetsMap.entries.map((e) => e.value).toList(),
+            ),
           );
   }
 

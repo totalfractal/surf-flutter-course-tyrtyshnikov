@@ -4,6 +4,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:places/globals.dart';
 import 'package:places/ui/screen/res/colors.dart';
+import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 
 class AddPhotosOfSight extends StatefulWidget {
   const AddPhotosOfSight({
@@ -30,11 +31,13 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
           ),
         ),
         Expanded(
-          child: ListView(
-            physics: Platform.isAndroid
-                ? ClampingScrollPhysics()
-                : BouncingScrollPhysics(),
-            children: _photosWidgets,
+          child: OverscrollGlowAbsorber(
+            child: ListView(
+              physics: Platform.isAndroid
+                  ? ClampingScrollPhysics()
+                  : BouncingScrollPhysics(),
+              children: _photosWidgets,
+            ),
           ),
         ),
       ],

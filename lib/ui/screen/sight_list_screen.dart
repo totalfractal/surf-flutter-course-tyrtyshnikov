@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/search_screen.dart';
+import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/widgets/sight_card.dart';
 import 'package:places/ui/screen/widgets/search_bar.dart';
 
@@ -53,25 +54,27 @@ class _SightListScreenState extends State<SightListScreen> {
       ),
       bottomNavigationBar: BottomNavBar(),
       body: Center(
-        child: ListView.builder(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            physics: Platform.isAndroid
-                ? ClampingScrollPhysics()
-                : BouncingScrollPhysics(),
-            itemCount: mocks.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SightCard(
-                    sight: Sight(
-                        name: mocks[index][0],
-                        lat: double.parse(mocks[index][1]),
-                        lon: double.parse(mocks[index][2]),
-                        url: mocks[index][3],
-                        details: mocks[index][4],
-                        type: mocks[index][5])),
-              );
-            }),
+        child: OverscrollGlowAbsorber(
+          child: ListView.builder(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              physics: Platform.isAndroid
+                  ? ClampingScrollPhysics()
+                  : BouncingScrollPhysics(),
+              itemCount: mocks.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SightCard(
+                      sight: Sight(
+                          name: mocks[index][0],
+                          lat: double.parse(mocks[index][1]),
+                          lon: double.parse(mocks[index][2]),
+                          url: mocks[index][3],
+                          details: mocks[index][4],
+                          type: mocks[index][5])),
+                );
+              }),
+        ),
       ),
     );
   }
