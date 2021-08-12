@@ -5,6 +5,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/res/colors.dart';
+import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/widgets/sight_card.dart';
 import 'package:places/ui/screen/sight_details.dart';
 import 'package:places/ui/screen/widgets/search_bar.dart';
@@ -142,37 +143,39 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void _setSearchHistoryWidget() {
     //TODO: Сделать виджет для отсуствия истории
-    _searchHistoryWidget = ListView(
-      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      physics: Platform.isAndroid
-          ? ClampingScrollPhysics()
-          : BouncingScrollPhysics(),
-      children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.symmetric(vertical: 8),
-          child: Text("ВЫ ИСКАЛИ",
-              style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontStyle: FontStyle.normal,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: dmInactiveBlackColor)),
-        ),
-        ..._history,
-        Container(
-          alignment: Alignment.centerLeft,
-          child: TextButton(
-            onPressed: () {
-              _clearHistory();
-            },
-            child: Text(
-              "Очистить историю",
-              textAlign: TextAlign.start,
+    _searchHistoryWidget = OverscrollGlowAbsorber(
+      child: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        physics: Platform.isAndroid
+            ? ClampingScrollPhysics()
+            : BouncingScrollPhysics(),
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: Text("ВЫ ИСКАЛИ",
+                style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontStyle: FontStyle.normal,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: dmInactiveBlackColor)),
+          ),
+          ..._history,
+          Container(
+            alignment: Alignment.centerLeft,
+            child: TextButton(
+              onPressed: () {
+                _clearHistory();
+              },
+              child: Text(
+                "Очистить историю",
+                textAlign: TextAlign.start,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -203,19 +206,21 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void _getHilightSearchResultWidgets(String query) {
-    _searchResultsWidget = ListView(
-      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      physics: Platform.isAndroid
-          ? ClampingScrollPhysics()
-          : BouncingScrollPhysics(),
-      children: [
-        for (var sight in _sightsList)
-          if (sight.name.toLowerCase().contains(query.toLowerCase()))
-            SearchResultItem(
-              query: query,
-              sight: sight,
-            )
-      ],
+    _searchResultsWidget = OverscrollGlowAbsorber(
+      child: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        physics: Platform.isAndroid
+            ? ClampingScrollPhysics()
+            : BouncingScrollPhysics(),
+        children: [
+          for (var sight in _sightsList)
+            if (sight.name.toLowerCase().contains(query.toLowerCase()))
+              SearchResultItem(
+                query: query,
+                sight: sight,
+              )
+        ],
+      ),
     );
   }
 }
