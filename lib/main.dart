@@ -34,13 +34,21 @@ class _AppState extends State<App> {
       builder: (context, themeProvider, child) {
         return MaterialApp(
           title: 'First App',
-          //   home: SearchScreen(),
+          // home: SearchScreen(),
           //home: AddSightScreen(),
           // home: SettingsScreen(),
           // home: FilterScreen(),
-          home: VisitingScreen(title: "Избранное"),
+          // home: VisitingScreen(title: "Избранное"),
           // home: SightListScreen(title: "Список интересных мест"),
-          // home: SightDetails(sight: Sight(name: mocks[0][0], lat: mocks[0][1], lon: mocks[0][2], url: mocks[0][3], details: mocks[0][4], type: mocks[0][5]),),
+          home: SightDetails(
+            sight: Sight(
+                name: mocks[0][0],
+                lat: double.parse(mocks[0][1]),
+                lon: double.parse(mocks[0][2]),
+                urls: mocks[0][3],
+                details: mocks[0][4],
+                type: mocks[0][5]),
+          ),
           //theme: globals.isDarkMode ? darkTheme : lightTheme,
           theme: themeProvider.getTheme,
         );

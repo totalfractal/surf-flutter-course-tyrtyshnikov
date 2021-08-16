@@ -87,7 +87,7 @@ class SightCard extends StatefulWidget {
                           topLeft: Radius.circular(12),
                           topRight: Radius.circular(12)),
                       child: Image.network(
-                        sight.url,
+                        sight.urls[0],
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent? loadingProgress) {
                           if (loadingProgress == null) {

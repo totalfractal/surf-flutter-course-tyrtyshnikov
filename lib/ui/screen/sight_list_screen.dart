@@ -69,7 +69,7 @@ class _SightListScreenState extends State<SightListScreen> {
                           name: mocks[index][0],
                           lat: double.parse(mocks[index][1]),
                           lon: double.parse(mocks[index][2]),
-                          url: mocks[index][3],
+                          urls: mocks[index][3],
                           details: mocks[index][4],
                           type: mocks[index][5])),
                 );

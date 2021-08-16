@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:places/domain/sight.dart';
@@ -9,7 +8,6 @@ import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/widgets/sight_card.dart';
 import 'package:places/ui/screen/sight_details.dart';
 import 'package:places/ui/screen/widgets/search_bar.dart';
-
 import '../../globals.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'widgets/search_screen/search_history_item.dart';
@@ -29,13 +27,16 @@ class _SearchScreenState extends State<SearchScreen> {
   late Widget _searchBodyWidget;
   late Widget _searchHistoryWidget;
   late Widget _searchResultsWidget;
-  List<Widget> _history = [];
+  List<Widget> _historyWigets = [];
+  List<SearchHistoryItem> _historyItems = [];
+  Map<String, Widget> __allWidgetsMap = {};
 
   @override
   void initState() {
     super.initState();
-    _history = _getHistory();
-    _setSearchHistoryWidget();
+    _historyItems = _getHistoryFromRepo();
+    _historyWigets = _updateHistoryWidget();
+    _searchHistoryWidget = _setSearchHistoryWidget();
     _sightsList = _getSightsOnInit();
     _searchBodyWidget = _searchHistoryWidget;
   }
@@ -97,25 +98,36 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  List<Widget> _getHistory() {
-    List<Widget> history = [];
-    for (int mock = 0; mock < 5; mock++) {
-      history.add(
+  List<SearchHistoryItem> _getHistoryFromRepo() {
+    return [
+      for (int mock = 0; mock < 5; mock++)
         SearchHistoryItem(
           index: mock,
           sight: Sight(
               name: mocks[mock][0],
               lat: double.parse(mocks[mock][1]),
               lon: double.parse(mocks[mock][2]),
-              url: mocks[mock][3],
+              urls: mocks[mock][3],
               details: mocks[mock][4],
               type: mocks[mock][5]),
           onDelete: (index) {
             _deleteHistoryItem(index);
           },
         ),
+    ];
+  }
+
+  /*  List<Widget> _updateHistoryWidget() {
+    List<Widget> history = [];
+    _historyItems.forEach((element) {
+      __allWidgetsMap[element.sight.name] = SearchHistoryItem(
+          index: _historyItems.indexOf(element),
+          sight: element.sight,
+          onDelete: (index) {
+            _deleteHistoryItem(index, element.sight.name);
+          },
       );
-      if (mock != mocks.length - 1) {
+      if (_historyItems.indexOf(element) != _historyItems.length - 1) {
         history.add(
           Divider(
             thickness: 0.8,
@@ -123,27 +135,48 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         );
       }
-    }
+    });
+    return history;
+  }
+ */
+  List<Widget> _updateHistoryWidget() {
+    List<Widget> history = [];
+    _historyItems.forEach((element) {
+      history.add(
+        SearchHistoryItem(
+          index: _historyItems.indexOf(element),
+          sight: element.sight,
+          onDelete: (index) {
+            _deleteHistoryItem(index);
+          },
+        ),
+      );
+      if (_historyItems.indexOf(element) != _historyItems.length - 1) {
+        history.add(
+          Divider(
+            thickness: 0.8,
+            color: lmInactiveBlackColor.withOpacity(0.24),
+          ),
+        );
+      }
+    });
     return history;
   }
 
   void _deleteHistoryItem(int index) {
     setState(
       () {
-        if (index != _history.length - 1) {
-          _history.removeRange(index, index + 2);
-        } else {
-          _history.clear();
-        }
-        _setSearchHistoryWidget();
+        _historyItems.removeAt(index);
+        _historyWigets = _updateHistoryWidget();
+        _searchHistoryWidget = _setSearchHistoryWidget();
         _searchBodyWidget = _searchHistoryWidget;
       },
     );
   }
 
-  void _setSearchHistoryWidget() {
+  Widget _setSearchHistoryWidget() {
     //TODO: Сделать виджет для отсуствия истории
-    _searchHistoryWidget = OverscrollGlowAbsorber(
+    return OverscrollGlowAbsorber(
       child: ListView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         physics: Platform.isAndroid
@@ -161,7 +194,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     fontWeight: FontWeight.w400,
                     color: dmInactiveBlackColor)),
           ),
-          ..._history,
+          ..._historyWigets,
           Container(
             alignment: Alignment.centerLeft,
             child: TextButton(
@@ -181,8 +214,10 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void _clearHistory() {
     setState(() {
-      _history.clear();
+      _historyWigets.clear();
       _setSearchHistoryWidget();
+      _searchBodyWidget = _searchHistoryWidget;
+      _searchHistoryWidget = _setSearchHistoryWidget();
       _searchBodyWidget = _searchHistoryWidget;
     });
   }
@@ -196,7 +231,7 @@ class _SearchScreenState extends State<SearchScreen> {
               name: element[0],
               lat: double.parse(element[1]),
               lon: double.parse(element[2]),
-              url: element[3],
+              urls: element[3],
               details: element[4],
               type: element[5]),
         );

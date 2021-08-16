@@ -25,7 +25,7 @@ class SearchResultItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
-                  sight.url,
+                  sight.urls[0],
                   height: 56,
                   width: 56,
                   fit: BoxFit.cover,
