@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/res/colors.dart';
+import 'package:places/ui/screen/res/styles.dart';
 import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/widgets/sight_card.dart';
 import 'package:places/ui/screen/sight_details.dart';
@@ -13,6 +14,7 @@ import 'widgets/bottom_nav_bar.dart';
 import 'widgets/search_screen/search_history_item.dart';
 import 'widgets/search_screen/search_result_item.dart';
 
+//TODO: Виджет пустого результата поиска
 class SearchScreen extends StatefulWidget {
   SearchScreen({
     Key? key,
@@ -98,6 +100,24 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
+  List<Sight> _getSightsOnInit() {
+    List<Sight> sightsList = [];
+    mocks.forEach(
+      (element) {
+        sightsList.add(
+          Sight(
+              name: element[0],
+              lat: double.parse(element[1]),
+              lon: double.parse(element[2]),
+              urls: element[3],
+              details: element[4],
+              type: element[5]),
+        );
+      },
+    );
+    return sightsList;
+  }
+
   List<SearchHistoryItem> _getHistoryFromRepo() {
     return [
       for (int mock = 0; mock < 5; mock++)
@@ -117,28 +137,6 @@ class _SearchScreenState extends State<SearchScreen> {
     ];
   }
 
-  /*  List<Widget> _updateHistoryWidget() {
-    List<Widget> history = [];
-    _historyItems.forEach((element) {
-      __allWidgetsMap[element.sight.name] = SearchHistoryItem(
-          index: _historyItems.indexOf(element),
-          sight: element.sight,
-          onDelete: (index) {
-            _deleteHistoryItem(index, element.sight.name);
-          },
-      );
-      if (_historyItems.indexOf(element) != _historyItems.length - 1) {
-        history.add(
-          Divider(
-            thickness: 0.8,
-            color: lmInactiveBlackColor.withOpacity(0.24),
-          ),
-        );
-      }
-    });
-    return history;
-  }
- */
   List<Widget> _updateHistoryWidget() {
     List<Widget> history = [];
     _historyItems.forEach((element) {
@@ -163,6 +161,66 @@ class _SearchScreenState extends State<SearchScreen> {
     return history;
   }
 
+  Widget _setSearchHistoryWidget() {
+    var notEmptyHistory = [
+      Container(
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.symmetric(vertical: 8),
+        child: Text("ВЫ ИСКАЛИ",
+            style: TextStyle(
+                fontFamily: 'Roboto',
+                fontStyle: FontStyle.normal,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: dmInactiveBlackColor)),
+      ),
+      ..._historyWigets,
+      Container(
+        alignment: Alignment.centerLeft,
+        child: TextButton(
+          onPressed: () {
+            _clearHistory();
+          },
+          child: Text(
+            "Очистить историю",
+            textAlign: TextAlign.start,
+          ),
+        ),
+      ),
+    ];
+    var emptyHistory = [
+      Container(
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.symmetric(vertical: 8),
+        child: Text("ВЫ ИСКАЛИ",
+            style: TextStyle(
+                fontFamily: 'Roboto',
+                fontStyle: FontStyle.normal,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: dmInactiveBlackColor)),
+      ),
+      Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "История поиска отсутствует",
+            style: lmRoboto14W400.copyWith(color: dmInactiveBlackColor),
+          ),
+        ),
+      ),
+    ];
+    return OverscrollGlowAbsorber(
+      child: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        physics: Platform.isAndroid
+            ? ClampingScrollPhysics()
+            : BouncingScrollPhysics(),
+        children: _historyItems.isNotEmpty ? notEmptyHistory : emptyHistory,
+      ),
+    );
+  }
+
   void _deleteHistoryItem(int index) {
     setState(
       () {
@@ -174,70 +232,13 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _setSearchHistoryWidget() {
-    //TODO: Сделать виджет для отсуствия истории
-    return OverscrollGlowAbsorber(
-      child: ListView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        physics: Platform.isAndroid
-            ? ClampingScrollPhysics()
-            : BouncingScrollPhysics(),
-        children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.symmetric(vertical: 8),
-            child: Text("ВЫ ИСКАЛИ",
-                style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontStyle: FontStyle.normal,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: dmInactiveBlackColor)),
-          ),
-          ..._historyWigets,
-          Container(
-            alignment: Alignment.centerLeft,
-            child: TextButton(
-              onPressed: () {
-                _clearHistory();
-              },
-              child: Text(
-                "Очистить историю",
-                textAlign: TextAlign.start,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   void _clearHistory() {
     setState(() {
       _historyWigets.clear();
-      _setSearchHistoryWidget();
-      _searchBodyWidget = _searchHistoryWidget;
+      _historyItems.clear();
       _searchHistoryWidget = _setSearchHistoryWidget();
       _searchBodyWidget = _searchHistoryWidget;
     });
-  }
-
-  List<Sight> _getSightsOnInit() {
-    List<Sight> sightsList = [];
-    mocks.forEach(
-      (element) {
-        sightsList.add(
-          Sight(
-              name: element[0],
-              lat: double.parse(element[1]),
-              lon: double.parse(element[2]),
-              urls: element[3],
-              details: element[4],
-              type: element[5]),
-        );
-      },
-    );
-    return sightsList;
   }
 
   void _getHilightSearchResultWidgets(String query) {

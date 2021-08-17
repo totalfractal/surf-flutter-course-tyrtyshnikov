@@ -34,7 +34,7 @@ class _AppState extends State<App> {
       builder: (context, themeProvider, child) {
         return MaterialApp(
           title: 'First App',
-          // home: SearchScreen(),
+          //home: SearchScreen(),
           //home: AddSightScreen(),
           // home: SettingsScreen(),
           // home: FilterScreen(),
