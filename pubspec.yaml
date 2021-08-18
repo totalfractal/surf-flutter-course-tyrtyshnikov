@@ -33,5 +33,6 @@ flutter:
     - res/icons/catalog/black/
     - res/icons/catalog/white/
     - res/icons/other/
+    - res/icons/tutorial/
 
 

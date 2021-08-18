@@ -3,6 +3,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filter_screen.dart';
+import 'package:places/ui/screen/onboarding_screen.dart';
 import 'package:places/ui/screen/res/themes.dart';
 import 'package:places/ui/screen/search_screen.dart';
 import 'package:places/ui/screen/settings_screen.dart';
@@ -40,7 +41,7 @@ class _AppState extends State<App> {
           // home: FilterScreen(),
           // home: VisitingScreen(title: "Избранное"),
           // home: SightListScreen(title: "Список интересных мест"),
-          home: SightDetails(
+          /* home: SightDetails(
             sight: Sight(
                 name: mocks[0][0],
                 lat: double.parse(mocks[0][1]),
@@ -48,7 +49,8 @@ class _AppState extends State<App> {
                 urls: mocks[0][3],
                 details: mocks[0][4],
                 type: mocks[0][5]),
-          ),
+          ), */
+          home: OnboardingScreen(),
           //theme: globals.isDarkMode ? darkTheme : lightTheme,
           theme: themeProvider.getTheme,
         );

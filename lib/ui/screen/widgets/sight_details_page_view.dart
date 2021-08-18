@@ -54,8 +54,9 @@ class _SightDetailsPageViewState extends State<SightDetailsPageView> {
       controller: _pageController,
       itemCount: widget.sight.urls.length,
       onPageChanged: (nextIndex) {
-        _currentPage = nextIndex;
-        setState(() {});
+        setState(() {
+          _currentPage = nextIndex;
+        });
       },
       itemBuilder: (context, index) {
         return Image.network(
