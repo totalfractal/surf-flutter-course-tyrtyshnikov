@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/search_screen.dart';
+import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/widgets/sight_card.dart';
 import 'package:places/ui/screen/widgets/search_bar.dart';
 
@@ -51,35 +54,29 @@ class _SightListScreenState extends State<SightListScreen> {
       ),
       bottomNavigationBar: BottomNavBar(),
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: getSightCardsList(),
-            // children: [
-            //   SightCard(sight: Sight(mocks[0], 0, 0, "1", "2", "3")),
-            // ],
-          ),
+        child: OverscrollGlowAbsorber(
+          child: ListView.builder(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              physics: Platform.isAndroid
+                  ? ClampingScrollPhysics()
+                  : BouncingScrollPhysics(),
+              itemCount: mocks.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SightCard(
+                      sight: Sight(
+                          name: mocks[index][0],
+                          lat: double.parse(mocks[index][1]),
+                          lon: double.parse(mocks[index][2]),
+                          urls: mocks[index][3],
+                          details: mocks[index][4],
+                          type: mocks[index][5])),
+                );
+              }),
         ),
       ),
     );
-  }
-
-  List<Widget> getSightCardsList() {
-    List<Widget> sightCards = [];
-    mocks.forEach((element) {
-      sightCards.add(Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SightCard(
-            sight: Sight(
-                name: element[0],
-                lat: double.parse(element[1]),
-                lon: double.parse(element[2]),
-                url: element[3],
-                details: element[4],
-                type: element[5])),
-      ));
-    });
-    return sightCards;
   }
 }
 

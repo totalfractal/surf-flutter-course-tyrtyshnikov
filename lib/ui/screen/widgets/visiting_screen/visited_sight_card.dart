@@ -16,6 +16,9 @@ class VisitedSightCard extends SightCard {
   final VoidCallback onDeleteTap;
 
   @override
+  _VisitedSightCardState createState() => _VisitedSightCardState();
+
+  @override
   Column informationColumn(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
@@ -24,15 +27,16 @@ class VisitedSightCard extends SightCard {
           sight.name.isEmpty ? "Название" : sight.name,
           style: Theme.of(context).primaryTextTheme.headline4,
           maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
       Container(
         padding: EdgeInsets.only(top: 2),
-        child: Text("Цель достигнута 12 окт. 2020",
-            textAlign: TextAlign.start,
-            style: Theme.of(context).primaryTextTheme.subtitle2,),
-            
+        child: Text(
+          "Цель достигнута 12 окт. 2020",
+          textAlign: TextAlign.start,
+          style: Theme.of(context).primaryTextTheme.subtitle2,
+        ),
       ),
       Container(
         padding: EdgeInsets.only(top: 16),
@@ -74,5 +78,29 @@ class VisitedSightCard extends SightCard {
             )),
       )
     ]);
+  }
+}
+
+class _VisitedSightCardState extends SightCardState<VisitedSightCard> {
+  GlobalKey globalKey = GlobalKey();
+  bool isDrag = false;
+  @override
+  Widget build(BuildContext context) {
+    return LongPressDraggable<int>(
+      axis: Axis.vertical,
+      data: widget.index,
+      feedback: widget.cardContainer(context),
+      onDragStarted: () {
+        setState(() {
+          isDrag = true;
+        });
+      },
+      onDragEnd: (details) {
+        setState(() {
+          isDrag = false;
+        });
+      },
+      child: isDrag ? SizedBox.shrink() : widget.cardContainer(context),
+    );
   }
 }

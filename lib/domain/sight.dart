@@ -1,7 +1,7 @@
 class Sight {
   final String name;
   final double lat, lon;
-  final String url;
+  final List<String> urls;
   final String details;
   final String type;
 
@@ -9,7 +9,7 @@ class Sight {
       {required this.name,
       required this.lat,
       required this.lon,
-      required this.url,
+      required this.urls,
       required this.details,
       required this.type});
 }
