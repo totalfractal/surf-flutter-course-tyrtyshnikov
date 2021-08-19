@@ -1,14 +1,9 @@
-final List<dynamic> mocks = [
+final List<List<String>> mocks = [
   [
     "Музей Востока",
     "55.75615487036372",
     "37.59995450240567",
-    [
-      "https://ru.moscovery.com/wp-content/uploads/2016/04/header-62.jpg",
-      "https://mos-holidays.ru/wp-content/uploads/2014/12/3_myzey_narodov_vostoka.jpg",
-      "https://putidorogi-nn.ru/images/stories/evropa/rossiya/muzey-vostoka_2.jpg",
-      "https://kudamoscow.ru/uploads/d6a01b585f50294cefbc631065c8ef06.jpg"
-    ],
+    "https://ru.moscovery.com/wp-content/uploads/2016/04/header-62.jpg",
     "Музей в классическом здании усадьбы с экспонатами из стран Ближнего Востока, Центральной Азии и Кавказа.",
     "Музей"
   ],
@@ -16,7 +11,7 @@ final List<dynamic> mocks = [
     "Российская государственная библиотека",
     "55.752395024651506",
     "37.60911009869005",
-    ["https://bigenc.ru/media/2016/10/27/1235248337/31233.jpg"],
+    "https://bigenc.ru/media/2016/10/27/1235248337/31233.jpg",
     "Здание 1862 года в стиле неоклассицизма, где хранится государственная коллекция книг.",
     "Особое место"
   ],
@@ -24,9 +19,7 @@ final List<dynamic> mocks = [
     "Белая площадь",
     "55.77813352604905",
     "37.586219403587094",
-    [
-      "https://www.belajaploshad.ru/wp-content/uploads/2018/09/white-square.jpg"
-    ],
+    "https://www.belajaploshad.ru/wp-content/uploads/2018/09/white-square.jpg",
     "",
     "Особое место"
   ],
@@ -34,9 +27,7 @@ final List<dynamic> mocks = [
     "Римско-католический Кафедральный собор Непорочного Зачатия Пресвятой Девы Марии",
     "0.0",
     "0.0",
-    [
-      "https://i.pinimg.com/originals/ea/01/42/ea0142373b202bb072d402af1821dd6e.jpg"
-    ],
+    "https://i.pinimg.com/originals/ea/01/42/ea0142373b202bb072d402af1821dd6e.jpg",
     "",
     "Особое место"
   ],
@@ -44,7 +35,7 @@ final List<dynamic> mocks = [
     "Музей-мастерская Зураба Церетели",
     "0.0",
     "0.0",
-    ["https://s2.afisha.ru/ms/paduiqTEgnxANUAja9fVggIBoGVoy8Ylr-3v-OmN0Qg.jpg"],
+    "https://s2.afisha.ru/ms/paduiqTEgnxANUAja9fVggIBoGVoy8Ylr-3v-OmN0Qg.jpg",
     "",
     "Музей"
   ],
@@ -52,9 +43,7 @@ final List<dynamic> mocks = [
     "Государственный Дарвиновский музей",
     "0.0",
     "0.0",
-    [
-      "https://ar.culture.ru/attachments/attachment/preview/593fb43d5a93481c74b34686-preview.jpg"
-    ],
+    "https://ar.culture.ru/attachments/attachment/preview/593fb43d5a93481c74b34686-preview.jpg",
     "",
     "Музей"
   ],
@@ -62,9 +51,7 @@ final List<dynamic> mocks = [
     "Азовский Историко-Археологический И Палеонтологический Музей-Заповедник",
     "47.11189722420434",
     "39.4235301004788",
-    [
-      "https://lh5.googleusercontent.com/p/AF1QipOzxynuBQ0ZPukSGVDfN6HdgOwkWVG2RrjWES7X=w408-h306-k-no"
-    ],
+    "https://lh5.googleusercontent.com/p/AF1QipOzxynuBQ0ZPukSGVDfN6HdgOwkWVG2RrjWES7X=w408-h306-k-no",
     "Музей в большом старинном здании: скелет мамонта и другие археологические экспонаты.",
     "Музей"
   ],
@@ -72,9 +59,7 @@ final List<dynamic> mocks = [
     "Азовская крепость",
     "47.11591914628983",
     "39.421353489874484",
-    [
-      "https://lh5.googleusercontent.com/p/AF1QipNZ7Sy6lw-m7smIFaWdjeHXpFPu7hgo430WCCXo=w408-h306-k-no"
-    ],
+    "https://lh5.googleusercontent.com/p/AF1QipNZ7Sy6lw-m7smIFaWdjeHXpFPu7hgo430WCCXo=w408-h306-k-no",
     "Крепость, основанная турками в 1475 году, с земляным валом, сторожевыми башнями и воротами.",
     "Особое место"
   ],
@@ -82,9 +67,7 @@ final List<dynamic> mocks = [
     "Памятник Г.И. Мирошниченко",
     "47.11780850016745",
     "39.42098596110988",
-    [
-      "https://lh5.googleusercontent.com/p/AF1QipNKK5hpzpc8hjHDWOLNd7ceaFZFJ87Ktsir9pQo=w408-h306-k-no"
-    ],
+    "https://lh5.googleusercontent.com/p/AF1QipNKK5hpzpc8hjHDWOLNd7ceaFZFJ87Ktsir9pQo=w408-h306-k-no",
     "Памятник Г. И. Мирошниченко находится за Крепостным валом города Азова, Ростовской области, на могиле писателя. Помимо того, что Григорий Мирошниченко известен как автор таких произведений, как «Азов», «Осада Азова» и «Слава Азова», еще он стал первым Почетным гражданином города Азова.",
     "Особое место"
   ],
@@ -92,9 +75,7 @@ final List<dynamic> mocks = [
     "Пороховой Погреб",
     "47.11646078019397",
     "39.4191057566339",
-    [
-      "https://lh5.googleusercontent.com/p/AF1QipPKHZ3nGaMhiDUhUm-0ORZPlE5CkJY4ZeF4uiFd=w408-h302-k-no"
-    ],
+    "https://lh5.googleusercontent.com/p/AF1QipPKHZ3nGaMhiDUhUm-0ORZPlE5CkJY4ZeF4uiFd=w408-h302-k-no",
     "Памятник военно-инженерного искусства XVIII века в городе Азов Ростовской области. Расположен на улице Лермонтова, дом 6. Является филиалом Азовского краеведческого музея.",
     "Музей"
   ],
@@ -102,9 +83,7 @@ final List<dynamic> mocks = [
     "Памятник Лётчикам",
     "47.10359494431791",
     "39.435854337329765",
-    [
-      "https://lh5.googleusercontent.com/p/AF1QipOu7LNuv6w9PDqMJySwYey9HYhR99YjZIIEQ7AN=w408-h544-k-no"
-    ],
+    "https://lh5.googleusercontent.com/p/AF1QipOu7LNuv6w9PDqMJySwYey9HYhR99YjZIIEQ7AN=w408-h544-k-no",
     "Памятник лётчикам 248-го истребительного полка, погибшим в небе над Азовом, установлен в 1942г на въезде в город, на месте падения первого, сбитого над Азовом немецкого самолета.",
     "Особое место"
   ],

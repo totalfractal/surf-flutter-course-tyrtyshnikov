@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class VisitingDragTarget extends StatefulWidget {
-  const VisitingDragTarget(
-      {Key? key, required this.onAccept, required this.index})
-      : super(key: key);
+  const VisitingDragTarget({Key? key, required this.onAccept, required this.index}) : super(key: key);
 
   final int index;
   final Function(int dragIndex, int targetIndex) onAccept;
@@ -37,7 +35,7 @@ class _VisitingDragTargetState extends State<VisitingDragTarget> {
         });
         return true;
       },
-      onAccept: (int data) {
+      onAccept: (int data){
         print((data));
         widget.onAccept(data, widget.index);
         setState(() {

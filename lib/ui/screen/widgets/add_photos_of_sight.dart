@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:places/globals.dart';
 import 'package:places/ui/screen/res/colors.dart';
-import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 
 class AddPhotosOfSight extends StatefulWidget {
   const AddPhotosOfSight({
@@ -31,12 +28,9 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
           ),
         ),
         Expanded(
-          child: OverscrollGlowAbsorber(
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              physics: Platform.isAndroid
-                  ? ClampingScrollPhysics()
-                  : BouncingScrollPhysics(),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
               children: _photosWidgets,
             ),
           ),
@@ -46,15 +40,14 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
   }
 
   void _getPhotosWidgets() {
-    List<PhotoOfSight> newPhotoList = [
-      for (int i = 0; i < _photosWidgets.length; i++)
-        PhotoOfSight(
-          key: UniqueKey(),
-          index: i,
-          image: _photosWidgets[i].image,
-          onDelete: (index) => _deletePhoto(index),
-        )
-    ];
+    List<PhotoOfSight> newPhotoList = [];
+    for (int i = 0; i < _photosWidgets.length; i++) {
+      newPhotoList.add(PhotoOfSight(
+        index: i,
+        image: _photosWidgets[i].image,
+        onDelete: (index) => _deletePhoto(index),
+      ));
+    }
     _photosWidgets = newPhotoList;
   }
 
@@ -67,7 +60,6 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
     );
     setState(() {
       _photosWidgets.add(photo);
-      _getPhotosWidgets();
     });
   }
 
@@ -142,6 +134,8 @@ class _PhotoOfSightState extends State<PhotoOfSight> {
         margin: EdgeInsets.symmetric(horizontal: 8),
         height: 72,
         width: 72,
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(12))),
         child: Stack(
           children: [
             ClipRRect(

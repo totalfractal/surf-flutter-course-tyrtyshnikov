@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
-import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 
 import 'add_sight_screen.dart';
 
@@ -57,25 +56,23 @@ class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
         ),
         child: Stack(
           children: [
-            OverscrollGlowAbsorber(
-              child: ListView.builder(
-                itemCount: _categories.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () {
-                      setState(() {
-                        _categories
-                            .forEach((element) => element.isSelected = false);
-                        _categories[index].isSelected = true;
-                        _selectedCategory = _categories[index].text;
-                        _isCategorySelected = true;
-                      });
-                    },
-                    child: CategoryItem(_categories[index]),
-                  );
-                },
-              ),
+            ListView.builder(
+              itemCount: _categories.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () {
+                    setState(() {
+                      _categories
+                          .forEach((element) => element.isSelected = false);
+                      _categories[index].isSelected = true;
+                      _selectedCategory = _categories[index].text;
+                      _isCategorySelected = true;
+                    });
+                  },
+                  child: CategoryItem(_categories[index]),
+                );
+              },
             ),
             Align(
               alignment: Alignment.bottomCenter,

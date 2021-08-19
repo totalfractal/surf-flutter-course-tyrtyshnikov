@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../mocks.dart';
 import 'sight.dart';
@@ -22,7 +23,7 @@ class NearbySightsFinder {
           name: element[0],
           lat: double.parse(element[1]),
           lon: double.parse(element[2]),
-          urls: element[3],
+          url: element[3],
           details: element[4],
           type: element[5]));
     });
@@ -43,11 +44,11 @@ class NearbySightsFinder {
   } */
 
   bool isPointsNear(
-      List<double> checkPoint, List<double> centerPoint, double km) {
+      List<double?> checkPoint, List<double> centerPoint, double km) {
     var ky = 40000 / 360;
     var kx = cos(pi * centerPoint[0] / 180.0) * ky;
-    var dx = (centerPoint[1] - checkPoint[1]).abs() * kx;
-    var dy = (centerPoint[0] - checkPoint[0]) * ky;
+    var dx = (centerPoint[1] - checkPoint[1]!).abs() * kx;
+    var dy = (centerPoint[0] - checkPoint[0]!) * ky;
     return sqrt(dx * dx + dy * dy) <= km;
   }
 

@@ -1,13 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
-import 'package:places/ui/screen/widgets/sight_details_page_view.dart';
 import '../../globals.dart';
-
-extension LoopList<T> on List {
-  T loop(int index) => this[index % this.length];
-}
 
 class SightDetails extends StatelessWidget {
   const SightDetails({
@@ -37,8 +31,24 @@ class SightDetails extends StatelessWidget {
                     stops: [0.0, 1.0],
                     tileMode: TileMode.clamp),
               ),
-              child: OverscrollGlowAbsorber(
-                child: SightDetailsPageView(sight: sight),
+              child: Image.network(
+                sight.url,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                    ),
+                  );
+                },
+                fit: BoxFit.cover,
               ),
             ),
             Container(
@@ -53,8 +63,6 @@ class SightDetails extends StatelessWidget {
                         sight.name,
                         textAlign: TextAlign.start,
                         style: Theme.of(context).primaryTextTheme.headline1,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
                       )),
                   Container(
                     // padding:

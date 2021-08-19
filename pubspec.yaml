@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  geolocator: ^7.2.0+1
   flutter_switch: ^0.3.2
   provider: ^5.0.0
   faker: ^2.0.0
@@ -33,6 +34,5 @@ flutter:
     - res/icons/catalog/black/
     - res/icons/catalog/white/
     - res/icons/other/
-    - res/icons/tutorial/
 
 
