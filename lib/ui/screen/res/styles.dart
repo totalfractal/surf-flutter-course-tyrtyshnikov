@@ -7,6 +7,9 @@ import 'colors.dart';
 const TextStyle _text =
     TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.normal);
 
+final sightListAppBarTextStyle =
+    _text.copyWith(fontWeight: FontWeight.w700, fontSize: 32);
+
 //TODO: Сделать стили по Figma
 
 //Light Theme

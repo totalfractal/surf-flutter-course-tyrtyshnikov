@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/globals.dart';
 import 'package:places/ui/screen/res/colors.dart';
+import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 
 class SightDetailsPageView extends StatefulWidget {
   SightDetailsPageView({
@@ -25,14 +26,16 @@ class _SightDetailsPageViewState extends State<SightDetailsPageView> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width / widget.sight.urls.length;
-    return Stack(
-      children: [
-        pageViewBuilder(),
-        Positioned(
-            bottom: 0,
-            left: width * _currentPage,
-            child: pageViewIndicator(width: width))
-      ],
+    return OverscrollGlowAbsorber(
+      child: Stack(
+        children: [
+          pageViewBuilder(),
+          Positioned(
+              bottom: 0,
+              left: width * _currentPage,
+              child: pageViewIndicator(width: width))
+        ],
+      ),
     );
   }
 
