@@ -40,7 +40,7 @@ class _AppState extends State<App> {
           // home: SettingsScreen(),
           // home: FilterScreen(),
           // home: VisitingScreen(title: "Избранное"),
-          // home: SightListScreen(title: "Список интересных мест"),
+          home: SightListScreen(title: "Список \nинтересных мест"),
           /* home: SightDetails(
             sight: Sight(
                 name: mocks[0][0],
@@ -50,7 +50,7 @@ class _AppState extends State<App> {
                 details: mocks[0][4],
                 type: mocks[0][5]),
           ), */
-          home: OnboardingScreen(),
+          // home: OnboardingScreen(),
           //theme: globals.isDarkMode ? darkTheme : lightTheme,
           theme: themeProvider.getTheme,
         );
