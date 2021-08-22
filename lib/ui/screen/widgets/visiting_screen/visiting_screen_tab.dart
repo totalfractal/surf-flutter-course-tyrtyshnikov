@@ -6,17 +6,17 @@ import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/res/styles.dart';
 import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
-
-import 'visiting_drag_target.dart';
-import 'want_to_visit_sight_card.dart';
+import 'package:places/ui/screen/widgets/visiting_screen/visiting_drag_target.dart';
+import 'package:places/ui/screen/widgets/visiting_screen/want_to_visit_sight_card.dart';
 
 class VisitingScreenTab extends StatefulWidget {
-  const VisitingScreenTab(
-      {Key? key, required this.sightList, required this.title})
-      : super(key: key);
-
   final List<Sight> sightList;
   final String title;
+  const VisitingScreenTab({
+    required this.sightList,
+    required this.title,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _VisitingScreenTabState createState() => _VisitingScreenTabState();
@@ -31,7 +31,7 @@ class _VisitingScreenTabState extends State<VisitingScreenTab> {
     super.initState();
     _getWantToVisitWidgets();
     _globalList =
-        widget.title == "Хочу посетить" ? _globalList : globals.visitedList;
+        widget.title == 'Хочу посетить' ? _globalList : globals.visitedList;
     _saveGlobalList();
   }
 
@@ -41,32 +41,30 @@ class _VisitingScreenTabState extends State<VisitingScreenTab> {
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                child: Image.asset(
-                  "res/icons/other/Card.png",
-                  height: 64,
-                  width: 64,
-                  fit: BoxFit.fill,
-                  filterQuality: FilterQuality.high,
-                  color: globals.hexToColor("#7C7E92"),
-                  scale: 2,
-                ),
+              Image.asset(
+                'res/icons/other/Card.png',
+                height: 64,
+                width: 64,
+                fit: BoxFit.fill,
+                filterQuality: FilterQuality.high,
+                color: globals.hexToColor('#7C7E92'),
+                scale: 2,
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 53),
+                padding: const EdgeInsets.symmetric(horizontal: 53),
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(top: 24, bottom: 8),
+                      padding: const EdgeInsets.only(top: 24, bottom: 8),
                       child: Text(
-                        "Пусто",
+                        'Пусто',
                         style: Theme.of(context).primaryTextTheme.headline2,
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Text(
-                        "Отмечайте понравившиеся места и они появятся здесь.",
+                        'Отмечайте понравившиеся места и они появятся здесь.',
                         style: Theme.of(context).primaryTextTheme.headline3,
                         textAlign: TextAlign.center,
                       ),
@@ -79,8 +77,8 @@ class _VisitingScreenTabState extends State<VisitingScreenTab> {
         : OverscrollGlowAbsorber(
             child: ListView(
               physics: Platform.isAndroid
-                  ? ClampingScrollPhysics()
-                  : BouncingScrollPhysics(),
+                  ? const ClampingScrollPhysics()
+                  : const BouncingScrollPhysics(),
               children: _allWidgetsMap.entries.map((e) => e.value).toList(),
             ),
           );
@@ -89,67 +87,31 @@ class _VisitingScreenTabState extends State<VisitingScreenTab> {
   void _getWantToVisitWidgets() {
     _saveGlobalList();
     _allWidgetsMap = {
-      "DragTarget 0": VisitingDragTarget(
-          index: 0,
-          onAccept: (dragIndex, targetIndex) =>
-              _moveSight(dragIndex, targetIndex)),
+      'DragTarget 0': VisitingDragTarget(
+        index: 0,
+        onAccept: _moveSight,
+      ),
     };
-    for (int index = 0; index < _globalList.length; index++) {
+    for (var index = 0; index < _globalList.length; index++) {
       _allWidgetsMap[_globalList[index].name] = Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: _getDismissibleSightCard(index),
+        child: DismissibleSightCard(
+          sight: _globalList[index],
+          index: index,
+          onDelete: (index, key) => _deleteSight(index, key.value),
+        ),
       );
-      _allWidgetsMap["DragTarget ${index + 1}"] = VisitingDragTarget(
-          index: index + 1,
-          onAccept: (dragIndex, targetIndex) =>
-              _moveSight(dragIndex, targetIndex));
+      _allWidgetsMap['DragTarget ${index + 1}'] = VisitingDragTarget(
+        index: index + 1,
+        onAccept: _moveSight,
+      );
     }
-  }
-
-  Dismissible _getDismissibleSightCard(int index) {
-    return Dismissible(
-      key: ValueKey(_globalList[index].name + " dismissWant"),
-      child: WantToVisitSightCard(
-        key: ValueKey(_globalList[index].name + " cardWant"),
-        index: index,
-        sight: _globalList[index],
-        onDeleteTap: () => _deleteSight(index, _globalList[index].name),
-        onCalendarTap: () => print("add to calendar"),
-      ),
-      background: Container(
-        height: 198,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          color: globals.isDarkMode ? dmRedColor : lmRedColor,
-        ),
-        child: Container(
-          margin: EdgeInsets.all(16),
-          alignment: Alignment.centerRight,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("res/icons/other/Bucket.png"),
-              Container(
-                padding: EdgeInsets.only(top: 10),
-                child: Text(
-                  "Удалить",
-                  style: lmRoboto12W400.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.w500),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-      onDismissed: (direction) => _deleteSight(index, _globalList[index].name),
-      direction: DismissDirection.endToStart,
-    );
   }
 
   void _moveSight(int dragIndex, int targetIndex) {
     if (targetIndex != dragIndex + 1 && targetIndex != dragIndex) {
       setState(() {
-        var movedSight = _globalList.removeAt(dragIndex);
+        final movedSight = _globalList.removeAt(dragIndex);
         if (targetIndex == _globalList.length + 1) {
           _globalList.insert(targetIndex - 1, movedSight);
         } else {
@@ -170,5 +132,61 @@ class _VisitingScreenTabState extends State<VisitingScreenTab> {
 
   void _saveGlobalList() {
     _globalList = widget.sightList;
+  }
+}
+
+class DismissibleSightCard extends StatelessWidget {
+  final Sight sight;
+  final int index;
+  final Function(int index, ValueKey<String> key) onDelete;
+  const DismissibleSightCard({
+    required this.sight,
+    required this.index,
+    required this.onDelete,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final key = ValueKey<String>('${sight.name} dismissWant');
+    return Dismissible(
+      key: key,
+      child: WantToVisitSightCard(
+        key: ValueKey('${sight.name} cardWant'),
+        index: index,
+        sight: sight,
+        onDeleteTap: () => onDelete(index, key),
+        onCalendarTap: () {},
+      ),
+      background: Container(
+        height: 198,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          color: globals.isDarkMode ? dmRedColor : lmRedColor,
+        ),
+        child: Container(
+          margin: const EdgeInsets.all(16),
+          alignment: Alignment.centerRight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('res/icons/other/Bucket.png'),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  'Удалить',
+                  style: lmRoboto12W400.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      onDismissed: (direction) => onDelete(index, key),
+      direction: DismissDirection.endToStart,
+    );
   }
 }

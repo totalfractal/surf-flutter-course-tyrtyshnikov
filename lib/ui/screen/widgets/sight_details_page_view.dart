@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/globals.dart';
@@ -7,33 +5,35 @@ import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 
 class SightDetailsPageView extends StatefulWidget {
-  SightDetailsPageView({
-    Key? key,
-    required this.sight,
-  }) : super(key: key);
-
   final Sight sight;
+  const SightDetailsPageView({
+    required this.sight,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SightDetailsPageViewState createState() => _SightDetailsPageViewState();
 }
 
 class _SightDetailsPageViewState extends State<SightDetailsPageView> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
   int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width / widget.sight.urls.length;
+    final width = MediaQuery.of(context).size.width / widget.sight.urls.length;
     return OverscrollGlowAbsorber(
       child: Stack(
         children: [
           pageViewBuilder(),
           Positioned(
-              bottom: 0,
-              left: width * _currentPage,
-              child: pageViewIndicator(width: width))
+            bottom: 0,
+            left: width * _currentPage,
+            child: pageViewIndicator(
+              width: width,
+            ),
+          ),
         ],
       ),
     );
@@ -46,7 +46,7 @@ class _SightDetailsPageViewState extends State<SightDetailsPageView> {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: isDarkMode ? dmWhiteColor : lmMainColor,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
       ),
     );
@@ -64,8 +64,11 @@ class _SightDetailsPageViewState extends State<SightDetailsPageView> {
       itemBuilder: (context, index) {
         return Image.network(
           widget.sight.urls[index % widget.sight.urls.length],
-          loadingBuilder: (BuildContext context, Widget child,
-              ImageChunkEvent? loadingProgress) {
+          loadingBuilder: (
+            context,
+            child,
+            loadingProgress,
+          ) {
             if (loadingProgress == null) {
               return child;
             }
@@ -75,7 +78,7 @@ class _SightDetailsPageViewState extends State<SightDetailsPageView> {
                     ? loadingProgress.cumulativeBytesLoaded /
                         loadingProgress.expectedTotalBytes!
                     : null,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
               ),
             );
           },

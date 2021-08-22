@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class OverscrollGlowAbsorber extends StatelessWidget {
-  const OverscrollGlowAbsorber({Key? key, required this.child})
-      : super(key: key);
-
   final Widget child;
+  const OverscrollGlowAbsorber({
+    required this.child,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

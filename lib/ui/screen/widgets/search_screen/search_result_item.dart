@@ -5,21 +5,22 @@ import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/sight_details.dart';
 
 class SearchResultItem extends StatelessWidget {
-  const SearchResultItem({Key? key, required this.sight, required this.query})
-      : super(key: key);
-
   final String query;
   final Sight sight;
+  const SearchResultItem({
+    required this.sight,
+    required this.query,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 11),
+        padding: const EdgeInsets.symmetric(vertical: 11),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               height: 56,
               width: 56,
               child: ClipRRect(
@@ -34,32 +35,34 @@ class SearchResultItem extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.symmetric(vertical: 4),
                       child: RichText(
                         overflow: TextOverflow.ellipsis,
                         maxLines: 4,
                         text: TextSpan(
-                            children: highlightOccurrences(
-                                sight.name,
-                                query,
-                                Theme.of(context)
-                                    .primaryTextTheme
-                                    .bodyText2!
-                                    .copyWith(fontWeight: FontWeight.w500)),
-                            style:
-                                Theme.of(context).primaryTextTheme.bodyText2),
-                        textAlign: TextAlign.start,
+                          children: highlightOccurrences(
+                            sight.name,
+                            query,
+                            Theme.of(context)
+                                .primaryTextTheme
+                                .bodyText2!
+                                .copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                          style: Theme.of(context).primaryTextTheme.bodyText2,
+                        ),
                       ),
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.symmetric(vertical: 4),
                       child: Text(
                         sight.type,
                         textAlign: TextAlign.start,
@@ -67,40 +70,46 @@ class SearchResultItem extends StatelessWidget {
                             .primaryTextTheme
                             .headline3!
                             .copyWith(
-                                color: isDarkMode
-                                    ? dmSecondary2Color
-                                    : lmSecondary2Color),
+                              color: isDarkMode
+                                  ? dmSecondary2Color
+                                  : lmSecondary2Color,
+                            ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
       borderRadius: BorderRadius.circular(12),
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SightDetails(
-                      sight: sight,
-                    )));
+        Navigator.push<SightDetails>(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SightDetails(
+              sight: sight,
+            ),
+          ),
+        );
       },
     );
   }
 
   List<TextSpan> highlightOccurrences(
-      String source, String query, TextStyle hilightTextTheme) {
+    String source,
+    String query,
+    TextStyle hilightTextTheme,
+  ) {
     if (query.isEmpty || !source.toLowerCase().contains(query.toLowerCase())) {
       return [TextSpan(text: source)];
     }
     final matches = query.toLowerCase().allMatches(source.toLowerCase());
 
-    int lastMatchEnd = 0;
+    var lastMatchEnd = 0;
 
-    final List<TextSpan> children = [];
+    final children = <TextSpan>[];
     for (var i = 0; i < matches.length; i++) {
       final match = matches.elementAt(i);
 
@@ -110,15 +119,19 @@ class SearchResultItem extends StatelessWidget {
         ));
       }
 
-      children.add(TextSpan(
-        text: source.substring(match.start, match.end),
-        style: hilightTextTheme,
-      ));
+      children.add(
+        TextSpan(
+          text: source.substring(match.start, match.end),
+          style: hilightTextTheme,
+        ),
+      );
 
       if (i == matches.length - 1 && match.end != source.length) {
-        children.add(TextSpan(
-          text: source.substring(match.end, source.length),
-        ));
+        children.add(
+          TextSpan(
+            text: source.substring(match.end, source.length),
+          ),
+        );
       }
 
       lastMatchEnd = match.end;

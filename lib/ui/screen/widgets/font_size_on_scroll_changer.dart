@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class FontSizeOnScrollChanger extends StatelessWidget {
-  const FontSizeOnScrollChanger(
-      {Key? key,
-      required this.child,
-      required this.onScrollDown,
-      required this.onScrollUp,
-      required this.scrollController})
-      : super(key: key);
-
   final Widget child;
   final VoidCallback onScrollDown;
   final VoidCallback onScrollUp;
   final ScrollController scrollController;
+  const FontSizeOnScrollChanger({
+    required this.child,
+    required this.onScrollDown,
+    required this.onScrollUp,
+    required this.scrollController,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

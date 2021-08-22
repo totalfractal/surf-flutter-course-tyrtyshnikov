@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-
-import '../sight_card.dart';
+import 'package:places/ui/screen/widgets/sight_card.dart';
 
 class VisitedSightCard extends SightCard {
-  const VisitedSightCard(
-      {key,
-      required int index,
-      required Sight sight,
-      required this.onShareTap,
-      required this.onDeleteTap})
-      : super(key: key, sight: sight, index: index);
+  const VisitedSightCard({
+    required int index,
+    required Sight sight,
+    required this.onShareTap,
+    required this.onDeleteTap,
+    Key? key,
+  }) : super(key: key, sight: sight, index: index);
 
   final VoidCallback onShareTap;
   final VoidCallback onDeleteTap;
@@ -20,70 +19,76 @@ class VisitedSightCard extends SightCard {
 
   @override
   Column informationColumn(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Container(
-        padding: EdgeInsets.symmetric(vertical: 2),
-        child: Text(
-          sight.name.isEmpty ? "Название" : sight.name,
-          style: Theme.of(context).primaryTextTheme.headline4,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 2),
+          child: Text(
+            sight.name.isEmpty ? 'Название' : sight.name,
+            style: Theme.of(context).primaryTextTheme.headline4,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
-      ),
-      Container(
-        padding: EdgeInsets.only(top: 2),
-        child: Text(
-          "Цель достигнута 12 окт. 2020",
-          textAlign: TextAlign.start,
-          style: Theme.of(context).primaryTextTheme.subtitle2,
-        ),
-      ),
-      Container(
-        padding: EdgeInsets.only(top: 16),
-        child: Text("закрыто до 9:00",
+        Container(
+          padding: const EdgeInsets.only(top: 2),
+          child: Text(
+            'Цель достигнута 12 окт. 2020',
             textAlign: TextAlign.start,
-            style: Theme.of(context).primaryTextTheme.subtitle2),
-      ),
-    ]);
+            style: Theme.of(context).primaryTextTheme.subtitle2,
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.only(top: 16),
+          child: Text(
+            'закрыто до 9:00',
+            textAlign: TextAlign.start,
+            style: Theme.of(context).primaryTextTheme.subtitle2,
+          ),
+        ),
+      ],
+    );
   }
 
   @override
   Widget interactionButtons() {
-    return Row(children: [
-      Container(
-        width: 45,
-        child: Material(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          child: InkWell(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            child: Image.asset(
-              "res/icons/other/Share.png",
+    return Row(
+      children: [
+        SizedBox(
+          width: 45,
+          child: Material(
+            color: Colors.transparent,
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            child: InkWell(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              child: Image.asset(
+                'res/icons/other/Share.png',
+              ),
+              onTap: onShareTap,
             ),
-            onTap: () => onShareTap(),
           ),
         ),
-      ),
-      Container(
-        width: 45,
-        child: Material(
+        SizedBox(
+          width: 45,
+          child: Material(
             color: Colors.transparent,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
             child: InkWell(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
               child: Image.asset(
-                "res/icons/other/Delete.png",
+                'res/icons/other/Delete.png',
               ),
-              onTap: () => onDeleteTap(),
-            )),
-      )
-    ]);
+              onTap: onDeleteTap,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
 class _VisitedSightCardState extends SightCardState<VisitedSightCard> {
-  GlobalKey globalKey = GlobalKey();
-  bool isDrag = false;
   @override
   Widget build(BuildContext context) {
     return LongPressDraggable<int>(
@@ -100,7 +105,7 @@ class _VisitedSightCardState extends SightCardState<VisitedSightCard> {
           isDrag = false;
         });
       },
-      child: isDrag ? SizedBox.shrink() : widget.cardContainer(context),
+      child: isDrag ? const SizedBox.shrink() : widget.cardContainer(context),
     );
   }
 }
