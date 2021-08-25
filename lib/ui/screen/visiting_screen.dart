@@ -6,8 +6,8 @@ import 'package:places/ui/screen/widgets/bottom_nav_bar.dart';
 import 'package:places/ui/screen/widgets/visiting_screen/visiting_screen_tab.dart';
 
 class VisitingScreen extends StatelessWidget {
-  final String title;
   static const _titles = ['Хочу посетить', 'Посетил'];
+  final String title;
   const VisitingScreen({
     required this.title,
     Key? key,

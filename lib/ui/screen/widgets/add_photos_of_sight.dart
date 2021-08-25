@@ -77,7 +77,11 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
 
   String _getPhoto() {
     return faker.image.image(
-        width: 100, height: 100, keywords: const ['place'], random: true);
+      width: 100,
+      height: 100,
+      keywords: const ['place'],
+      random: true,
+    );
   }
 }
 
@@ -95,12 +99,16 @@ class AddButton extends StatelessWidget {
           height: 72,
           width: 72,
           decoration: BoxDecoration(
-              border: Border.all(
-                  color: isDarkMode
-                      ? dmGreenColor.withOpacity(0.4)
-                      : lmGreenColor.withOpacity(0.4),
-                  width: 2),
-              borderRadius: const BorderRadius.all(Radius.circular(12))),
+            border: Border.all(
+              color: isDarkMode
+                  ? dmGreenColor.withOpacity(0.4)
+                  : lmGreenColor.withOpacity(0.4),
+              width: 2,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
           child: Icon(
             Icons.add,
             size: 40,

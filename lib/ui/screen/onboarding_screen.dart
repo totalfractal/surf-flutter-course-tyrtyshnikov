@@ -69,7 +69,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 117),
-                child: _indicatorWidget(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (int i = 0; i < _pages; i++)
+                      IndicatorItem(isSelected: _currentPage == i),
+                  ],
+                ),
               ),
             ],
           ),
@@ -88,16 +94,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ]),
       ),
-    );
-  }
-
-  Widget _indicatorWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (int i = 0; i < _pages; i++)
-          IndicatorItem(isSelected: _currentPage == i),
-      ],
     );
   }
 }
@@ -166,12 +162,13 @@ class IndicatorItem extends StatelessWidget {
         height: 8,
         child: DecoratedBox(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: isSelected
-                  ? isDarkMode
-                      ? dmGreenColor
-                      : lmGreenColor
-                  : lmInactiveBlackColor),
+            borderRadius: BorderRadius.circular(8),
+            color: isSelected
+                ? isDarkMode
+                    ? dmGreenColor
+                    : lmGreenColor
+                : lmInactiveBlackColor,
+          ),
         ),
       ),
     );

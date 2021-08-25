@@ -35,6 +35,7 @@ class _VisitingScreenTabState extends State<VisitingScreenTab> {
     _saveGlobalList();
   }
 
+  //TODO: Скролл списка при перетаскивании
   @override
   Widget build(BuildContext context) {
     return widget.sightList.isEmpty

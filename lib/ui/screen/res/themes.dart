@@ -75,13 +75,13 @@ final lightTheme = ThemeData(
     button: lmRoboto14W700,
   ),
   sliderTheme: SliderThemeData(
-      activeTrackColor: lmGreenColor,
-      inactiveTrackColor: lmInactiveBlackColor,
-      thumbColor: Colors.white,
-      rangeThumbShape:
-          const RoundRangeSliderThumbShape(elevation: 4, pressedElevation: 8),
-      rangeTrackShape: CustomRectTrackShape(),
-      trackHeight: 2),
+    activeTrackColor: lmGreenColor,
+    inactiveTrackColor: lmInactiveBlackColor,
+    thumbColor: Colors.white,
+    rangeThumbShape:
+        const RoundRangeSliderThumbShape(elevation: 4, pressedElevation: 8),
+    rangeTrackShape: CustomRectTrackShape(),
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       fixedSize:
@@ -90,10 +90,11 @@ final lightTheme = ThemeData(
       foregroundColor: MaterialStateProperty.all(Colors.white),
       textStyle: MaterialStateProperty.all(
         const TextStyle(
-            fontFamily: 'Roboto',
-            fontStyle: FontStyle.normal,
-            fontWeight: FontWeight.w700,
-            fontSize: 14),
+          fontFamily: 'Roboto',
+          fontStyle: FontStyle.normal,
+          fontWeight: FontWeight.w700,
+          fontSize: 14,
+        ),
       ),
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
@@ -150,11 +151,12 @@ final darkTheme = ThemeData(
   backgroundColor: dmBackgroundColor,
   scaffoldBackgroundColor: dmScaffoldBackgroundColor,
   appBarTheme: AppBarTheme(
-      backwardsCompatibility: false,
-      backgroundColor: dmBackgroundColor,
-      titleTextStyle: dmAppBarTextStyle,
-      elevation: 0,
-      centerTitle: true),
+    backwardsCompatibility: false,
+    backgroundColor: dmBackgroundColor,
+    titleTextStyle: dmAppBarTextStyle,
+    elevation: 0,
+    centerTitle: true,
+  ),
   tabBarTheme: TabBarTheme(
     indicatorSize: TabBarIndicatorSize.tab,
     indicator: const BoxDecoration(
@@ -175,22 +177,24 @@ final darkTheme = ThemeData(
     color: dmBottomAppBarColor,
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: dmBottomNavBarColor,
-      selectedItemColor: dmWhiteColor,
-      unselectedItemColor: dmWhiteColor),
+    backgroundColor: dmBottomNavBarColor,
+    selectedItemColor: dmWhiteColor,
+    unselectedItemColor: dmWhiteColor,
+  ),
   primaryTextTheme: TextTheme(
-      headline1: dmRoboto24W700,
-      headline2: dmRoboto18W500,
-      headline3: dmRoboto14W400,
-      headline4: dmRoboto14W500,
-      headline5: dmHeadline5,
-      headline6: dmRoboto12W400,
-      subtitle1: dmRoboto14BoldSubtitle1,
-      subtitle2: dmRoboto14Subtitle2,
-      bodyText1: dmRoboto14BodyText,
-      bodyText2: dmRoboto16W400,
-      caption: dmRoboto14W700Caption,
-      button: dmRoboto14W700),
+    headline1: dmRoboto24W700,
+    headline2: dmRoboto18W500,
+    headline3: dmRoboto14W400,
+    headline4: dmRoboto14W500,
+    headline5: dmHeadline5,
+    headline6: dmRoboto12W400,
+    subtitle1: dmRoboto14BoldSubtitle1,
+    subtitle2: dmRoboto14Subtitle2,
+    bodyText1: dmRoboto14BodyText,
+    bodyText2: dmRoboto16W400,
+    caption: dmRoboto14W700Caption,
+    button: dmRoboto14W700,
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       fixedSize:

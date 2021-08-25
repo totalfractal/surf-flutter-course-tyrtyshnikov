@@ -249,7 +249,7 @@ class _SearchScreenState extends State<SearchScreen> {
               SearchResultItem(
                 query: query,
                 sight: sight,
-              )
+              ),
         ],
       ),
     );

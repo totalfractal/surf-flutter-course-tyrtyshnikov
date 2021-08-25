@@ -336,23 +336,19 @@ ButtonStyle getInactiveButtonStyle(BuildContext context) {
 }
 
 class NewPlaceTextFormField extends StatefulWidget {
+  final TextEditingController textController;
+  final TextInputType inputType;
+  final int maxLength;
+  final String hintText;
+  final bool isLastNode;
   const NewPlaceTextFormField({
     required this.textController,
     required this.inputType,
     Key? key,
-    // @required this.focusNode,
-
     this.maxLength = 60,
     this.hintText = '',
     this.isLastNode = false,
   }) : super(key: key);
-
-  final TextEditingController textController;
-  final TextInputType inputType;
-
-  final int maxLength;
-  final String hintText;
-  final bool isLastNode;
 
   @override
   _NewPlaceTextFormFieldState createState() => _NewPlaceTextFormFieldState();

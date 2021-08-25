@@ -129,8 +129,8 @@ class CategoryItem extends StatelessWidget {
 }
 
 class CategoryModel {
-  bool isSelected;
   final String text;
+  bool isSelected;
 
   CategoryModel({this.isSelected = true, this.text = ''});
 }

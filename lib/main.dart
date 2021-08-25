@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/screen/res/themes.dart';
-import 'package:places/ui/screen/visiting_screen.dart';
+import 'package:places/ui/screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -27,7 +27,7 @@ class _AppState extends State<App> {
           //home: AddSightScreen(),
           // home: SettingsScreen(),
           // home: FilterScreen(),
-          home: const VisitingScreen(title: 'Избранное'),
+          // home: const VisitingScreen(title: 'Избранное'),
           // home: SightListScreen(title: "Список \nинтересных мест"),
           /* home: SightDetails(
             sight: Sight(
@@ -40,6 +40,7 @@ class _AppState extends State<App> {
           ), */
           // home: const OnboardingScreen(),
           //theme: globals.isDarkMode ? darkTheme : lightTheme,
+          home: const SplashScreen(),
           theme: themeProvider.getTheme,
         );
       },

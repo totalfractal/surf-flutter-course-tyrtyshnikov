@@ -5,12 +5,11 @@ import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 
 class FilterScreen extends StatefulWidget {
+  final ValueSetter<List<Sight>> onFiltersChanged;
   const FilterScreen({
     required this.onFiltersChanged,
     Key? key,
   }) : super(key: key);
-
-  final ValueSetter<List<Sight>> onFiltersChanged;
 
   @override
   _FilterScreenState createState() => _FilterScreenState();
@@ -21,6 +20,12 @@ class _FilterScreenState extends State<FilterScreen> {
   RangeValues _currentRangeValues = const RangeValues(100, 2000);
   int _nearbyCount = 0;
   List<Sight> _nearbySights = [];
+  final GlobalKey<_CategoryFilterIconState> _cafeIconKey = GlobalKey();
+  final GlobalKey<_CategoryFilterIconState> _hotelIconKey = GlobalKey();
+  final GlobalKey<_CategoryFilterIconState> _museumIconKey = GlobalKey();
+  final GlobalKey<_CategoryFilterIconState> _parkIconKey = GlobalKey();
+  final GlobalKey<_CategoryFilterIconState> _partPlaceIconKey = GlobalKey();
+  final GlobalKey<_CategoryFilterIconState> _restourantIconKey = GlobalKey();
 
   // ignore: unused_field
   bool? _isCafePressed;
@@ -34,13 +39,6 @@ class _FilterScreenState extends State<FilterScreen> {
   bool? _isPartPlacePressed;
   // ignore: unused_field
   bool? _isRestourantPressed;
-
-  final GlobalKey<_CategoryFilterIconState> _cafeIconKey = GlobalKey();
-  final GlobalKey<_CategoryFilterIconState> _hotelIconKey = GlobalKey();
-  final GlobalKey<_CategoryFilterIconState> _museumIconKey = GlobalKey();
-  final GlobalKey<_CategoryFilterIconState> _parkIconKey = GlobalKey();
-  final GlobalKey<_CategoryFilterIconState> _partPlaceIconKey = GlobalKey();
-  final GlobalKey<_CategoryFilterIconState> _restourantIconKey = GlobalKey();
 
   // ignore: use_late_for_private_fields_and_variables
   CategoryFilter? _cafeFilter;
@@ -198,9 +196,9 @@ class _FilterScreenState extends State<FilterScreen> {
                             .primaryTextTheme
                             .headline3!
                             .copyWith(
-                                fontSize: 12,
-                                color:
-                                    const Color.fromRGBO(124, 126, 146, 0.56)),
+                              fontSize: 12,
+                              color: const Color.fromRGBO(124, 126, 146, 0.56),
+                            ),
                       ),
                     ),
                     Container(
@@ -229,10 +227,10 @@ class _FilterScreenState extends State<FilterScreen> {
                               _museumFilter!,
                               _cafeFilter!,
                             ],
-                          )
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -241,17 +239,24 @@ class _FilterScreenState extends State<FilterScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Расстояние',
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText1!
-                            .copyWith(fontSize: 16)),
                     Text(
-                        'от ${_currentRangeValues.start.round()} до ${_currentRangeValues.end.round()} м',
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .subtitle2!
-                            .copyWith(fontSize: 16)),
+                      'Расстояние',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .bodyText1!
+                          .copyWith(
+                            fontSize: 16,
+                          ),
+                    ),
+                    Text(
+                      'от ${_currentRangeValues.start.round()} до ${_currentRangeValues.end.round()} м',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .subtitle2!
+                          .copyWith(
+                            fontSize: 16,
+                          ),
+                    ),
                   ],
                 ),
               ),
@@ -322,7 +327,10 @@ class CategoryFilter extends StatelessWidget {
     return Column(
       children: [
         CategoryFilterIcon(
-            key: iconKey, iconImage: iconImage, onPressed: onPressed),
+          key: iconKey,
+          iconImage: iconImage,
+          onPressed: onPressed,
+        ),
         Align(
           alignment: Alignment.topCenter,
           child: Text(
@@ -331,7 +339,7 @@ class CategoryFilter extends StatelessWidget {
                   fontSize: 12,
                 ),
           ),
-        )
+        ),
       ],
     );
   }

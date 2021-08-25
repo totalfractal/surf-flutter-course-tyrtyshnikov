@@ -14,12 +14,11 @@ import 'package:places/ui/screen/widgets/sight_card.dart';
 import 'package:places/ui/screen/widgets/search_bar.dart';
 
 class SightListScreen extends StatefulWidget {
+  final String title;
   const SightListScreen({
     required this.title,
     Key? key,
   }) : super(key: key);
-
-  final String title;
 
   @override
   _SightListScreenState createState() => _SightListScreenState();

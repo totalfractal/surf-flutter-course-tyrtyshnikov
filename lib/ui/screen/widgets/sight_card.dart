@@ -5,14 +5,13 @@ import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/sight_details.dart';
 
 class SightCard extends StatefulWidget {
+  final Sight sight;
+  final int? index;
   const SightCard({
     required this.sight,
     Key? key,
     this.index,
   }) : super(key: key);
-
-  final Sight sight;
-  final int? index;
 
   @override
   SightCardState createState() => SightCardState();
@@ -174,6 +173,6 @@ class SightCardState<T extends SightCard> extends State<T> {
   bool isDrag = false;
   @override
   Widget build(BuildContext context) {
-    return widget.cardContainer(context);
+    return Builder(builder: widget.cardContainer);
   }
 }

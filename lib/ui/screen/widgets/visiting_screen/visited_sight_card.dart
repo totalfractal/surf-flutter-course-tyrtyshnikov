@@ -3,6 +3,8 @@ import 'package:places/domain/sight.dart';
 import 'package:places/ui/screen/widgets/sight_card.dart';
 
 class VisitedSightCard extends SightCard {
+  final VoidCallback onShareTap;
+  final VoidCallback onDeleteTap;
   const VisitedSightCard({
     required int index,
     required Sight sight,
@@ -10,9 +12,6 @@ class VisitedSightCard extends SightCard {
     required this.onDeleteTap,
     Key? key,
   }) : super(key: key, sight: sight, index: index);
-
-  final VoidCallback onShareTap;
-  final VoidCallback onDeleteTap;
 
   @override
   _VisitedSightCardState createState() => _VisitedSightCardState();

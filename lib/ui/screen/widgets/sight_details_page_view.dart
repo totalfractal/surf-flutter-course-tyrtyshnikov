@@ -26,65 +26,56 @@ class _SightDetailsPageViewState extends State<SightDetailsPageView> {
     return OverscrollGlowAbsorber(
       child: Stack(
         children: [
-          pageViewBuilder(),
+          PageView.builder(
+            controller: _pageController,
+            itemCount: widget.sight.urls.length,
+            onPageChanged: (nextIndex) {
+              setState(() {
+                _currentPage = nextIndex;
+              });
+            },
+            itemBuilder: (context, index) {
+              return Image.network(
+                widget.sight.urls[index % widget.sight.urls.length],
+                loadingBuilder: (
+                  context,
+                  child,
+                  loadingProgress,
+                ) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(Colors.green),
+                    ),
+                  );
+                },
+                fit: BoxFit.cover,
+              );
+            },
+          ),
           Positioned(
             bottom: 0,
             left: width * _currentPage,
-            child: pageViewIndicator(
+            child: SizedBox(
               width: width,
+              height: 7.57,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: isDarkMode ? dmWhiteColor : lmMainColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                ),
+              ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget pageViewIndicator({required double width}) {
-    return SizedBox(
-      width: width,
-      height: 7.57,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: isDarkMode ? dmWhiteColor : lmMainColor,
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-        ),
-      ),
-    );
-  }
-
-  PageView pageViewBuilder() {
-    return PageView.builder(
-      controller: _pageController,
-      itemCount: widget.sight.urls.length,
-      onPageChanged: (nextIndex) {
-        setState(() {
-          _currentPage = nextIndex;
-        });
-      },
-      itemBuilder: (context, index) {
-        return Image.network(
-          widget.sight.urls[index % widget.sight.urls.length],
-          loadingBuilder: (
-            context,
-            child,
-            loadingProgress,
-          ) {
-            if (loadingProgress == null) {
-              return child;
-            }
-            return Center(
-              child: CircularProgressIndicator(
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
-                    : null,
-                valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
-              ),
-            );
-          },
-          fit: BoxFit.cover,
-        );
-      },
     );
   }
 }
