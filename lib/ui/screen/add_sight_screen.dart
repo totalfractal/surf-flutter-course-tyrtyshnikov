@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/globals.dart' as globals;
 import 'package:places/mocks.dart';
+import 'package:places/ui/screen/add_sight_screen_category.dart';
 import 'package:places/ui/screen/res/colors.dart';
-import 'package:provider/provider.dart';
-
-import 'add_sight_screen_category.dart';
-import 'widgets/add_photos_of_sight.dart';
+import 'package:places/ui/screen/widgets/add_photos_of_sight.dart';
 
 class AddSightScreen extends StatefulWidget {
   const AddSightScreen({Key? key}) : super(key: key);
@@ -16,14 +14,15 @@ class AddSightScreen extends StatefulWidget {
 }
 
 class _AddSightScreenState extends State<AddSightScreen> {
-  bool _isFieldsFill = false;
-  TextEditingController _nameFieldTextController = TextEditingController();
-  TextEditingController _latFieldTextController = TextEditingController();
-  TextEditingController _lonFieldTextController = TextEditingController();
-  TextEditingController _descriptionFieldTextController =
+  final TextEditingController _nameFieldTextController =
       TextEditingController();
-  String _category = "Не выбрано";
+  final TextEditingController _latFieldTextController = TextEditingController();
+  final TextEditingController _lonFieldTextController = TextEditingController();
+  final TextEditingController _descriptionFieldTextController =
+      TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isFieldsFill = false;
+  String _category = 'Не выбрано';
 
   @override
   void dispose() {
@@ -36,31 +35,34 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ButtonStyle _inactiveCreateButtonStyle = getInactiveButtonStyle(context);
+    final _inactiveCreateButtonStyle = getInactiveButtonStyle(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
-          child: AppBar(
-            leadingWidth: 75,
-            leading: Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(left: 8),
-              child: TextButton(
-                child: Text(
-                  "Отмена",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+        child: AppBar(
+          leadingWidth: 75,
+          leading: Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 8),
+            child: TextButton(
+              child: Text(
+                'Отмена',
+                style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       color: globals.isDarkMode
                           ? dmSecondary2Color
-                          : lmSecondary2Color),
-                ),
-                onPressed: () {
-                  print("Отмена");
-                },
+                          : lmSecondary2Color,
+                    ),
               ),
+              onPressed: () {},
             ),
-            title: const Text("Новое место"),
           ),
-          preferredSize: Size(MediaQuery.of(context).size.width, 56)),
+          title: const Text('Новое место'),
+        ),
+        preferredSize: Size(
+          MediaQuery.of(context).size.width,
+          56,
+        ),
+      ),
       body: Stack(
         children: [
           Padding(
@@ -73,7 +75,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                       _latFieldTextController.text.isNotEmpty &&
                       _lonFieldTextController.text.isNotEmpty &&
                       _descriptionFieldTextController.text.isNotEmpty &&
-                      _category != "Не выбрано") {
+                      _category != 'Не выбрано') {
                     setState(() {
                       _isFieldsFill = true;
                     });
@@ -86,63 +88,62 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 child: Column(
                   children: [
                     Container(
-                        height: 85,
-                        padding: EdgeInsets.only(bottom: 12),
-                        child: AddPhotosOfSight()),
-                    Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            child: Text(
-                              "КАТЕГОРИЯ",
-                              style:
-                                  Theme.of(context).primaryTextTheme.headline6,
-                            ),
+                      height: 85,
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: const AddPhotosOfSight(),
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          child: Text(
+                            'КАТЕГОРИЯ',
+                            style: Theme.of(context).primaryTextTheme.headline6,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Text(
-                                      _category,
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyText2!
-                                          .copyWith(
-                                              color: globals.isDarkMode
-                                                  ? dmSecondary2Color
-                                                  : lmSecondary2Color),
-                                    ),
-                                  ),
-                                  Container(
-                                      child: ImageIcon(
-                                    AssetImage("res/icons/other/View.png"),
-                                  )),
-                                ],
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AddSightScreenCategory(
-                                                setCategory: (category) {
-                                              setState(() {
-                                                _category = category;
-                                              });
-                                            })));
-                              },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  _category,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText2!
+                                      .copyWith(
+                                        color: globals.isDarkMode
+                                            ? dmSecondary2Color
+                                            : lmSecondary2Color,
+                                      ),
+                                ),
+                                const ImageIcon(
+                                  AssetImage('res/icons/other/View.png'),
+                                ),
+                              ],
                             ),
-                          )
-                        ],
-                      ),
+                            onTap: () {
+                              Navigator.push<AddSightScreenCategory>(
+                                context,
+                                MaterialPageRoute<AddSightScreenCategory>(
+                                  builder: (context) => AddSightScreenCategory(
+                                    setCategory: (category) {
+                                      setState(
+                                        () {
+                                          _category = category;
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -157,9 +158,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                         children: [
                           Container(
                             alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.only(bottom: 12),
+                            padding: const EdgeInsets.only(bottom: 12),
                             child: Text(
-                              "НАЗВАНИЕ",
+                              'НАЗВАНИЕ',
                               style:
                                   Theme.of(context).primaryTextTheme.headline6,
                             ),
@@ -170,9 +171,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                               textController: _nameFieldTextController,
                               inputType: TextInputType.text,
                               maxLength: 100,
-                              hintText: "введите название",
+                              hintText: 'введите название',
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -185,15 +186,15 @@ class _AddSightScreenState extends State<AddSightScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                padding: EdgeInsets.only(bottom: 12),
+                                padding: const EdgeInsets.only(bottom: 12),
                                 child: Text(
-                                  "ШИРОТА",
+                                  'ШИРОТА',
                                   style: Theme.of(context)
                                       .primaryTextTheme
                                       .headline6,
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 height: 40,
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 25,
@@ -201,9 +202,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                                   textController: _latFieldTextController,
                                   inputType: TextInputType.number,
                                   maxLength: 10,
-                                  hintText: "...",
+                                  hintText: '...',
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -213,15 +214,15 @@ class _AddSightScreenState extends State<AddSightScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                padding: EdgeInsets.only(bottom: 12),
+                                padding: const EdgeInsets.only(bottom: 12),
                                 child: Text(
-                                  "ДОЛГОТА",
+                                  'ДОЛГОТА',
                                   style: Theme.of(context)
                                       .primaryTextTheme
                                       .headline6,
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 height: 40,
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 25,
@@ -229,9 +230,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                                   textController: _lonFieldTextController,
                                   inputType: TextInputType.number,
                                   maxLength: 10,
-                                  hintText: "...",
+                                  hintText: '...',
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -240,12 +241,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: TextButton(
-                        child: Text(
-                          "Указать на карте",
+                        child: const Text(
+                          'Указать на карте',
                         ),
-                        onPressed: () {
-                          print("Указать на карте");
-                        },
+                        onPressed: () {},
                       ),
                     ),
                     Container(
@@ -254,9 +253,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                         children: [
                           Container(
                             alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.only(bottom: 12),
+                            padding: const EdgeInsets.only(bottom: 12),
                             child: Text(
-                              "ОПИСАНИЕ",
+                              'ОПИСАНИЕ',
                               style:
                                   Theme.of(context).primaryTextTheme.headline6,
                             ),
@@ -267,10 +266,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
                               textController: _descriptionFieldTextController,
                               inputType: TextInputType.text,
                               maxLength: 1000,
-                              hintText: "введите текст",
+                              hintText: 'введите текст',
                               isLastNode: true,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -282,7 +281,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              margin: EdgeInsets.all(16),
+              margin: const EdgeInsets.all(16),
               width: double.infinity,
               height: 48,
               child: AbsorbPointer(
@@ -296,19 +295,19 @@ class _AddSightScreenState extends State<AddSightScreen> {
                       _nameFieldTextController.text,
                       _latFieldTextController.text,
                       _lonFieldTextController.text,
-                      "",
+                      '',
                       _descriptionFieldTextController.text,
-                      _category
+                      _category,
                     ]);
                     setState(() {
                       _nameFieldTextController.clear();
                       _latFieldTextController.clear();
                       _lonFieldTextController.clear();
                       _descriptionFieldTextController.clear();
-                      _category = "Не выбрано";
+                      _category = 'Не выбрано';
                     });
                   },
-                  child: Text(
+                  child: const Text(
                     'СОЗДАТЬ',
                   ),
                 ),
@@ -322,34 +321,34 @@ class _AddSightScreenState extends State<AddSightScreen> {
 }
 
 ButtonStyle getInactiveButtonStyle(BuildContext context) {
-  ButtonStyle _inactiveCreateButtonStyle = globals.isDarkMode
+  final _inactiveCreateButtonStyle = globals.isDarkMode
       ? Theme.of(context).elevatedButtonTheme.style!.copyWith(
-          backgroundColor: MaterialStateProperty.all<Color>(dmMainColor),
-          foregroundColor: MaterialStateProperty.all(dmInactiveBlackColor))
+            backgroundColor: MaterialStateProperty.all<Color>(dmMainColor),
+            foregroundColor: MaterialStateProperty.all(dmInactiveBlackColor),
+          )
       : Theme.of(context).elevatedButtonTheme.style!.copyWith(
-          backgroundColor: MaterialStateProperty.all<Color>(
-              Color.fromRGBO(245, 245, 245, 1)),
-          foregroundColor: MaterialStateProperty.all(lmInactiveBlackColor));
+            backgroundColor: MaterialStateProperty.all<Color>(
+              const Color.fromRGBO(245, 245, 245, 1),
+            ),
+            foregroundColor: MaterialStateProperty.all(lmInactiveBlackColor),
+          );
   return _inactiveCreateButtonStyle;
 }
 
 class NewPlaceTextFormField extends StatefulWidget {
-  const NewPlaceTextFormField({
-    Key? key,
-    // @required this.focusNode,
-    required this.textController,
-    required this.inputType,
-    this.maxLength = 60,
-    this.hintText = "",
-    this.isLastNode = false,
-  }) : super(key: key);
-
   final TextEditingController textController;
   final TextInputType inputType;
-
   final int maxLength;
   final String hintText;
   final bool isLastNode;
+  const NewPlaceTextFormField({
+    required this.textController,
+    required this.inputType,
+    Key? key,
+    this.maxLength = 60,
+    this.hintText = '',
+    this.isLastNode = false,
+  }) : super(key: key);
 
   @override
   _NewPlaceTextFormFieldState createState() => _NewPlaceTextFormFieldState();
@@ -368,8 +367,8 @@ class _NewPlaceTextFormFieldState extends State<NewPlaceTextFormField> {
       },
       child: TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: (String? value) {
-          if (value == null || value.isEmpty) return "";
+        validator: (value) {
+          if (value == null || value.isEmpty) return '';
           return null;
         },
         maxLength: widget.maxLength,
@@ -378,31 +377,29 @@ class _NewPlaceTextFormFieldState extends State<NewPlaceTextFormField> {
         cursorWidth: 1,
         maxLines: null,
         minLines: 5,
-
         style: Theme.of(context).primaryTextTheme.bodyText2,
-        // focusNode: widget.focusNode,
         controller: widget.textController,
         onTap: () {},
-
-        //cursorColor: dmWhiteColor,
         decoration: InputDecoration(
-            counterText: "",
-            hintText: widget.hintText,
-            suffixIcon: Visibility(
-              visible: _hasFocus && widget.textController.text.isNotEmpty,
-              child: IconButton(
-                alignment: Alignment.center,
-                icon: ImageIcon(
-                  AssetImage("res/icons/other/Clear.png"),
-                  color: IconTheme.of(context).color,
-                ),
-                onPressed: () {
-                  setState(() {
-                    widget.textController.clear();
-                  });
-                },
+          counterText: '',
+          hintText: widget.hintText,
+          suffixIcon: Visibility(
+            visible: _hasFocus && widget.textController.text.isNotEmpty,
+            child: IconButton(
+              icon: ImageIcon(
+                const AssetImage('res/icons/other/Clear.png'),
+                color: IconTheme.of(context).color,
               ),
-            )),
+              onPressed: () {
+                setState(
+                  () {
+                    widget.textController.clear();
+                  },
+                );
+              },
+            ),
+          ),
+        ),
         textInputAction:
             widget.isLastNode ? TextInputAction.done : TextInputAction.next,
         onEditingComplete: widget.isLastNode

@@ -18,28 +18,31 @@ class _BottomNavBarState extends State<BottomNavBar> {
       currentIndex: _selectedIndex,
       items: [
         BottomNavigationBarItem(
-            icon: _selectedIndex == 0
-                ? ImageIcon(AssetImage("res/icons/menu/List Full.png"))
-                : ImageIcon(AssetImage("res/icons/menu/List.png")),
-            label: ""),
-        BottomNavigationBarItem(
-            icon: _selectedIndex == 1
-                ? ImageIcon(AssetImage("res/icons/menu/Map Full.png"))
-                : ImageIcon(AssetImage("res/icons/menu/Map.png")),
-            label: ""),
-        BottomNavigationBarItem(
-          icon: _selectedIndex == 2
-              ? ImageIcon(AssetImage("res/icons/menu/Heart Full.png"))
-              : ImageIcon(AssetImage("res/icons/menu/Heart.png")),
-          label: "",
+          icon: _selectedIndex == 0
+              ? const ImageIcon(AssetImage('res/icons/menu/List Full.png'))
+              : const ImageIcon(AssetImage('res/icons/menu/List.png')),
+          label: '',
         ),
         BottomNavigationBarItem(
-            icon: _selectedIndex == 3
-                ? ImageIcon(AssetImage("res/icons/menu/Settings Full.png"))
-                : ImageIcon(AssetImage("res/icons/menu/Settings.png")),
-            label: ""),
+          icon: _selectedIndex == 1
+              ? const ImageIcon(AssetImage('res/icons/menu/Map Full.png'))
+              : const ImageIcon(AssetImage('res/icons/menu/Map.png')),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: _selectedIndex == 2
+              ? const ImageIcon(AssetImage('res/icons/menu/Heart Full.png'))
+              : const ImageIcon(AssetImage('res/icons/menu/Heart.png')),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: _selectedIndex == 3
+              ? const ImageIcon(AssetImage('res/icons/menu/Settings Full.png'))
+              : const ImageIcon(AssetImage('res/icons/menu/Settings.png')),
+          label: '',
+        ),
       ],
-      onTap: (int index) {
+      onTap: (index) {
         setState(() {
           _selectedIndex = index;
         });

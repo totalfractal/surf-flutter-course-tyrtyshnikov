@@ -1,41 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:places/globals.dart' as globals;
+import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 
-import 'add_sight_screen.dart';
-
 class AddSightScreenCategory extends StatefulWidget {
-  const AddSightScreenCategory({Key? key, required this.setCategory})
-      : super(key: key);
-
   final ValueSetter<String> setCategory;
-
-  final List<String> categories = const [
-    "Кинотеатр",
-    "Ресторан",
-    "Особое место",
-    "Театр",
-    "Музей",
-    "Кафе"
-  ];
+  const AddSightScreenCategory({
+    required this.setCategory,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _AddSightScreenCategoryState createState() => _AddSightScreenCategoryState();
 }
 
 class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
-  List<CategoryModel> _categories = [];
-  String _selectedCategory = "";
+  final List<CategoryModel> _categoriesModels = <CategoryModel>[
+    for (var element in _categories)
+      CategoryModel(isSelected: false, text: element),
+  ];
+  String _selectedCategory = '';
   bool _isCategorySelected = false;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.categories.forEach((element) {
-      _categories.add(CategoryModel(false, element));
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +29,12 @@ class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
       appBar: AppBar(
         leading: IconButton(
           icon: ImageIcon(
-            AssetImage("res/icons/other/Arrow.png"),
+            const AssetImage('res/icons/other/Arrow.png'),
             color: Theme.of(context).iconTheme.color,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text("Категория"),
+        title: const Text('Категория'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -59,27 +45,28 @@ class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
           children: [
             OverscrollGlowAbsorber(
               child: ListView.builder(
-                itemCount: _categories.length,
-                itemBuilder: (BuildContext context, int index) {
+                itemCount: _categoriesModels.length,
+                itemBuilder: (context, index) {
                   return InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () {
                       setState(() {
-                        _categories
-                            .forEach((element) => element.isSelected = false);
-                        _categories[index].isSelected = true;
-                        _selectedCategory = _categories[index].text;
+                        for (final model in _categoriesModels) {
+                          model.isSelected = false;
+                        }
+                        _categoriesModels[index].isSelected = true;
+                        _selectedCategory = _categoriesModels[index].text;
                         _isCategorySelected = true;
                       });
                     },
-                    child: CategoryItem(_categories[index]),
+                    child: CategoryItem(item: _categoriesModels[index]),
                   );
                 },
               ),
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 height: 48,
                 child: AbsorbPointer(
@@ -92,8 +79,8 @@ class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
                       widget.setCategory(_selectedCategory);
                       Navigator.of(context).pop();
                     },
-                    child: Text(
-                      "СОХРАНИТЬ",
+                    child: const Text(
+                      'СОХРАНИТЬ',
                     ),
                   ),
                 ),
@@ -107,29 +94,34 @@ class _AddSightScreenCategoryState extends State<AddSightScreenCategory> {
 }
 
 class CategoryItem extends StatelessWidget {
-  final CategoryModel _item;
-  CategoryItem(this._item);
+  final CategoryModel item;
+  const CategoryItem({
+    required this.item,
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 14),
+      padding: const EdgeInsets.symmetric(vertical: 14),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Container(
+          SizedBox(
             height: 24,
             child: Text(
-              _item.text,
+              item.text,
               style: Theme.of(context).primaryTextTheme.bodyText2,
             ),
           ),
-          Container(
-              child: Visibility(
-                  visible: _item.isSelected,
-                  child: Image.asset(
-                    'res/icons/other/Tick.png',
-                    color: globals.isDarkMode ? dmGreenColor : lmGreenColor,
-                  ))),
+          SizedBox(
+            child: Visibility(
+              visible: item.isSelected,
+              child: Image.asset(
+                'res/icons/other/Tick.png',
+                color: globals.isDarkMode ? dmGreenColor : lmGreenColor,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -137,8 +129,17 @@ class CategoryItem extends StatelessWidget {
 }
 
 class CategoryModel {
-  bool isSelected;
   final String text;
+  bool isSelected;
 
-  CategoryModel(this.isSelected, this.text);
+  CategoryModel({this.isSelected = true, this.text = ''});
 }
+
+final List<String> _categories = [
+  'Кинотеатр',
+  'Ресторан',
+  'Особое место',
+  'Театр',
+  'Музей',
+  'Кафе',
+];

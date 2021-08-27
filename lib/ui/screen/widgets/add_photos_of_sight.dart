@@ -25,9 +25,7 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
         Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: AddButton(
-            onTap: () {
-              _addPhoto();
-            },
+            onTap: _addPhoto,
           ),
         ),
         Expanded(
@@ -35,8 +33,8 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               physics: Platform.isAndroid
-                  ? ClampingScrollPhysics()
-                  : BouncingScrollPhysics(),
+                  ? const ClampingScrollPhysics()
+                  : const BouncingScrollPhysics(),
               children: _photosWidgets,
             ),
           ),
@@ -46,24 +44,23 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
   }
 
   void _getPhotosWidgets() {
-    List<PhotoOfSight> newPhotoList = [
+    _photosWidgets = [
       for (int i = 0; i < _photosWidgets.length; i++)
         PhotoOfSight(
           key: UniqueKey(),
           index: i,
           image: _photosWidgets[i].image,
-          onDelete: (index) => _deletePhoto(index),
-        )
+          onDelete: _deletePhoto,
+        ),
     ];
-    _photosWidgets = newPhotoList;
   }
 
   void _addPhoto() {
-    var photo = PhotoOfSight(
-      key: ValueKey("Photo #${_photosWidgets.length}"),
+    final photo = PhotoOfSight(
+      key: ValueKey('Photo #${_photosWidgets.length}'),
       index: _photosWidgets.length,
       image: Image.network(_getPhoto()),
-      onDelete: (index) => _deletePhoto(index),
+      onDelete: _deletePhoto,
     );
     setState(() {
       _photosWidgets.add(photo);
@@ -80,17 +77,20 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
 
   String _getPhoto() {
     return faker.image.image(
-        width: 100, height: 100, keywords: const ["place"], random: true);
+      width: 100,
+      height: 100,
+      keywords: const ['place'],
+      random: true,
+    );
   }
 }
 
 class AddButton extends StatelessWidget {
-  const AddButton({
-    Key? key,
-    required this.onTap,
-  }) : super(key: key);
-
   final VoidCallback onTap;
+  const AddButton({
+    required this.onTap,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,29 +99,33 @@ class AddButton extends StatelessWidget {
           height: 72,
           width: 72,
           decoration: BoxDecoration(
-              border: Border.all(
-                  color: isDarkMode
-                      ? dmGreenColor.withOpacity(0.4)
-                      : lmGreenColor.withOpacity(0.4),
-                  width: 2),
-              borderRadius: BorderRadius.all(Radius.circular(12))),
+            border: Border.all(
+              color: isDarkMode
+                  ? dmGreenColor.withOpacity(0.4)
+                  : lmGreenColor.withOpacity(0.4),
+              width: 2,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
           child: Icon(
             Icons.add,
             size: 40,
             color: isDarkMode ? dmGreenColor : lmGreenColor,
           ),
         ),
-        onTap: () => onTap(),
-        borderRadius: BorderRadius.all(Radius.circular(12)));
+        onTap: onTap,
+        borderRadius: const BorderRadius.all(Radius.circular(12)));
   }
 }
 
 class PhotoOfSight extends StatefulWidget {
   const PhotoOfSight({
-    Key? key,
     required this.index,
     required this.image,
     required this.onDelete,
+    Key? key,
   }) : super(key: key);
 
   final int index;
@@ -139,28 +143,28 @@ class _PhotoOfSightState extends State<PhotoOfSight> {
       key: UniqueKey(),
       direction: DismissDirection.up,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 8),
         height: 72,
         width: 72,
         child: Stack(
           children: [
             ClipRRect(
               child: widget.image,
-              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
             GestureDetector(
               child: Container(
-                margin: EdgeInsets.all(4),
+                margin: const EdgeInsets.all(4),
                 alignment: Alignment.topRight,
-                child: ImageIcon(
+                child: const ImageIcon(
                   AssetImage(
-                    "res/icons/other/Clear.png",
+                    'res/icons/other/Clear.png',
                   ),
                   color: lmPrimaryColor,
                 ),
               ),
               onTap: () => widget.onDelete(widget.index),
-            )
+            ),
           ],
         ),
       ),

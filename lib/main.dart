@@ -1,29 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:places/domain/sight.dart';
-import 'package:places/mocks.dart';
-import 'package:places/ui/screen/add_sight_screen.dart';
-import 'package:places/ui/screen/filter_screen.dart';
-import 'package:places/ui/screen/onboarding_screen.dart';
 import 'package:places/ui/screen/res/themes.dart';
-import 'package:places/ui/screen/search_screen.dart';
-import 'package:places/ui/screen/settings_screen.dart';
-import 'package:places/ui/screen/sight_details.dart';
-import 'package:places/ui/screen/sight_list_screen.dart';
-import 'package:places/ui/screen/visiting_screen.dart';
+import 'package:places/ui/screen/splash_screen.dart';
 import 'package:provider/provider.dart';
-
-import 'globals.dart' as globals;
 
 void main() {
   return runApp(ChangeNotifierProvider(
-    child: App(),
-    create: (BuildContext context) => ThemeProvider(isDarkMode: true),
+    child: const App(),
+    create: (context) => ThemeProvider(isDarkMode: true),
   ));
 }
 
 class App extends StatefulWidget {
-  // This widget is the root of your application.
-
+  const App({Key? key}) : super(key: key);
   @override
   _AppState createState() => _AppState();
 }
@@ -39,8 +27,8 @@ class _AppState extends State<App> {
           //home: AddSightScreen(),
           // home: SettingsScreen(),
           // home: FilterScreen(),
-          // home: VisitingScreen(title: "Избранное"),
-          home: SightListScreen(title: "Список \nинтересных мест"),
+          // home: const VisitingScreen(title: 'Избранное'),
+          // home: SightListScreen(title: "Список \nинтересных мест"),
           /* home: SightDetails(
             sight: Sight(
                 name: mocks[0][0],
@@ -50,63 +38,12 @@ class _AppState extends State<App> {
                 details: mocks[0][4],
                 type: mocks[0][5]),
           ), */
-          // home: OnboardingScreen(),
+          // home: const OnboardingScreen(),
           //theme: globals.isDarkMode ? darkTheme : lightTheme,
+          home: const SplashScreen(),
           theme: themeProvider.getTheme,
         );
       },
-    );
-  }
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyFirstStatelessWidget(),
-    );
-  }
-}
-
-class MyFirstStatelessWidget extends StatelessWidget {
-  int buildCount = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    print('Количество вызовов метода build(): ${++buildCount}');
-    return Container(
-      child: Center(
-        child: Text('Hello!'),
-      ),
-    );
-  }
-}
-
-class MyFirstStatefulWidget extends StatefulWidget {
-  @override
-  _MyFirstStatefulWidgetState createState() => _MyFirstStatefulWidgetState();
-}
-
-class _MyFirstStatefulWidgetState extends State<MyFirstStatefulWidget> {
-  int buildCount = 0;
-
-  void getRuntimeType() {
-    print(context.runtimeType);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    print('Количество вызовов метода build(): ${++buildCount}');
-    getRuntimeType();
-    return Container(
-      child: Center(
-        child: Text('Hello!'),
-      ),
     );
   }
 }

@@ -1,42 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:places/domain/nearbySights.dart';
+import 'package:places/domain/nearby_sights.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({Key? key, required this.onFiltersChanged})
-      : super(key: key);
-
   final ValueSetter<List<Sight>> onFiltersChanged;
+  const FilterScreen({
+    required this.onFiltersChanged,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _FilterScreenState createState() => _FilterScreenState();
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  RangeValues _currentRangeValues = RangeValues(100, 2000);
+  final NearbySightsFinder _nearbySightsFinder = NearbySightsFinder();
+  RangeValues _currentRangeValues = const RangeValues(100, 2000);
   int _nearbyCount = 0;
-  NearbySightsFinder _nearbySightsFinder = NearbySightsFinder();
   List<Sight> _nearbySights = [];
+  final GlobalKey<_CategoryFilterIconState> _cafeIconKey = GlobalKey();
+  final GlobalKey<_CategoryFilterIconState> _hotelIconKey = GlobalKey();
+  final GlobalKey<_CategoryFilterIconState> _museumIconKey = GlobalKey();
+  final GlobalKey<_CategoryFilterIconState> _parkIconKey = GlobalKey();
+  final GlobalKey<_CategoryFilterIconState> _partPlaceIconKey = GlobalKey();
+  final GlobalKey<_CategoryFilterIconState> _restourantIconKey = GlobalKey();
 
+  // ignore: unused_field
   bool? _isCafePressed;
+  // ignore: unused_field
   bool? _isHotelPressed;
+  // ignore: unused_field
   bool? _isMuseumPressed;
+  // ignore: unused_field
   bool? _isParkPressed;
+  // ignore: unused_field
   bool? _isPartPlacePressed;
+  // ignore: unused_field
   bool? _isRestourantPressed;
 
-  GlobalKey<_CategoryFilterIconState> _cafeIconKey = GlobalKey();
-  GlobalKey<_CategoryFilterIconState> _hotelIconKey = GlobalKey();
-  GlobalKey<_CategoryFilterIconState> _museumIconKey = GlobalKey();
-  GlobalKey<_CategoryFilterIconState> _parkIconKey = GlobalKey();
-  GlobalKey<_CategoryFilterIconState> _partPlaceIconKey = GlobalKey();
-  GlobalKey<_CategoryFilterIconState> _restourantIconKey = GlobalKey();
-
+  // ignore: use_late_for_private_fields_and_variables
   CategoryFilter? _cafeFilter;
   CategoryFilter? _hotelFilter;
+  // ignore: use_late_for_private_fields_and_variables
   CategoryFilter? _museumFilter;
+  // ignore: use_late_for_private_fields_and_variables
   CategoryFilter? _parkFilter;
   CategoryFilter? _partPlaceFilter;
   CategoryFilter? _restourantFilter;
@@ -57,9 +66,9 @@ class _FilterScreenState extends State<FilterScreen> {
       iconKey: _cafeIconKey,
       name: 'Кафе',
       iconImage: globals.isDarkMode
-          ? "res/icons/catalog/black/Cafe.png"
-          : "res/icons/catalog/white/Cafe.png",
-      onPressed: (bool? value) {
+          ? 'res/icons/catalog/black/Cafe.png'
+          : 'res/icons/catalog/white/Cafe.png',
+      onPressed: (value) {
         _isCafePressed = value;
       },
     );
@@ -67,9 +76,9 @@ class _FilterScreenState extends State<FilterScreen> {
       iconKey: _hotelIconKey,
       name: 'Отель',
       iconImage: globals.isDarkMode
-          ? "res/icons/catalog/black/Hotel.png"
-          : "res/icons/catalog/white/Hotel.png",
-      onPressed: (bool? value) {
+          ? 'res/icons/catalog/black/Hotel.png'
+          : 'res/icons/catalog/white/Hotel.png',
+      onPressed: (value) {
         _isHotelPressed = value;
       },
     );
@@ -77,9 +86,9 @@ class _FilterScreenState extends State<FilterScreen> {
       iconKey: _museumIconKey,
       name: 'Музей',
       iconImage: globals.isDarkMode
-          ? "res/icons/catalog/black/Museum.png"
-          : "res/icons/catalog/white/Museum.png",
-      onPressed: (bool? value) {
+          ? 'res/icons/catalog/black/Museum.png'
+          : 'res/icons/catalog/white/Museum.png',
+      onPressed: (value) {
         _isMuseumPressed = value;
       },
     );
@@ -87,9 +96,9 @@ class _FilterScreenState extends State<FilterScreen> {
       iconKey: _parkIconKey,
       name: 'Парк',
       iconImage: globals.isDarkMode
-          ? "res/icons/catalog/black/Park.png"
-          : "res/icons/catalog/white/Park.png",
-      onPressed: (bool? value) {
+          ? 'res/icons/catalog/black/Park.png'
+          : 'res/icons/catalog/white/Park.png',
+      onPressed: (value) {
         _isParkPressed = value;
       },
     );
@@ -97,9 +106,9 @@ class _FilterScreenState extends State<FilterScreen> {
       iconKey: _partPlaceIconKey,
       name: 'Особое место',
       iconImage: globals.isDarkMode
-          ? "res/icons/catalog/black/Particular place.png"
-          : "res/icons/catalog/white/Particular place.png",
-      onPressed: (bool? value) {
+          ? 'res/icons/catalog/black/Particular place.png'
+          : 'res/icons/catalog/white/Particular place.png',
+      onPressed: (value) {
         _isPartPlacePressed = value;
       },
     );
@@ -107,9 +116,9 @@ class _FilterScreenState extends State<FilterScreen> {
       iconKey: _restourantIconKey,
       name: 'Ресторан',
       iconImage: globals.isDarkMode
-          ? "res/icons/catalog/black/Restourant.png"
-          : "res/icons/catalog/white/Restourant.png",
-      onPressed: (bool? value) {
+          ? 'res/icons/catalog/black/Restourant.png'
+          : 'res/icons/catalog/white/Restourant.png',
+      onPressed: (value) {
         _isRestourantPressed = value;
       },
     );
@@ -121,79 +130,83 @@ class _FilterScreenState extends State<FilterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-          child: AppBar(
-            elevation: 0,
-            leading: GestureDetector(
-              child: Container(
-                  padding: EdgeInsets.only(left: 16.0),
-                  child: IconButton(
-                    icon: ImageIcon(
-                      AssetImage("res/icons/other/Arrow.png"),
-                      color: IconTheme.of(context).color,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )),
+        child: AppBar(
+          elevation: 0,
+          leading: GestureDetector(
+            child: Container(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: IconButton(
+                icon: ImageIcon(
+                  const AssetImage('res/icons/other/Arrow.png'),
+                  color: IconTheme.of(context).color,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
-            actions: [
-              Padding(
-                  padding: EdgeInsets.only(right: 16.0),
-                  child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _cafeIconKey.currentState!.unselect();
-                          _hotelIconKey.currentState!.unselect();
-                          _museumIconKey.currentState!.unselect();
-                          _parkIconKey.currentState!.unselect();
-                          _partPlaceIconKey.currentState!.unselect();
-                          _restourantIconKey.currentState!.unselect();
-                        });
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Очистить",
-                          style: TextStyle(
-                              fontFamily: "Roboto",
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 16,
-                              color: globals.isDarkMode
-                                  ? dmGreenColor
-                                  : lmGreenColor),
-                          textAlign: TextAlign.right,
-                        ),
-                      ))),
-            ],
           ),
-          preferredSize: Size(MediaQuery.of(context).size.width, 56)),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _cafeIconKey.currentState!.unselect();
+                    _hotelIconKey.currentState!.unselect();
+                    _museumIconKey.currentState!.unselect();
+                    _parkIconKey.currentState!.unselect();
+                    _partPlaceIconKey.currentState!.unselect();
+                    _restourantIconKey.currentState!.unselect();
+                  });
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Очистить',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w500,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 16,
+                      color: globals.isDarkMode ? dmGreenColor : lmGreenColor,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        preferredSize: Size(MediaQuery.of(context).size.width, 56),
+      ),
       body: Stack(
         children: [
-          Container(
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "КАТЕГОРИИ",
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .headline3!
-                              .copyWith(
-                                  fontSize: 12,
-                                  color: Color.fromRGBO(124, 126, 146, 0.56)),
-                        ),
+          Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'КАТЕГОРИИ',
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .headline3!
+                            .copyWith(
+                              fontSize: 12,
+                              color: const Color.fromRGBO(124, 126, 146, 0.56),
+                            ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 20, bottom: 20),
-                        child: Table(
-                          children: [
-                            TableRow(children: [
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20, bottom: 20),
+                      child: Table(
+                        children: [
+                          TableRow(
+                            children: [
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 20.0),
                                 child: _hotelFilter,
@@ -206,67 +219,76 @@ class _FilterScreenState extends State<FilterScreen> {
                                 padding: const EdgeInsets.only(bottom: 20.0),
                                 child: _partPlaceFilter,
                               ),
-                            ]),
-                            TableRow(children: [
+                            ],
+                          ),
+                          TableRow(
+                            children: [
                               _parkFilter!,
                               _museumFilter!,
-                              _cafeFilter!
-                            ])
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                              _cafeFilter!,
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  margin: EdgeInsets.only(left: 16, right: 16, top: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Расстояние",
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .bodyText1!
-                              .copyWith(fontSize: 16)),
-                      Text(
-                          'от ${_currentRangeValues.start.round()} до ${_currentRangeValues.end.round()} м',
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .subtitle2!
-                              .copyWith(fontSize: 16)),
-                    ],
-                  ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Расстояние',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .bodyText1!
+                          .copyWith(
+                            fontSize: 16,
+                          ),
+                    ),
+                    Text(
+                      'от ${_currentRangeValues.start.round()} до ${_currentRangeValues.end.round()} м',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .subtitle2!
+                          .copyWith(
+                            fontSize: 16,
+                          ),
+                    ),
+                  ],
                 ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child: RangeSlider(
-                    values: _currentRangeValues,
-                    min: 100,
-                    max: 10100,
-                    divisions: 100,
-                    onChanged: (values) {
-                      setState(() {
-                        _currentRangeValues = values;
-                      });
-                    },
-                    onChangeEnd: (values) {
-                      _nearbySights = _nearbySightsFinder
-                          .calcNearbySightsByRange(_currentRangeValues);
-                      _nearbyCount = _nearbySights.length;
+              ),
+              Container(
+                padding: const EdgeInsets.all(5),
+                child: RangeSlider(
+                  values: _currentRangeValues,
+                  min: 100,
+                  max: 10100,
+                  divisions: 100,
+                  onChanged: (values) {
+                    setState(() {
+                      _currentRangeValues = values;
+                    });
+                  },
+                  onChangeEnd: (values) {
+                    _nearbySights = _nearbySightsFinder
+                        .calcNearbySightsByRange(_currentRangeValues);
+                    _nearbyCount = _nearbySights.length;
 
-                      setState(() {
-                        _nearbyCount = _nearbySights.length;
-                      });
-                    },
-                  ),
+                    setState(() {
+                      _nearbyCount = _nearbySights.length;
+                    });
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              margin: EdgeInsets.all(16),
+              margin: const EdgeInsets.all(16),
               width: double.infinity,
               height: 48,
               child: ElevatedButton(
@@ -288,11 +310,11 @@ class _FilterScreenState extends State<FilterScreen> {
 
 class CategoryFilter extends StatelessWidget {
   const CategoryFilter({
-    Key? key,
     required this.name,
     required this.iconImage,
     required this.iconKey,
     required this.onPressed,
+    Key? key,
   }) : super(key: key);
 
   final GlobalKey iconKey;
@@ -302,33 +324,33 @@ class CategoryFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          CategoryFilterIcon(
-              key: iconKey, iconImage: iconImage, onPressed: onPressed),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Text(
-              name,
-              style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
-                    fontSize: 12,
-                  ),
-            ),
-          )
-        ],
-      ),
+    return Column(
+      children: [
+        CategoryFilterIcon(
+          key: iconKey,
+          iconImage: iconImage,
+          onPressed: onPressed,
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: Text(
+            name,
+            style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
+                  fontSize: 12,
+                ),
+          ),
+        ),
+      ],
     );
   }
 }
 
 class CategoryFilterIcon extends StatefulWidget {
-  CategoryFilterIcon(
-      {Key? key,
-      //@required this.isPressed,
-      required this.iconImage,
-      required this.onPressed})
-      : super(key: key);
+  const CategoryFilterIcon({
+    required this.iconImage,
+    required this.onPressed,
+    Key? key,
+  }) : super(key: key);
 
   final String iconImage;
   final ValueChanged<bool?> onPressed;
@@ -376,12 +398,11 @@ class _CategoryFilterIconState extends State<CategoryFilterIcon> {
           },
         ),
         Opacity(
-            opacity: _isSelected! ? 1.0 : 0.0,
-            //TODO: разобраться с BlendMode
-            child: Image.asset(
-              "res/icons/other/Tick choice.png",
-              // color: globals.isDarkMode ? dmWhiteColor : lmMainColor,
-            )),
+          opacity: _isSelected! ? 1.0 : 0.0,
+          child: Image.asset(
+            'res/icons/other/Tick choice.png',
+          ),
+        ),
       ],
     );
   }

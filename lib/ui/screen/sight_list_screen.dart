@@ -2,31 +2,32 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/globals.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/res/styles.dart';
 import 'package:places/ui/screen/search_screen.dart';
+import 'package:places/ui/screen/widgets/bottom_nav_bar.dart';
 import 'package:places/ui/screen/widgets/font_size_on_scroll_changer.dart';
 import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/widgets/sight_card.dart';
 import 'package:places/ui/screen/widgets/search_bar.dart';
 
-import '../../globals.dart';
-import 'widgets/bottom_nav_bar.dart';
-
 class SightListScreen extends StatefulWidget {
-  SightListScreen({Key? key, required this.title}) : super(key: key);
-
   final String title;
+  const SightListScreen({
+    required this.title,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SightListScreenState createState() => _SightListScreenState();
 }
 
 class _SightListScreenState extends State<SightListScreen> {
-  List<Sight> _sightsList = [];
+  final ScrollController _scrollController = ScrollController();
+  final List<Sight> _sightsList = [];
   late Widget _currentAppBarText;
-  ScrollController _scrollController = ScrollController();
   bool _centerTitle = false;
   double _toolBarHeight = 140;
 
@@ -39,7 +40,7 @@ class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: const BottomNavBar(),
       body: OverscrollGlowAbsorber(
         child: FontSizeOnScrollChanger(
           scrollController: _scrollController,
@@ -60,8 +61,8 @@ class _SightListScreenState extends State<SightListScreen> {
           child: CustomScrollView(
             controller: _scrollController,
             physics: Platform.isAndroid
-                ? ClampingScrollPhysics()
-                : BouncingScrollPhysics(),
+                ? const ClampingScrollPhysics()
+                : const BouncingScrollPhysics(),
             slivers: [
               SliverAppBar(
                 floating: true,
@@ -76,18 +77,19 @@ class _SightListScreenState extends State<SightListScreen> {
                     alignment: Alignment.bottomCenter,
                     child: InkWell(
                       child: IgnorePointer(
-                        ignoring: true,
                         child: SearchBar(
-                          onFiltersChanged: (List<Sight> value) => _sightsList,
-                          onQueryChanged: (String query) {},
-                          onFocusChanged: (bool value) {},
+                          onFiltersChanged: (value) => _sightsList,
+                          onQueryChanged: (query) {},
+                          onFocusChanged: (value) {},
                         ),
                       ),
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SearchScreen()));
+                          context,
+                          MaterialPageRoute<SearchScreen>(
+                            builder: (context) => const SearchScreen(),
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -99,13 +101,15 @@ class _SightListScreenState extends State<SightListScreen> {
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: SightCard(
-                          sight: Sight(
-                              name: mocks[index][0],
-                              lat: double.parse(mocks[index][1]),
-                              lon: double.parse(mocks[index][2]),
-                              urls: mocks[index][3],
-                              details: mocks[index][4],
-                              type: mocks[index][5])),
+                        sight: Sight(
+                          name: mocks[index][0] as String,
+                          lat: double.parse(mocks[index][1] as String),
+                          lon: double.parse(mocks[index][2] as String),
+                          urls: mocks[index][3] as List<String>,
+                          details: mocks[index][4] as String,
+                          type: mocks[index][5] as String,
+                        ),
+                      ),
                     );
                   },
                   childCount: mocks.length,
@@ -120,19 +124,19 @@ class _SightListScreenState extends State<SightListScreen> {
 }
 
 class DefaultAppBarTitleText extends StatelessWidget {
-  const DefaultAppBarTitleText({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
-
   final String title;
+  const DefaultAppBarTitleText({
+    required this.title,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       title,
       style: sightListAppBarTextStyle.copyWith(
-          color: isDarkMode ? dmWhiteColor : lmMainColor),
+        color: isDarkMode ? dmWhiteColor : lmMainColor,
+      ),
       textAlign: TextAlign.start,
       maxLines: 2,
       softWrap: true,
@@ -142,8 +146,8 @@ class DefaultAppBarTitleText extends StatelessWidget {
 
 class ScrolledAppBarTitleText extends StatelessWidget {
   const ScrolledAppBarTitleText({
-    Key? key,
     required this.title,
+    Key? key,
   }) : super(key: key);
 
   final String title;
@@ -153,9 +157,10 @@ class ScrolledAppBarTitleText extends StatelessWidget {
     return Text(
       title.replaceAll(RegExp(r'\n'), ''),
       style: sightListAppBarTextStyle.copyWith(
-          color: isDarkMode ? dmWhiteColor : lmMainColor,
-          fontSize: 18,
-          fontWeight: FontWeight.w500),
+        color: isDarkMode ? dmWhiteColor : lmMainColor,
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+      ),
       textAlign: TextAlign.start,
       maxLines: 2,
       softWrap: true,
