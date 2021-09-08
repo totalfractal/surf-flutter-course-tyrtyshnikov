@@ -6,9 +6,9 @@ import 'package:places/globals.dart';
 import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/widgets/sight_details_page_view.dart';
 
-class SightDetails extends StatelessWidget {
+class SightDetailsScreen extends StatelessWidget {
   final Sight sight;
-  const SightDetails({
+  const SightDetailsScreen({
     required this.sight,
     Key? key,
   }) : super(key: key);

@@ -1,5 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
+void calcSome(List<String> massive) {
+  for (final string in massive) {
+    debugPrint(string.split('').reversed.join());
+  }
+}
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -15,6 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     isInitialized = _navigateToNext();
   }
 
@@ -42,8 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<bool> _navigateToNext() async {
     return Future.delayed(const Duration(seconds: 2), () {
-      //ignore:avoid_print
-      print('Переход на следующий экран');
+      Navigator.of(context).pushNamedAndRemoveUntil('/root', (route) => false);
       return true;
     });
   }

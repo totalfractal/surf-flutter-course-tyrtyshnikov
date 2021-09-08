@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
+  final ValueSetter<int> onTap;
   const BottomNavBar({
+    required this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -46,6 +48,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         setState(() {
           _selectedIndex = index;
         });
+        widget.onTap(index);
       },
     );
   }

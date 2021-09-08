@@ -53,7 +53,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           : lmSecondary2Color,
                     ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ),
           title: const Text('Новое место'),
