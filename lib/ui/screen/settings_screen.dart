@@ -3,7 +3,6 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/res/themes.dart';
-import 'package:places/ui/screen/widgets/bottom_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -27,7 +26,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      // bottomNavigationBar: const BottomNavBar(),
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(

@@ -6,13 +6,12 @@ import 'package:places/ui/screen/res/styles.dart';
 class ThemeProvider extends ChangeNotifier {
   ThemeData light = lightTheme;
   ThemeData dark = darkTheme;
+  ThemeData? get getTheme => _selectedTheme;
   ThemeData? _selectedTheme;
 
   ThemeProvider({required bool isDarkMode}) {
     _selectedTheme = isDarkMode ? dark : light;
   }
-
-  ThemeData? get getTheme => _selectedTheme;
 
   bool isDarkTheme() => _selectedTheme == dark || false;
 

@@ -95,42 +95,44 @@ class AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        child: Container(
-          height: 72,
-          width: 72,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: isDarkMode
-                  ? dmGreenColor.withOpacity(0.4)
-                  : lmGreenColor.withOpacity(0.4),
-              width: 2,
-            ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(12),
-            ),
+      child: Container(
+        height: 72,
+        width: 72,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isDarkMode
+                ? dmGreenColor.withOpacity(0.4)
+                : lmGreenColor.withOpacity(0.4),
+            width: 2,
           ),
-          child: Icon(
-            Icons.add,
-            size: 40,
-            color: isDarkMode ? dmGreenColor : lmGreenColor,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
           ),
         ),
-        onTap: onTap,
-        borderRadius: const BorderRadius.all(Radius.circular(12)));
+        child: Icon(
+          Icons.add,
+          size: 40,
+          color: isDarkMode ? dmGreenColor : lmGreenColor,
+        ),
+      ),
+      onTap: onTap,
+      borderRadius: const BorderRadius.all(
+        Radius.circular(12),
+      ),
+    );
   }
 }
 
 class PhotoOfSight extends StatefulWidget {
+  final int index;
+  final Image image;
+  final Function(int) onDelete;
   const PhotoOfSight({
     required this.index,
     required this.image,
     required this.onDelete,
     Key? key,
   }) : super(key: key);
-
-  final int index;
-  final Image image;
-  final Function(int) onDelete;
 
   @override
   _PhotoOfSightState createState() => _PhotoOfSightState();

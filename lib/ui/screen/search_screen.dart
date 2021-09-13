@@ -4,7 +4,6 @@ import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/res/styles.dart';
-import 'package:places/ui/screen/widgets/bottom_nav_bar.dart';
 import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/widgets/search_screen/search_history_item.dart';
 import 'package:places/ui/screen/widgets/search_bar.dart';
@@ -87,7 +86,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      // bottomNavigationBar: const BottomNavBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16),
         child: _searchBodyWidget,

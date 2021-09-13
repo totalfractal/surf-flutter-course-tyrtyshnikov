@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:places/domain/sight.dart';
+import 'package:places/ui/screen/add_sight_screen.dart';
+import 'package:places/ui/screen/onboarding_screen.dart';
 import 'package:places/ui/screen/res/themes.dart';
+import 'package:places/ui/screen/root_screen.dart';
+import 'package:places/ui/screen/search_screen.dart';
+import 'package:places/ui/screen/sight_details_screen.dart';
+import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/splash_screen.dart';
+import 'package:places/ui/screen/visiting_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -23,24 +31,25 @@ class _AppState extends State<App> {
       builder: (context, themeProvider, child) {
         return MaterialApp(
           title: 'First App',
-          //home: SearchScreen(),
-          //home: AddSightScreen(),
-          // home: SettingsScreen(),
-          // home: FilterScreen(),
-          // home: const VisitingScreen(title: 'Избранное'),
-          // home: SightListScreen(title: "Список \nинтересных мест"),
-          /* home: SightDetails(
-            sight: Sight(
-                name: mocks[0][0],
-                lat: double.parse(mocks[0][1]),
-                lon: double.parse(mocks[0][2]),
-                urls: mocks[0][3],
-                details: mocks[0][4],
-                type: mocks[0][5]),
-          ), */
-          // home: const OnboardingScreen(),
-          //theme: globals.isDarkMode ? darkTheme : lightTheme,
-          home: const SplashScreen(),
+          routes: {
+            '/': (context) => const SplashScreen(),
+            '/root': (context) => const RootScreen(),
+            '/onboarding': (context) => const OnboardingScreen(),
+            '/search': (context) => const SearchScreen(),
+            '/add': (context) => const AddSightScreen(),
+            '/list': (context) =>
+                const SightListScreen(title: 'Список \nинтересных мест'),
+            '/favorites': (context) => const VisitingScreen(title: 'Избранное'),
+          },
+          onGenerateRoute: (settings) {
+            if (settings.name == '/details') {
+              final sight = settings.arguments as Sight;
+              return MaterialPageRoute<SightDetailsScreen>(
+                builder: (context) => SightDetailsScreen(sight: sight),
+              );
+            }
+          },
+          // home: const RootScreen(),
           theme: themeProvider.getTheme,
         );
       },

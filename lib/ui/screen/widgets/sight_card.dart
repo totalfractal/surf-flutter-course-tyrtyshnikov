@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/globals.dart';
 import 'package:places/ui/screen/res/colors.dart';
-import 'package:places/ui/screen/sight_details.dart';
+import 'package:places/ui/screen/sight_details_screen.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;
@@ -123,7 +123,7 @@ class SightCard extends StatefulWidget {
                 ),
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.all(16.0),
-                child: informationColumn(context),
+                child: Builder(builder: informationColumn),
               ),
             ],
           ),
@@ -132,14 +132,7 @@ class SightCard extends StatefulWidget {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  Navigator.push<SightDetails>(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SightDetails(
-                        sight: sight,
-                      ),
-                    ),
-                  );
+                  Navigator.of(context).pushNamed('/details', arguments: sight);
                 },
                 customBorder: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -153,10 +146,9 @@ class SightCard extends StatefulWidget {
               children: [
                 Expanded(
                   child: Text(
-                      sight.type.isEmpty
-                          ? 'категория'
-                          : sight.type.toLowerCase(),
-                      style: Theme.of(context).primaryTextTheme.caption),
+                    sight.type.isEmpty ? 'категория' : sight.type.toLowerCase(),
+                    style: Theme.of(context).primaryTextTheme.caption,
+                  ),
                 ),
                 interactionButtons(),
               ],

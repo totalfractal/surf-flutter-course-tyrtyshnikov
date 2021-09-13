@@ -35,7 +35,7 @@ class VisitingScreen extends StatelessWidget {
           ),
           elevation: 0,
         ),
-        bottomNavigationBar: const BottomNavBar(),
+        //   bottomNavigationBar: const BottomNavBar(),
         body: TabBarView(
           children: [
             VisitingScreenTab(sightList: _getwantToisitList(), title: title),
