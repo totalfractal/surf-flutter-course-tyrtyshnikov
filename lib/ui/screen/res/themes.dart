@@ -26,6 +26,7 @@ final lightTheme = ThemeData(
   primaryColor: lmPrimaryColor,
   backgroundColor: lmBackgroundColor,
   scaffoldBackgroundColor: lmScaffoldBackgroundColor,
+  disabledColor: lmInactiveBlackColor,
   appBarTheme: const AppBarTheme(
     backgroundColor: lmBackgroundColor,
     titleTextStyle: TextStyle(
@@ -59,7 +60,7 @@ final lightTheme = ThemeData(
     unselectedItemColor: lmSecondaryColor,
     selectedItemColor: lmSecondaryColor,
   ),
-  bottomSheetTheme: BottomSheetThemeData(
+  bottomSheetTheme: const BottomSheetThemeData(
     backgroundColor: Colors.transparent,
   ),
   primaryTextTheme: TextTheme(
@@ -152,6 +153,7 @@ final darkTheme = ThemeData(
   primaryColor: dmPrimaryColor,
   backgroundColor: dmBackgroundColor,
   scaffoldBackgroundColor: dmScaffoldBackgroundColor,
+  disabledColor: dmInactiveBlackColor,
   appBarTheme: AppBarTheme(
     backgroundColor: dmBackgroundColor,
     titleTextStyle: dmAppBarTextStyle,

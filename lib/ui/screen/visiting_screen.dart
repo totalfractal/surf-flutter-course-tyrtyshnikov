@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/globals.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screen/widgets/bottom_nav_bar.dart';
 import 'package:places/ui/screen/widgets/visiting_screen/visiting_screen_tab.dart';
 
 class VisitingScreen extends StatelessWidget {

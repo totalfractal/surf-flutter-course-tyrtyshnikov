@@ -4,6 +4,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:places/globals.dart';
 import 'package:places/ui/screen/res/colors.dart';
+import 'package:places/ui/screen/widgets/add_photo_dialog.dart';
 import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 
 class AddPhotosOfSight extends StatefulWidget {
@@ -56,15 +57,24 @@ class _AddPhotosOfSightState extends State<AddPhotosOfSight> {
   }
 
   void _addPhoto() {
-    final photo = PhotoOfSight(
-      key: ValueKey('Photo #${_photosWidgets.length}'),
-      index: _photosWidgets.length,
-      image: Image.network(_getPhoto()),
-      onDelete: _deletePhoto,
-    );
-    setState(() {
-      _photosWidgets.add(photo);
-      _getPhotosWidgets();
+    showDialog<bool>(
+      useSafeArea: true,
+      barrierDismissible: false,
+      context: context,
+      builder: (_) => const AddPhotoDialog(),
+    ).then((value) {
+      if (value != null) {
+        final photo = PhotoOfSight(
+          key: ValueKey('Photo #${_photosWidgets.length}'),
+          index: _photosWidgets.length,
+          image: Image.network(_getPhoto()),
+          onDelete: _deletePhoto,
+        );
+        setState(() {
+          _photosWidgets.add(photo);
+          _getPhotosWidgets();
+        });
+      }
     });
   }
 
