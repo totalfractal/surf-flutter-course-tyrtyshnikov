@@ -15,43 +15,14 @@ class SightCard extends StatefulWidget {
 
   @override
   SightCardState createState() => SightCardState();
+}
 
-  Widget interactionButtons() {
-    return SizedBox(
-      width: 45,
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-        child: InkWell(
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          child: Ink(
-            child: Image.asset(
-              'res/icons/menu/Heart.png',
-            ),
-          ),
-          onTap: () {},
-        ),
-      ),
-    );
-  }
-
-  Column informationColumn(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Container(
-        padding: const EdgeInsets.symmetric(vertical: 2),
-        child: Text(
-          sight.name.isEmpty ? 'Название' : sight.name,
-          style: Theme.of(context).primaryTextTheme.headline5,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-      Text(
-        'закрыто до 9:00',
-        textAlign: TextAlign.start,
-        style: Theme.of(context).primaryTextTheme.subtitle2,
-      ),
-    ]);
+class SightCardState<T extends SightCard> extends State<T> {
+  GlobalKey globalKey = GlobalKey();
+  bool isDrag = false;
+  @override
+  Widget build(BuildContext context) {
+    return Builder(builder: cardContainer);
   }
 
   Widget cardContainer(BuildContext context) {
@@ -87,7 +58,7 @@ class SightCard extends StatefulWidget {
                         topRight: Radius.circular(12),
                       ),
                       child: Image.network(
-                        sight.urls[0],
+                        widget.sight.urls[0],
                         loadingBuilder: (
                           context,
                           child,
@@ -131,9 +102,7 @@ class SightCard extends StatefulWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/details', arguments: sight);
-                },
+                onTap: _showDetails,
                 customBorder: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
@@ -146,7 +115,9 @@ class SightCard extends StatefulWidget {
               children: [
                 Expanded(
                   child: Text(
-                    sight.type.isEmpty ? 'категория' : sight.type.toLowerCase(),
+                    widget.sight.type.isEmpty
+                        ? 'категория'
+                        : widget.sight.type.toLowerCase(),
                     style: Theme.of(context).primaryTextTheme.caption,
                   ),
                 ),
@@ -158,13 +129,54 @@ class SightCard extends StatefulWidget {
       ),
     );
   }
-}
 
-class SightCardState<T extends SightCard> extends State<T> {
-  GlobalKey globalKey = GlobalKey();
-  bool isDrag = false;
-  @override
-  Widget build(BuildContext context) {
-    return Builder(builder: widget.cardContainer);
+  Widget interactionButtons() {
+    return SizedBox(
+      width: 45,
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        child: InkWell(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          child: Ink(
+            child: Image.asset(
+              'res/icons/menu/Heart.png',
+            ),
+          ),
+          onTap: () {},
+        ),
+      ),
+    );
+  }
+
+  Column informationColumn(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Container(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Text(
+          widget.sight.name.isEmpty ? 'Название' : widget.sight.name,
+          style: Theme.of(context).primaryTextTheme.headline5,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      Text(
+        'закрыто до 9:00',
+        textAlign: TextAlign.start,
+        style: Theme.of(context).primaryTextTheme.subtitle2,
+      ),
+    ]);
+  }
+
+  void _showDetails() {
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (_) {
+          return SightDetailsScreen(sight: widget.sight);
+        },
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height - 64,
+        ),
+        isScrollControlled: true);
   }
 }

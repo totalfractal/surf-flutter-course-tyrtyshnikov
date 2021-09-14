@@ -19,9 +19,10 @@ class VisitingScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           bottom: TabBar(
             indicatorPadding:
-                const EdgeInsets.only(left: 16, right: 1, top: 6, bottom: 6),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             tabs: _titles
                 .map(
                   (title) => Tab(

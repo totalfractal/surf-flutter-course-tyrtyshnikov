@@ -46,7 +46,7 @@ class _SightListScreenState extends State<SightListScreen> {
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(24),
             ),
           ),
           child: Ink(

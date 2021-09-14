@@ -21,6 +21,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width * 0.7, 75),
         child: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text(
             'Настройки',
           ),

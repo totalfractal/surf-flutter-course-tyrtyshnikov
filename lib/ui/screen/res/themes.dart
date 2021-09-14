@@ -27,7 +27,6 @@ final lightTheme = ThemeData(
   backgroundColor: lmBackgroundColor,
   scaffoldBackgroundColor: lmScaffoldBackgroundColor,
   appBarTheme: const AppBarTheme(
-    backwardsCompatibility: false,
     backgroundColor: lmBackgroundColor,
     titleTextStyle: TextStyle(
       fontFamily: 'Roboto',
@@ -44,6 +43,7 @@ final lightTheme = ThemeData(
     indicator: BoxDecoration(
       borderRadius: const BorderRadius.horizontal(
         left: Radius.circular(40),
+        right: Radius.circular(40),
       ),
       color: lmTabBarColor,
     ),
@@ -58,6 +58,9 @@ final lightTheme = ThemeData(
     backgroundColor: lmBottomNavBarColor,
     unselectedItemColor: lmSecondaryColor,
     selectedItemColor: lmSecondaryColor,
+  ),
+  bottomSheetTheme: BottomSheetThemeData(
+    backgroundColor: Colors.transparent,
   ),
   primaryTextTheme: TextTheme(
     headline1: lmRoboto24W700,
@@ -150,7 +153,6 @@ final darkTheme = ThemeData(
   backgroundColor: dmBackgroundColor,
   scaffoldBackgroundColor: dmScaffoldBackgroundColor,
   appBarTheme: AppBarTheme(
-    backwardsCompatibility: false,
     backgroundColor: dmBackgroundColor,
     titleTextStyle: dmAppBarTextStyle,
     elevation: 0,
