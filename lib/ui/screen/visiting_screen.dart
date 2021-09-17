@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/globals.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screen/widgets/bottom_nav_bar.dart';
 import 'package:places/ui/screen/widgets/visiting_screen/visiting_screen_tab.dart';
 
 class VisitingScreen extends StatelessWidget {
@@ -19,9 +18,10 @@ class VisitingScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           bottom: TabBar(
             indicatorPadding:
-                const EdgeInsets.only(left: 16, right: 1, top: 6, bottom: 6),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             tabs: _titles
                 .map(
                   (title) => Tab(
@@ -35,7 +35,7 @@ class VisitingScreen extends StatelessWidget {
           ),
           elevation: 0,
         ),
-        bottomNavigationBar: const BottomNavBar(),
+        //   bottomNavigationBar: const BottomNavBar(),
         body: TabBarView(
           children: [
             VisitingScreenTab(sightList: _getwantToisitList(), title: title),

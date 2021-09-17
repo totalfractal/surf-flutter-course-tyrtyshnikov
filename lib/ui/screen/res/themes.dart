@@ -6,13 +6,12 @@ import 'package:places/ui/screen/res/styles.dart';
 class ThemeProvider extends ChangeNotifier {
   ThemeData light = lightTheme;
   ThemeData dark = darkTheme;
+  ThemeData? get getTheme => _selectedTheme;
   ThemeData? _selectedTheme;
 
   ThemeProvider({required bool isDarkMode}) {
     _selectedTheme = isDarkMode ? dark : light;
   }
-
-  ThemeData? get getTheme => _selectedTheme;
 
   bool isDarkTheme() => _selectedTheme == dark || false;
 
@@ -27,8 +26,8 @@ final lightTheme = ThemeData(
   primaryColor: lmPrimaryColor,
   backgroundColor: lmBackgroundColor,
   scaffoldBackgroundColor: lmScaffoldBackgroundColor,
+  disabledColor: lmInactiveBlackColor,
   appBarTheme: const AppBarTheme(
-    backwardsCompatibility: false,
     backgroundColor: lmBackgroundColor,
     titleTextStyle: TextStyle(
       fontFamily: 'Roboto',
@@ -45,6 +44,7 @@ final lightTheme = ThemeData(
     indicator: BoxDecoration(
       borderRadius: const BorderRadius.horizontal(
         left: Radius.circular(40),
+        right: Radius.circular(40),
       ),
       color: lmTabBarColor,
     ),
@@ -59,6 +59,9 @@ final lightTheme = ThemeData(
     backgroundColor: lmBottomNavBarColor,
     unselectedItemColor: lmSecondaryColor,
     selectedItemColor: lmSecondaryColor,
+  ),
+  bottomSheetTheme: const BottomSheetThemeData(
+    backgroundColor: Colors.transparent,
   ),
   primaryTextTheme: TextTheme(
     headline1: lmRoboto24W700,
@@ -150,8 +153,8 @@ final darkTheme = ThemeData(
   primaryColor: dmPrimaryColor,
   backgroundColor: dmBackgroundColor,
   scaffoldBackgroundColor: dmScaffoldBackgroundColor,
+  disabledColor: dmInactiveBlackColor,
   appBarTheme: AppBarTheme(
-    backwardsCompatibility: false,
     backgroundColor: dmBackgroundColor,
     titleTextStyle: dmAppBarTextStyle,
     elevation: 0,

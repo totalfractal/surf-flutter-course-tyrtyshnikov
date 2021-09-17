@@ -15,6 +15,28 @@ class VisitedSightCard extends SightCard {
 
   @override
   _VisitedSightCardState createState() => _VisitedSightCardState();
+}
+
+class _VisitedSightCardState extends SightCardState<VisitedSightCard> {
+  @override
+  Widget build(BuildContext context) {
+    return LongPressDraggable<int>(
+      axis: Axis.vertical,
+      data: widget.index,
+      feedback: cardContainer(context),
+      onDragStarted: () {
+        setState(() {
+          isDrag = true;
+        });
+      },
+      onDragEnd: (details) {
+        setState(() {
+          isDrag = false;
+        });
+      },
+      child: isDrag ? const SizedBox.shrink() : cardContainer(context),
+    );
+  }
 
   @override
   Column informationColumn(BuildContext context) {
@@ -24,7 +46,7 @@ class VisitedSightCard extends SightCard {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 2),
           child: Text(
-            sight.name.isEmpty ? 'Название' : sight.name,
+            widget.sight.name.isEmpty ? 'Название' : widget.sight.name,
             style: Theme.of(context).primaryTextTheme.headline4,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -64,7 +86,7 @@ class VisitedSightCard extends SightCard {
               child: Image.asset(
                 'res/icons/other/Share.png',
               ),
-              onTap: onShareTap,
+              onTap: widget.onShareTap,
             ),
           ),
         ),
@@ -78,33 +100,11 @@ class VisitedSightCard extends SightCard {
               child: Image.asset(
                 'res/icons/other/Delete.png',
               ),
-              onTap: onDeleteTap,
+              onTap: widget.onDeleteTap,
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _VisitedSightCardState extends SightCardState<VisitedSightCard> {
-  @override
-  Widget build(BuildContext context) {
-    return LongPressDraggable<int>(
-      axis: Axis.vertical,
-      data: widget.index,
-      feedback: widget.cardContainer(context),
-      onDragStarted: () {
-        setState(() {
-          isDrag = true;
-        });
-      },
-      onDragEnd: (details) {
-        setState(() {
-          isDrag = false;
-        });
-      },
-      child: isDrag ? const SizedBox.shrink() : widget.cardContainer(context),
     );
   }
 }

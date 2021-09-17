@@ -17,15 +17,16 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
   final NearbySightsFinder _nearbySightsFinder = NearbySightsFinder();
-  RangeValues _currentRangeValues = const RangeValues(100, 2000);
-  int _nearbyCount = 0;
-  List<Sight> _nearbySights = [];
   final GlobalKey<_CategoryFilterIconState> _cafeIconKey = GlobalKey();
   final GlobalKey<_CategoryFilterIconState> _hotelIconKey = GlobalKey();
   final GlobalKey<_CategoryFilterIconState> _museumIconKey = GlobalKey();
   final GlobalKey<_CategoryFilterIconState> _parkIconKey = GlobalKey();
   final GlobalKey<_CategoryFilterIconState> _partPlaceIconKey = GlobalKey();
   final GlobalKey<_CategoryFilterIconState> _restourantIconKey = GlobalKey();
+
+  RangeValues _currentRangeValues = const RangeValues(100, 2000);
+  int _nearbyCount = 0;
+  List<Sight> _nearbySights = [];
 
   // ignore: unused_field
   bool? _isCafePressed;
@@ -309,6 +310,10 @@ class _FilterScreenState extends State<FilterScreen> {
 }
 
 class CategoryFilter extends StatelessWidget {
+  final GlobalKey iconKey;
+  final String name;
+  final String iconImage;
+  final ValueChanged<bool?> onPressed;
   const CategoryFilter({
     required this.name,
     required this.iconImage,
@@ -316,11 +321,6 @@ class CategoryFilter extends StatelessWidget {
     required this.onPressed,
     Key? key,
   }) : super(key: key);
-
-  final GlobalKey iconKey;
-  final String name;
-  final String iconImage;
-  final ValueChanged<bool?> onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -346,14 +346,13 @@ class CategoryFilter extends StatelessWidget {
 }
 
 class CategoryFilterIcon extends StatefulWidget {
+  final String iconImage;
+  final ValueChanged<bool?> onPressed;
   const CategoryFilterIcon({
     required this.iconImage,
     required this.onPressed,
     Key? key,
   }) : super(key: key);
-
-  final String iconImage;
-  final ValueChanged<bool?> onPressed;
 
   @override
   _CategoryFilterIconState createState() => _CategoryFilterIconState();
@@ -361,13 +360,6 @@ class CategoryFilterIcon extends StatefulWidget {
 
 class _CategoryFilterIconState extends State<CategoryFilterIcon> {
   bool? _isSelected;
-
-  void unselect() {
-    setState(() {
-      _isSelected = false;
-      widget.onPressed(_isSelected);
-    });
-  }
 
   @override
   void initState() {
@@ -405,5 +397,12 @@ class _CategoryFilterIconState extends State<CategoryFilterIcon> {
         ),
       ],
     );
+  }
+
+  void unselect() {
+    setState(() {
+      _isSelected = false;
+      widget.onPressed(_isSelected);
+    });
   }
 }

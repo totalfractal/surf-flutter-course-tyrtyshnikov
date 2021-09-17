@@ -1,4 +1,5 @@
 class Sight {
+  final String? id;
   final String name;
   final double lat;
   final double lon;
@@ -13,5 +14,6 @@ class Sight {
     required this.urls,
     required this.details,
     required this.type,
+    this.id,
   });
 }

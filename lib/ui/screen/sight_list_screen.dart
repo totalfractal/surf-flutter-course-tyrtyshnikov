@@ -7,7 +7,6 @@ import 'package:places/mocks.dart';
 import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/res/styles.dart';
 import 'package:places/ui/screen/search_screen.dart';
-import 'package:places/ui/screen/widgets/bottom_nav_bar.dart';
 import 'package:places/ui/screen/widgets/font_size_on_scroll_changer.dart';
 import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 import 'package:places/ui/screen/widgets/sight_card.dart';
@@ -40,7 +39,48 @@ class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomNavBar(),
+      floatingActionButton: SizedBox(
+        width: 177,
+        child: ElevatedButton(
+          onPressed: () => Navigator.of(context).pushNamed('/add'),
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+          ),
+          child: Ink(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color.fromRGBO(252, 221, 61, 1),
+                  Color.fromRGBO(76, 175, 80, 1),
+                ],
+                begin: FractionalOffset.centerLeft,
+                end: FractionalOffset.centerRight,
+                stops: [0.0, 1.0],
+              ),
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.add),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Text('НОВОЕ МЕСТО'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      //  bottomNavigationBar: const BottomNavBar(),
       body: OverscrollGlowAbsorber(
         child: FontSizeOnScrollChanger(
           scrollController: _scrollController,
@@ -84,12 +124,7 @@ class _SightListScreenState extends State<SightListScreen> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<SearchScreen>(
-                            builder: (context) => const SearchScreen(),
-                          ),
-                        );
+                        Navigator.of(context).pushNamed('/search');
                       },
                     ),
                   ),
@@ -145,12 +180,11 @@ class DefaultAppBarTitleText extends StatelessWidget {
 }
 
 class ScrolledAppBarTitleText extends StatelessWidget {
+  final String title;
   const ScrolledAppBarTitleText({
     required this.title,
     Key? key,
   }) : super(key: key);
-
-  final String title;
 
   @override
   Widget build(BuildContext context) {

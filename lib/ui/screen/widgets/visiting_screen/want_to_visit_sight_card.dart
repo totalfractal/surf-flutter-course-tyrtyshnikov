@@ -17,6 +17,28 @@ class WantToVisitSightCard extends SightCard {
 
   @override
   _WantToVisitSightCardState createState() => _WantToVisitSightCardState();
+}
+
+class _WantToVisitSightCardState extends SightCardState<WantToVisitSightCard> {
+  @override
+  Widget build(BuildContext context) {
+    return LongPressDraggable<int>(
+      axis: Axis.vertical,
+      data: widget.index,
+      feedback: cardContainer(context),
+      onDragStarted: () {
+        setState(() {
+          isDrag = true;
+        });
+      },
+      onDragEnd: (details) {
+        setState(() {
+          isDrag = false;
+        });
+      },
+      child: isDrag ? const SizedBox.shrink() : cardContainer(context),
+    );
+  }
 
   @override
   Column informationColumn(BuildContext context) {
@@ -26,7 +48,7 @@ class WantToVisitSightCard extends SightCard {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 2),
           child: Text(
-            sight.name.isEmpty ? 'Название' : sight.name,
+            widget.sight.name.isEmpty ? 'Название' : widget.sight.name,
             style: Theme.of(context).primaryTextTheme.headline4,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -68,7 +90,7 @@ class WantToVisitSightCard extends SightCard {
               child: Image.asset(
                 'res/icons/other/Calendar.png',
               ),
-              onTap: onCalendarTap,
+              onTap: widget.onCalendarTap,
             ),
           ),
         ),
@@ -82,33 +104,11 @@ class WantToVisitSightCard extends SightCard {
               child: Image.asset(
                 'res/icons/other/Delete.png',
               ),
-              onTap: onDeleteTap,
+              onTap: widget.onDeleteTap,
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _WantToVisitSightCardState extends SightCardState<WantToVisitSightCard> {
-  @override
-  Widget build(BuildContext context) {
-    return LongPressDraggable<int>(
-      axis: Axis.vertical,
-      data: widget.index,
-      feedback: widget.cardContainer(context),
-      onDragStarted: () {
-        setState(() {
-          isDrag = true;
-        });
-      },
-      onDragEnd: (details) {
-        setState(() {
-          isDrag = false;
-        });
-      },
-      child: isDrag ? const SizedBox.shrink() : widget.cardContainer(context),
     );
   }
 }

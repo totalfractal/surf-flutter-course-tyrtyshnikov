@@ -146,12 +146,11 @@ class OnboardingFrame extends StatelessWidget {
 }
 
 class IndicatorItem extends StatelessWidget {
+  final bool isSelected;
   const IndicatorItem({
     required this.isSelected,
     Key? key,
   }) : super(key: key);
-
-  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
