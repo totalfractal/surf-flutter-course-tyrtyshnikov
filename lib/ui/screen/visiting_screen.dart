@@ -38,8 +38,9 @@ class VisitingScreen extends StatelessWidget {
         //   bottomNavigationBar: const BottomNavBar(),
         body: TabBarView(
           children: [
-            VisitingScreenTab(sightList: _getwantToisitList(), title: title),
-            VisitingScreenTab(sightList: _getVisitedList(), title: title),
+            VisitingScreenTab(
+                sightList: _getwantToisitList(), title: 'Хочу посетить'),
+            VisitingScreenTab(sightList: _getVisitedList(), title: 'Посетил'),
           ],
         ),
       ),

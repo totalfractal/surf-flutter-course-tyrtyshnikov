@@ -165,7 +165,15 @@ class DismissibleWantToVisitSightCard extends StatelessWidget {
         index: index,
         sight: sight,
         onDeleteTap: () => onDelete(index, key),
-        onCalendarTap: () {},
+        onCalendarTap: () async {
+          final date = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now().add(const Duration(days: 1)),
+            firstDate: DateTime.now(),
+            lastDate: DateTime.now().add(const Duration(days: 365)),
+          );
+          if (date != null) debugPrint(date.toString());
+        },
       ),
       background: Container(
         height: 198,
