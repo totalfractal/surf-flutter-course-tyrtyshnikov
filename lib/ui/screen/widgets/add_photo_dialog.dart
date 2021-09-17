@@ -24,17 +24,23 @@ class AddPhotoDialog extends StatelessWidget {
               child: Column(
                 children: const [
                   AddPhotoDialogItem(
-                      icon: 'res/icons/other/Camera.png', name: 'Камера'),
+                    icon: 'res/icons/other/Camera.png',
+                    name: 'Камера',
+                  ),
                   Divider(
                     color: lmInactiveBlackColor,
                   ),
                   AddPhotoDialogItem(
-                      icon: 'res/icons/other/Photo.png', name: 'Фотография'),
+                    icon: 'res/icons/other/Photo.png',
+                    name: 'Фотография',
+                  ),
                   Divider(
                     color: lmInactiveBlackColor,
                   ),
                   AddPhotoDialogItem(
-                      icon: 'res/icons/other/Fail.png', name: 'Файл'),
+                    icon: 'res/icons/other/Fail.png',
+                    name: 'Файл',
+                  ),
                 ],
               ),
             ),
@@ -98,9 +104,10 @@ class AddPhotoDialogItem extends StatelessWidget {
               child: Text(
                 name,
                 style: Theme.of(context).primaryTextTheme.bodyText2!.copyWith(
-                    color: isDarkMode ? dmWhiteColor : lmSecondary2Color),
+                      color: isDarkMode ? dmWhiteColor : lmSecondary2Color,
+                    ),
               ),
-            )
+            ),
           ],
         ),
       ),
