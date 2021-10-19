@@ -6,6 +6,7 @@ import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
 import 'package:places/ui/screen/res/styles.dart';
 import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
+import 'package:places/ui/screen/widgets/visiting_screen/visited_sight_card.dart';
 import 'package:places/ui/screen/widgets/visiting_screen/visiting_drag_target.dart';
 import 'package:places/ui/screen/widgets/visiting_screen/want_to_visit_sight_card.dart';
 
@@ -30,8 +31,9 @@ class _VisitingScreenTabState extends State<VisitingScreenTab> {
   void initState() {
     super.initState();
     _getWantToVisitWidgets();
-    _globalList =
-        widget.title == 'Хочу посетить' ? _globalList : globals.visitedList;
+    _globalList = widget.title == 'Хочу посетить'
+        ? globals.wantToVisitList
+        : globals.visitedList;
     _saveGlobalList();
   }
 
@@ -96,11 +98,17 @@ class _VisitingScreenTabState extends State<VisitingScreenTab> {
     for (var index = 0; index < _globalList.length; index++) {
       _allWidgetsMap[_globalList[index].name] = Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: DismissibleSightCard(
-          sight: _globalList[index],
-          index: index,
-          onDelete: (index, key) => _deleteSight(index, key.value),
-        ),
+        child: widget.title == 'Хочу посетить'
+            ? DismissibleWantToVisitSightCard(
+                sight: _globalList[index],
+                index: index,
+                onDelete: (index, key) => _deleteSight(index, key.value),
+              )
+            : DismissibleVisitedSightCard(
+                sight: _globalList[index],
+                index: index,
+                onDelete: (index, key) => _deleteSight(index, key.value),
+              ),
       );
       _allWidgetsMap['DragTarget ${index + 1}'] = VisitingDragTarget(
         index: index + 1,
@@ -136,11 +144,11 @@ class _VisitingScreenTabState extends State<VisitingScreenTab> {
   }
 }
 
-class DismissibleSightCard extends StatelessWidget {
+class DismissibleWantToVisitSightCard extends StatelessWidget {
   final Sight sight;
   final int index;
   final Function(int index, ValueKey<String> key) onDelete;
-  const DismissibleSightCard({
+  const DismissibleWantToVisitSightCard({
     required this.sight,
     required this.index,
     required this.onDelete,
@@ -157,7 +165,71 @@ class DismissibleSightCard extends StatelessWidget {
         index: index,
         sight: sight,
         onDeleteTap: () => onDelete(index, key),
-        onCalendarTap: () {},
+        onCalendarTap: () async {
+          final date = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now().add(const Duration(days: 1)),
+            firstDate: DateTime.now(),
+            lastDate: DateTime.now().add(const Duration(days: 365)),
+          );
+          if (date != null) debugPrint(date.toString());
+        },
+      ),
+      background: Container(
+        height: 198,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          color: globals.isDarkMode ? dmRedColor : lmRedColor,
+        ),
+        child: Container(
+          margin: const EdgeInsets.all(16),
+          alignment: Alignment.centerRight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('res/icons/other/Bucket.png'),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  'Удалить',
+                  style: lmRoboto12W400.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      onDismissed: (direction) => onDelete(index, key),
+      direction: DismissDirection.endToStart,
+    );
+  }
+}
+
+class DismissibleVisitedSightCard extends StatelessWidget {
+  final Sight sight;
+  final int index;
+  final Function(int index, ValueKey<String> key) onDelete;
+  const DismissibleVisitedSightCard({
+    required this.sight,
+    required this.index,
+    required this.onDelete,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final key = ValueKey<String>('${sight.name} dismissVisited');
+    return Dismissible(
+      key: key,
+      child: VisitedSightCard(
+        key: ValueKey('${sight.name} cardVisited'),
+        index: index,
+        sight: sight,
+        onDeleteTap: () => onDelete(index, key),
+        onShareTap: () {},
       ),
       background: Container(
         height: 198,

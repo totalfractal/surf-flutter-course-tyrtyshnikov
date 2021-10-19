@@ -56,7 +56,9 @@ class SightDetailsScreen extends StatelessWidget {
                 SliverFillRemaining(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 24),
+                      horizontal: 16.0,
+                      vertical: 24,
+                    ),
                     color: Theme.of(context).primaryColor,
                     child: Column(
                       children: [
