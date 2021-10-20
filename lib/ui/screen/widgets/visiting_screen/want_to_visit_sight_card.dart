@@ -23,7 +23,7 @@ class _WantToVisitSightCardState extends SightCardState<WantToVisitSightCard> {
   @override
   Widget build(BuildContext context) {
     return LongPressDraggable<int>(
-      axis: Axis.vertical,
+      axis: MediaQuery.of(context).orientation == Orientation.landscape ? null : Axis.vertical,
       data: widget.index,
       feedback: cardContainer(context),
       onDragStarted: () {
