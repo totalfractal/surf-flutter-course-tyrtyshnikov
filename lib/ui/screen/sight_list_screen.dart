@@ -93,9 +93,17 @@ class _SightListScreenState extends State<SightListScreen> {
           },
           onScrollUp: () {
             setState(() {
-              _currentAppBarText = DefaultAppBarTitleText(title: widget.title);
-              _centerTitle = false;
-              _toolBarHeight = 140;
+              if (MediaQuery.of(context).orientation == Orientation.landscape) {
+                _currentAppBarText = ScrolledAppBarTitleText(title: widget.title);
+                _centerTitle = true;
+                _toolBarHeight = 70;
+              }
+              else{
+                _currentAppBarText = DefaultAppBarTitleText(title: widget.title);
+                _centerTitle = false;
+                _toolBarHeight = 140;
+              }
+              
             });
           },
           child: CustomScrollView(
@@ -110,7 +118,7 @@ class _SightListScreenState extends State<SightListScreen> {
                 pinned: true,
                 title: _currentAppBarText,
                 centerTitle: _centerTitle,
-                expandedHeight: 160,
+                expandedHeight: MediaQuery.of(context).orientation == Orientation.landscape ? 120 : 160,
                 toolbarHeight: _toolBarHeight,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Align(
@@ -130,7 +138,32 @@ class _SightListScreenState extends State<SightListScreen> {
                   ),
                 ),
               ),
-              SliverList(
+              if (MediaQuery.of(context).orientation == Orientation.landscape) SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: SightCard(
+                        sight: Sight(
+                          name: mocks[index][0] as String,
+                          lat: double.parse(mocks[index][1] as String),
+                          lon: double.parse(mocks[index][2] as String),
+                          urls: mocks[index][3] as List<String>,
+                          details: mocks[index][4] as String,
+                          type: mocks[index][5] as String,
+                        ),
+                      ),
+                    );
+                  },
+                  childCount: mocks.length,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                     crossAxisCount: 2,
+                                     childAspectRatio: 2,
+                                     mainAxisSpacing: 10.0,
+                                     crossAxisSpacing: 10.0,
+                                   ),
+              ) else SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     return Padding(
