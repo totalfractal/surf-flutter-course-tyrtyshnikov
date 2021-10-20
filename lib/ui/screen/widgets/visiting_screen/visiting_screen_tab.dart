@@ -167,7 +167,7 @@ class DismissibleWantToVisitSightCard extends StatelessWidget {
         sight: sight,
         onDeleteTap: () => onDelete(index, key),
         onCalendarTap: () async {
-          final date = Platform.isIOS
+          final date = Platform.isAndroid
               ? await showDatePicker(
                   context: context,
                   initialDate: DateTime.now().add(const Duration(days: 1)),

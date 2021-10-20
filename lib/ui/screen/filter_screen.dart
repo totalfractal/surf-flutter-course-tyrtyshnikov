@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:places/domain/nearby_sights.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/globals.dart' as globals;
 import 'package:places/ui/screen/res/colors.dart';
+import 'package:places/ui/screen/widgets/overscroll_glow_absorber.dart';
 
 class FilterScreen extends StatefulWidget {
   final ValueSetter<List<Sight>> onFiltersChanged;
@@ -202,36 +205,59 @@ class _FilterScreenState extends State<FilterScreen> {
                             ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20, bottom: 20),
-                      child: Table(
-                        children: [
-                          TableRow(
+                    if (MediaQuery.of(context).size.height <= 800)
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 100,
+                        margin: const EdgeInsets.only(top: 20, bottom: 20),
+                        child: OverscrollGlowAbsorber(
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            physics: Platform.isAndroid
+                                ? const ClampingScrollPhysics()
+                                : const BouncingScrollPhysics(),
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20.0),
-                                child: _hotelFilter,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20.0),
-                                child: _restourantFilter,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20.0),
-                                child: _partPlaceFilter,
-                              ),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
+                              _hotelFilter!,
+                              _restourantFilter!,
+                              _partPlaceFilter!,
                               _parkFilter!,
                               _museumFilter!,
                               _cafeFilter!,
                             ],
                           ),
-                        ],
+                        ),
+                      )
+                    else
+                      Container(
+                        margin: const EdgeInsets.only(top: 20, bottom: 20),
+                        child: Table(
+                          children: [
+                            TableRow(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: _hotelFilter,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: _restourantFilter,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: _partPlaceFilter,
+                                ),
+                              ],
+                            ),
+                            TableRow(
+                              children: [
+                                _parkFilter!,
+                                _museumFilter!,
+                                _cafeFilter!,
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
