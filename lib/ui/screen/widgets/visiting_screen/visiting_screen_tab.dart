@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/globals.dart' as globals;
@@ -166,12 +167,36 @@ class DismissibleWantToVisitSightCard extends StatelessWidget {
         sight: sight,
         onDeleteTap: () => onDelete(index, key),
         onCalendarTap: () async {
-          final date = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now().add(const Duration(days: 1)),
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(const Duration(days: 365)),
-          );
+          final date = Platform.isIOS
+              ? await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now().add(const Duration(days: 1)),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime.now().add(const Duration(days: 365)),
+                )
+              : showCupertinoModalPopup<DateTime?>(
+                  context: context,
+                  builder: (_) => Container(
+                        height: MediaQuery.of(context).size.height*0.38,
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height*0.3,
+                              child: CupertinoDatePicker(
+                                  initialDateTime: DateTime.now(),
+                                  onDateTimeChanged: (val) {
+                                    Navigator.of(context).pop(val);
+                                  },),
+                            ),
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                          ],
+                        ),
+                      ),);
+
           if (date != null) debugPrint(date.toString());
         },
       ),
